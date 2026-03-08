@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="IronTrack Pro">
-    <title>IronTrack Pro - Seu Companheiro de Treino</title>
+    <title>IronTrack Pro - Biblioteca Completa de Exercícios</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
@@ -304,9 +304,277 @@
         .time-input {
             font-variant-numeric: tabular-nums;
         }
+        
+        .exercise-image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+        }
+        
+        .exercise-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .exercise-image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        .muscle-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .muscle-primary {
+            background: rgba(249, 115, 22, 0.2);
+            color: #f97316;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+        
+        .muscle-secondary {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .exercise-card {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .exercise-card:hover {
+            border-color: rgba(249, 115, 22, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .difficulty-badge {
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .difficulty-beginner {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+        }
+        
+        .difficulty-intermediate {
+            background: rgba(234, 179, 8, 0.2);
+            color: #facc15;
+        }
+        
+        .difficulty-advanced {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+        }
+        
+        .instruction-step {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .instruction-step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .tip-card {
+            background: rgba(249, 115, 22, 0.1);
+            border-left: 3px solid #f97316;
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        
+        .warning-card {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid #ef4444;
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        
+        .anatomy-container {
+            background: linear-gradient(135deg, #1f2937, #111827);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .muscle-map {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+        }
+        
+        .muscle-map-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .muscle-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .muscle-dot.primary {
+            background: #f97316;
+            box-shadow: 0 0 8px #f97316;
+        }
+        
+        .muscle-dot.secondary {
+            background: #3b82f6;
+        }
+        
+        .muscle-dot.stabilizer {
+            background: #6b7280;
+        }
+        
+        .variation-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            background: rgba(75, 85, 99, 0.3);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            margin: 0.25rem;
+            transition: all 0.2s;
+        }
+        
+        .variation-chip:hover {
+            background: rgba(249, 115, 22, 0.3);
+            color: #f97316;
+        }
+        
+        .exercise-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .gallery-item {
+            aspect-ratio: 4/3;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .gallery-item:hover {
+            border-color: #f97316;
+            transform: scale(1.02);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        
+        .modal-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .close-modal:hover {
+            background: #f97316;
+        }
+        
+        .equipment-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            background: rgba(75, 85, 99, 0.3);
+            border-radius: 0.25rem;
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
     </style>
 </head>
 <body class="bg-gray-950 text-white min-h-screen pb-20">
+    <!-- Image Modal -->
+    <div id="image-modal" class="modal-overlay" onclick="closeImageModal()">
+        <div class="close-modal" onclick="event.stopPropagation(); closeImageModal()">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="modal-content">
+            <img id="modal-image" src="" alt="Exercise demonstration">
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="fixed top-0 w-full z-50 glass-effect border-b border-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -316,7 +584,7 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-bold tracking-tight">IronTrack<span class="text-orange-500">Pro</span></h1>
-                    <p class="text-xs text-gray-400">Seu companheiro de treino</p>
+                    <p class="text-xs text-gray-400">Biblioteca Completa de Exercícios</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -412,6 +680,138 @@
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="muscle-grid">
                     <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercise Library View -->
+        <div id="library-view" class="hidden space-y-6">
+            <div class="flex items-center gap-4 mb-6">
+                <button onclick="showView('dashboard')" class="p-2 rounded-lg hover:bg-gray-800 transition">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="flex-1">
+                    <h2 class="text-2xl font-bold" id="library-title">Biblioteca de Exercícios</h2>
+                    <p class="text-gray-400 text-sm" id="library-subtitle">Todos os exercícios disponíveis</p>
+                </div>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="sticky top-20 z-30 bg-gray-950/95 backdrop-blur pb-4">
+                <div class="relative mb-4">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                    <input type="text" id="library-search" placeholder="Buscar exercício..." 
+                        class="w-full bg-gray-900 border border-gray-800 rounded-xl pl-12 pr-4 py-3 text-white focus:border-orange-500 focus:outline-none"
+                        oninput="filterLibrary()">
+                </div>
+                
+                <div class="flex gap-2 overflow-x-auto pb-2" id="library-filters">
+                    <button onclick="filterLibraryByMuscle('all')" class="library-filter-btn active px-4 py-2 rounded-full bg-orange-500 text-white text-sm font-medium whitespace-nowrap">
+                        Todos
+                    </button>
+                </div>
+            </div>
+
+            <!-- Exercise Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="library-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Exercise Detail View -->
+        <div id="exercise-detail-view" class="hidden space-y-6">
+            <div class="flex items-center gap-4">
+                <button onclick="backFromDetail()" class="p-2 rounded-lg hover:bg-gray-800 transition">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 class="text-2xl font-bold" id="detail-exercise-name">Exercício</h2>
+            </div>
+
+            <!-- Image Gallery -->
+            <div class="exercise-gallery" id="detail-gallery">
+                <!-- Images populated by JS -->
+            </div>
+
+            <!-- Main Info Card -->
+            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800">
+                <div class="p-6 space-y-6">
+                    <!-- Tags -->
+                    <div class="flex flex-wrap gap-2" id="detail-tags">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Anatomy Section -->
+                    <div class="anatomy-container">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <i class="fas fa-user text-orange-400"></i>
+                            Músculos Trabalhados
+                        </h3>
+                        <div class="muscle-map" id="detail-muscles">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Instructions -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4 text-orange-400">Execução Correta</h3>
+                        <div id="detail-instructions">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Tips -->
+                    <div class="tip-card">
+                        <h4 class="font-semibold mb-2 flex items-center gap-2">
+                            <i class="fas fa-lightbulb text-yellow-400"></i>
+                            Dicas Profissionais
+                        </h4>
+                        <ul class="space-y-2 text-sm text-gray-300" id="detail-tips">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+
+                    <!-- Common Errors -->
+                    <div class="warning-card">
+                        <h4 class="font-semibold mb-2 flex items-center gap-2">
+                            <i class="fas fa-exclamation-triangle text-red-400"></i>
+                            Erros Comuns a Evitar
+                        </h4>
+                        <ul class="space-y-2 text-sm text-gray-300" id="detail-errors">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+
+                    <!-- Variations -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Variações</h3>
+                        <div class="flex flex-wrap" id="detail-variations">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Specifications -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="bg-gray-800 rounded-xl p-4 text-center">
+                            <i class="fas fa-layer-group text-blue-400 mb-2"></i>
+                            <p class="text-xs text-gray-400">Dificuldade</p>
+                            <p class="font-bold" id="detail-difficulty">Intermediário</p>
+                        </div>
+                        <div class="bg-gray-800 rounded-xl p-4 text-center">
+                            <i class="fas fa-dumbbell text-orange-400 mb-2"></i>
+                            <p class="text-xs text-gray-400">Equipamento</p>
+                            <p class="font-bold" id="detail-equipment">Barra</p>
+                        </div>
+                        <div class="bg-gray-800 rounded-xl p-4 text-center">
+                            <i class="fas fa-bullseye text-green-400 mb-2"></i>
+                            <p class="text-xs text-gray-400">Foco</p>
+                            <p class="font-bold" id="detail-focus">Hipertrofia</p>
+                        </div>
+                    </div>
+
+                    <button onclick="addToCurrentWorkout()" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg shadow-orange-500/30">
+                        <i class="fas fa-plus mr-2"></i>
+                        Adicionar ao Treino
+                    </button>
                 </div>
             </div>
         </div>
@@ -590,7 +990,7 @@
             </div>
         </div>
 
-        <!-- Profile Modal (Peso do usuário) -->
+        <!-- Profile Modal -->
         <div id="profile-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
             <div class="bg-gray-900 rounded-3xl p-6 max-w-sm w-full border border-gray-800">
                 <div class="flex justify-between items-center mb-6">
@@ -660,66 +1060,6 @@
                 <i class="fas fa-plus"></i>
                 Adicionar Exercício
             </button>
-        </div>
-
-        <!-- Exercise Detail View -->
-        <div id="exercise-detail-view" class="hidden space-y-6">
-            <div class="flex items-center gap-4">
-                <button onclick="backFromDetail()" class="p-2 rounded-lg hover:bg-gray-800 transition">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                <h2 class="text-2xl font-bold" id="detail-exercise-name">Exercício</h2>
-            </div>
-
-            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800">
-                <div class="h-64 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center relative">
-                    <i class="fas fa-dumbbell text-6xl text-gray-700"></i>
-                    <div class="absolute bottom-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold" id="detail-muscle-group">
-                        Peitoral
-                    </div>
-                </div>
-                
-                <div class="p-6 space-y-6">
-                    <div>
-                        <h3 class="text-lg font-semibold mb-2 text-orange-400">Execução Correta</h3>
-                        <p class="text-gray-300 leading-relaxed" id="detail-instructions">
-                            Mantenha a coluna neutra, escápulas estáveis e execute o movimento com controle.
-                        </p>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-gray-800 rounded-xl p-4">
-                            <i class="fas fa-redo text-blue-400 mb-2"></i>
-                            <p class="text-sm text-gray-400">Séries</p>
-                            <p class="text-xl font-bold">3-4</p>
-                        </div>
-                        <div class="bg-gray-800 rounded-xl p-4">
-                            <i class="fas fa-hashtag text-green-400 mb-2"></i>
-                            <p class="text-sm text-gray-400">Repetições</p>
-                            <p class="text-xl font-bold">8-12</p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-lg font-semibold mb-3 text-orange-400">Dicas Profissionais</h3>
-                        <ul class="space-y-2 text-gray-300" id="detail-tips">
-                            <li class="flex items-start gap-2">
-                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
-                                <span>Expire na fase de esforço (concentração)</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
-                                <span>Mantenha a conexão mente-músculo</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <button onclick="addToCurrentWorkout()" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg shadow-orange-500/30">
-                        <i class="fas fa-plus mr-2"></i>
-                        Adicionar ao Treino Atual
-                    </button>
-                </div>
-            </div>
         </div>
 
         <!-- History View -->
@@ -809,180 +1149,1623 @@
 
     <script>
         // ==========================================
-        // DADOS E CONFIGURAÇÕES
+        // BIBLIOTECA COMPLETA DE EXERCÍCIOS COM IMAGENS
         // ==========================================
         
-        // Dados do usuário
-        let userProfile = JSON.parse(localStorage.getItem('userProfile')) || {
-            weight: 70,
-            gender: 'male' // 'male' ou 'female'
-        };
-
-        // METs para cálculo de calorias (valores científicos)
-        const exerciseMETs = {
-            weightlifting_light: 3.0,    // Leve (alta repetição, pouco peso)
-            weightlifting_moderate: 3.5, // Moderado (8-12 reps)
-            weightlifting_vigorous: 5.0, // Intenso (powerlifting, poucas reps pesadas)
-            cardio_light: 4.0,           // Cardio leve
-            cardio_moderate: 7.0,        // Cardio moderado
-            cardio_vigorous: 10.0,       // Cardio intenso
-            isometric: 2.5               // Exercícios isométricos (prancha, etc)
-        };
-
-        // Grupos musculares com exercícios
-        const muscleGroups = {
+        const exerciseDatabase = {
             peitoral: {
                 name: "Peitoral",
                 color: "from-red-500 to-pink-600",
+                icon: "fa-dumbbell",
+                description: "Músculos responsáveis pela adução e flexão horizontal do braço",
                 exercises: [
-                    { name: "Supino Reto", variations: ["Barra", "Halter"], focus: "Geral", type: "weight" },
-                    { name: "Supino Inclinado", variations: ["Barra", "Halter"], focus: "Superior", type: "weight" },
-                    { name: "Supino Declinado", variations: ["Barra", "Halter"], focus: "Inferior", type: "weight" },
-                    { name: "Crucifixo", variations: ["Reto", "Inclinado"], focus: "Isolamento", type: "weight" },
-                    { name: "Crossover", variations: ["Polia Alta", "Baixa", "Média"], focus: "Isolamento", type: "weight" },
-                    { name: "Voador/Pec Deck", variations: ["Máquina"], focus: "Isolamento", type: "weight" },
-                    { name: "Flexão de Braço", variations: ["Padrão", "Diamond"], focus: "Funcional", type: "weight" },
-                    { name: "Supino na Máquina", variations: ["Vertical"], focus: "Máquina", type: "weight" },
-                    { name: "Pull Over", variations: ["Halter", "Máquina"], focus: "Superior", type: "weight" }
+                    {
+                        id: "supino-reto",
+                        name: "Supino Reto",
+                        difficulty: "intermediate",
+                        equipment: "Barra ou Halteres",
+                        focus: "Hipertrofia",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/09/supino.jpg",
+                        muscles: {
+                            primary: ["Peitoral Maior (porção esternal)"],
+                            secondary: ["Deltóide Anterior", "Tríceps Braquial"],
+                            stabilizers: ["Core", "Trapézio", "Romboides"]
+                        },
+                        instructions: [
+                            "Deite-se no banco com os pés firmes no chão e escápulas retraídas",
+                            "Segure a barra com pegada larga (1,5x a largura dos ombros)",
+                            "Desça a barra controladamente até tocar levemente o peito",
+                            "Mantenha os cotovelos a 45° do corpo",
+                            "Empurre a barra para cima contraindo o peitoral"
+                        ],
+                        tips: [
+                            "Mantenha a curva natural da lombar (arco natural)",
+                            "Não rebote a barra no peito",
+                            "Expire no esforço (empurrar)",
+                            "Mantenha os punhos alinhados com os cotovelos"
+                        ],
+                        errors: [
+                            "Elevar os glúteos do banco (arco excessivo)",
+                            "Pegada muito estreita (foca em tríceps)",
+                            "Descer a barra muito alto (pescoço)",
+                            "Cotovelos abertos demais (estresse no ombro)"
+                        ],
+                        variations: ["Supino com Halteres", "Supino na Máquina", "Supino com Pés Elevados"]
+                    },
+                    {
+                        id: "supino-inclinado",
+                        name: "Supino Inclinado",
+                        difficulty: "intermediate",
+                        equipment: "Barra ou Halteres",
+                        focus: "Parte Superior do Peito",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2022/07/supino-inclinado-com-halteres-.jpg",
+                        muscles: {
+                            primary: ["Peitoral Maior (porção clavicular)"],
+                            secondary: ["Deltóide Anterior", "Tríceps Braquial"],
+                            stabilizers: ["Core", "Trapézio"]
+                        },
+                        instructions: [
+                            "Ajuste o banco entre 30° e 45° de inclinação",
+                            "Posicione-se com os pés firmes no chão",
+                            "Segure a barra com pegada levemente mais larga que os ombros",
+                            "Desça a barra até a parte superior do peito",
+                            "Empurre para cima focando na contração do peito superior"
+                        ],
+                        tips: [
+                            "Ângulo de 30° é ideal para peitoral (45° foca mais ombros)",
+                            "Mantenha o queixo levemente encolhido",
+                            "Contraia o peito no topo do movimento",
+                            "Use halteres para maior amplitude"
+                        ],
+                        errors: [
+                            "Inclinação muito alta (vira exercício de ombro)",
+                            "Descer a barra muito baixo (estresse no ombro)",
+                            "Arco excessivo na lombar",
+                            "Movimento explosivo sem controle"
+                        ],
+                        variations: ["Inclinado com Halteres", "Inclinado na Máquina", "Inclinado com Pegada Neutra"]
+                    },
+                    {
+                        id: "supino-declinado",
+                        name: "Supino Declinado",
+                        difficulty: "advanced",
+                        equipment: "Barra ou Halteres",
+                        focus: "Parte Inferior do Peito",
+                        type: "weight",
+                        focus: "Hipertrofia",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/09/supino.jpg",
+                        muscles: {
+                            primary: ["Peitoral Maior (porção inferior)"],
+                            secondary: ["Tríceps Braquial", "Deltóide Anterior"],
+                            stabilizers: ["Core", "Quadríceps"]
+                        },
+                        instructions: [
+                            "Ajuste o banco em declive (-15° a -30°)",
+                            "Trave as pernas na almofada para segurança",
+                            "Segure a barra com pegada moderada",
+                            "Desça a barra até a parte inferior do peito",
+                            "Empurre para cima contraindo o peitoral inferior"
+                        ],
+                        tips: [
+                            "Movimento mais curto que o supino reto",
+                            "Excelente para desenvolver a 'caixa' do peito",
+                            "Mantenha a pressão nos calcanhares",
+                            "Use cinto de segurança se necessário"
+                        ],
+                        errors: [
+                            "Descer muito rápido (risco de lesão)",
+                            "Não travar as pernas adequadamente",
+                            "Pegada muito larga (estresse no ombro)",
+                            "Rebater a barra no peito"
+                        ],
+                        variations: ["Declinado com Halteres", "Declinado na Máquina"]
+                    },
+                    {
+                        id: "crucifixo",
+                        name: "Crucifixo com Halteres",
+                        difficulty: "beginner",
+                        equipment: "Halteres",
+                        focus: "Isolamento do Peitoral",
+                        type: "weight",
+                        image: "https://www.bodynutry.ind.br/images/uploads/FILE-20170531-1653NV23BHDWHBLM.jpg",
+                        muscles: {
+                            primary: ["Peitoral Maior (porção esternal)"],
+                            secondary: ["Deltóide Anterior"],
+                            stabilizers: ["Bíceps Braquial (isométrico)"]
+                        },
+                        instructions: [
+                            "Deite-se no banco com halteres estendidos sobre o peito",
+                            "Mantenha leve flexão nos cotovelos (não estenda totalmente)",
+                            "Abra os braços em arco até sentir alongamento no peito",
+                            "Mantenha os cotovelos na mesma linha",
+                            "Feche os braços contraindo o peitoral"
+                        ],
+                        tips: [
+                            "Imagine abraçando uma árvore",
+                            "Mantenha a mesma flexão no cotovelo durante todo o movimento",
+                            "Sinta o alongamento no peito na parte inferior",
+                            "Não use momentum - movimento controlado"
+                        ],
+                        errors: [
+                            "Esticar completamente os cotovelos (lesão)",
+                            "Abrir muito os braços (estresse no ombro)",
+                            "Usar peso excessivo (compromete forma)",
+                            "Balançar o corpo"
+                        ],
+                        variations: ["Crucifixo Inclinado", "Crucifixo Declinado", "Crucifixo no Cabo", "Crucifixo na Máquina"]
+                    },
+                    {
+                        id: "crossover",
+                        name: "Crossover na Polia",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Isolamento e Definição",
+                        type: "weight",
+                        image: "https://www.hsefitness.com/wp-content/uploads/2025/01/High-to-Low-Cable-Crossover-600x600.png.webp",
+                        muscles: {
+                            primary: ["Peitoral Maior"],
+                            secondary: ["Deltóide Anterior"],
+                            stabilizers: ["Core", "Oblíquos"]
+                        },
+                        instructions: [
+                            "Posicione as polias na altura dos ombros (ou superior/inferior)",
+                            "Segure as alças com os braços estendidos",
+                            "Mantenve leve flexão nos cotovelos",
+                            "Cruze os braços à frente do corpo contraindo o peito",
+                            "Retorne controladamente sentindo o alongamento"
+                        ],
+                        tips: [
+                            "Polia alta: foco inferior do peito",
+                            "Polia baixa: foco superior do peito",
+                            "Cruze os braços para máxima contração",
+                            "Mantenha o torso estável"
+                        ],
+                        errors: [
+                            "Usar peso excessivo (perde isolamento)",
+                            "Esticar os cotovelos",
+                            "Movimento com o tronco",
+                            "Não cruzar os braços (perde contração)"
+                        ],
+                        variations: ["Crossover Alto", "Crossover Baixo", "Crossover Unilateral"]
+                    },
+                    {
+                        id: "flexao",
+                        name: "Flexão de Braço",
+                        difficulty: "beginner",
+                        equipment: "Peso Corporal",
+                        focus: "Força e Resistência",
+                        type: "weight",
+                        image: "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/12/flexao-peitoral.jpg?w=1024",
+                        muscles: {
+                            primary: ["Peitoral Maior"],
+                            secondary: ["Tríceps Braquial", "Deltóide Anterior"],
+                            stabilizers: ["Core", "Quadríceps", "Glúteos"]
+                        },
+                        instructions: [
+                            "Posição de prancha com as mãos na largura dos ombros",
+                            "Mantenha o corpo em linha reta (não arqueie)",
+                            "Desça o peito até quase tocar o chão",
+                            "Mantenha os cotovelos a 45°",
+                            "Empurre o chão para subir"
+                        ],
+                        tips: [
+                            "Contraia o glúteo e core para estabilidade",
+                            "Respire: inspire descendo, expire subindo",
+                            "Mãos mais abertas = foco peito",
+                            "Mãos mais fechadas = foco tríceps"
+                        ],
+                        errors: [
+                            "Quadril muito alto ou baixo",
+                            "Cotovelos abertos demais (90°)",
+                            "Não descer completamente",
+                            "Cabeça pendida"
+                        ],
+                        variations: ["Flexão Diamond", "Flexão Inclinada", "Flexão Declinada", "Flexão com Palmas", "Flexão Arqueiro"]
+                    },
+                    {
+                        id: "pullover",
+                        name: "Pullover",
+                        difficulty: "intermediate",
+                        equipment: "Halter ou Barra",
+                        focus: "Expansão Torácica",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/blog/wp-content/uploads/2020/06/exercicio-pullover.jpg",
+                        muscles: {
+                            primary: ["Peitoral Maior", "Dorsal Grande"],
+                            secondary: ["Tríceps Braquial (cabeça longa)", "Serrátil Anterior"],
+                            stabilizers: ["Core", "Glúteos"]
+                        },
+                        instructions: [
+                            "Deite-se perpendicular ao banco (ombros no banco)",
+                            "Segure o halter com as duas mãos sobre o peito",
+                            "Mantenve leve flexão nos cotovelos",
+                            "Leve o peso atrás da cabeça sentindo o alongamento",
+                            "Retorne o peso à posição inicial contraindo o peito"
+                        ],
+                        tips: [
+                            "Excelente para expansão da caixa torácica",
+                            "Mantenha o quadril elevado durante o movimento",
+                            "Siga um arco amplo com os braços",
+                            "Concentre-se na respiração (expira ao subir)"
+                        ],
+                        errors: [
+                            "Flexionar muito os cotovelos (vira rosca)",
+                            "Quadril cair durante o movimento",
+                            "Usar peso excessivo (compromete amplitude)",
+                            "Movimento muito curto"
+                        ],
+                        variations: ["Pullover com Barra", "Pullover na Máquina", "Pullover com Cabo"]
+                    }
                 ]
             },
             costas: {
                 name: "Costas",
                 color: "from-blue-500 to-cyan-600",
+                icon: "fa-dumbbell",
+                description: "Músculos responsáveis pela extensão, adução e rotação do braço",
                 exercises: [
-                    { name: "Puxada Alta", variations: ["Aberta", "Fechada", "Supinada"], focus: "Largura", type: "weight" },
-                    { name: "Remada Curvada", variations: ["Barra", "Halter"], focus: "Espessura", type: "weight" },
-                    { name: "Remada Baixa", variations: ["Cabo"], focus: "Espessura", type: "weight" },
-                    { name: "Remada Cavalinho", variations: ["T-Bar"], focus: "Espessura", type: "weight" },
-                    { name: "Remada Articulada", variations: ["Máquina"], focus: "Espessura", type: "weight" },
-                    { name: "Barra Fixa", variations: ["Pull-up", "Chin-up"], focus: "Largura", type: "weight" },
-                    { name: "Levantamento Terra", variations: ["Convencional", "Sumô"], focus: "Geral", type: "weight" },
-                    { name: "Remada Unilateral", variations: ["Serrote"], focus: "Isolamento", type: "weight" },
-                    { name: "Pull Down", variations: ["Braços Estendidos"], focus: "Largura", type: "weight" },
-                    { name: "Remada Renegade", variations: ["Halter"], focus: "Funcional", type: "weight" }
+                    {
+                        id: "puxada-aberta",
+                        name: "Puxada Aberta na Frente",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Pulley",
+                        focus: "Largura das Costas",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2024/08/Puxada-frente-pegada-aberta.gif",
+                        muscles: {
+                            primary: ["Dorsal Grande", "Redondo Maior"],
+                            secondary: ["Bíceps Braquial", "Braquial", "Deltóide Posterior"],
+                            stabilizers: ["Romboides", "Trapézio Médio e Inferior"]
+                        },
+                        instructions: [
+                            "Ajuste a barra na polia alta com pegada larga",
+                            "Sente-se com as coxas presas no suporte",
+                            "Segure a barra com as palmas para frente (pronada)",
+                            "Puxe a barra até a parte superior do peito",
+                            "Contraia as escápulas no final do movimento"
+                        ],
+                        tips: [
+                            "Imagine puxar com os cotovelos, não com as mãos",
+                            "Mantenha o torso levemente inclinado para trás",
+                            "Sinta a contração no dorsal no topo",
+                            "Não use momentum - controle o peso"
+                        ],
+                        errors: [
+                            "Puxar com os bíceps (flexionar cotovelos primeiro)",
+                            "Balancear o corpo para trás",
+                            "Não completar a amplitude (não subir totalmente)",
+                            "Pegada muito estreita"
+                        ],
+                        variations: ["Puxada Fechada", "Puxada Supinada", "Puxada com Triângulo", "Puxada Unilateral"]
+                    },
+                    {
+                        id: "remada-curvada",
+                        name: "Remada Curvada",
+                        difficulty: "intermediate",
+                        equipment: "Barra ou Halteres",
+                        focus: "Espessura das Costas",
+                        type: "weight",
+                        image: "https://vedius.com.br/wp-content/uploads/2025/08/Remada-Unilateral-com-Halteres_-Fortalecimento-das-Costas.jpg",
+                        muscles: {
+                            primary: ["Dorsal Grande", "Romboides", "Trapézio Médio"],
+                            secondary: ["Bíceps Braquial", "Braquial", "Deltóide Posterior"],
+                            stabilizers: ["Core", "Lombar", "Isquiotibiais"]
+                        },
+                        instructions: [
+                            "Segure a barra com pegada pronada (palmas para baixo)",
+                            "Flexione levemente os joelhos e incline o torso a 45°",
+                            "Mantenha a coluna neutra e escápulas retraídas",
+                            "Puxe a barra até o abdômen inferior",
+                            "Abaixe controladamente estendendo os braços"
+                        ],
+                        tips: [
+                            "Mantenha o cotovelo próximo ao corpo",
+                            "Contraia as escápulas no topo do movimento",
+                            "Não arqueie a lombar excessivamente",
+                            "Use halteres para maior amplitude unilateral"
+                        ],
+                        errors: [
+                            "Levantar o torso (usar momentum)",
+                            "Arquear excessivamente a lombar",
+                            "Puxar com os bíceps",
+                            "Cotovelos abertos demais"
+                        ],
+                        variations: ["Remada com Pegada Supinada", "Remada Unilateral", "Remada T-Bar", "Remada no Cabo"]
+                    },
+                    {
+                        id: "remada-cavalinho",
+                        name: "Remada Cavalinho (T-Bar)",
+                        difficulty: "intermediate",
+                        equipment: "Máquina T-Bar ou Barra",
+                        focus: "Espessura Central",
+                        type: "weight",
+                        image: "https://saude.abril.com.br/wp-content/uploads/2025/10/remada-cavalinho.jpg?quality=50&strip=info&resize=1080,565&crop=1",
+                        muscles: {
+                            primary: ["Dorsal Grande", "Romboides", "Trapézio Médio"],
+                            secondary: ["Bíceps Braquial", "Deltóide Posterior"],
+                            stabilizers: ["Lombar", "Glúteos", "Isquiotibiais"]
+                        },
+                        instructions: [
+                            "Posicione-se na máquina com o peito apoiado",
+                            "Segure as alças com pegada neutra",
+                            "Puxe o peso em direção ao abdômen",
+                            "Contraia as escápulas no topo",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Excelente para isolar as costas sem stress na lombar",
+                            "Mantenve o peito sempre apoiado",
+                            "Use pegada fechada para foco central",
+                            "Pegada aberta para foco lateral"
+                        ],
+                        errors: [
+                            "Levantar o peito do apoio",
+                            "Usar momentum com as pernas",
+                            "Não completar a amplitude",
+                            "Puxar muito alto (peito alto)"
+                        ],
+                        variations: ["Remada Cavalinho Livre", "Remada Cavalinho Unilateral"]
+                    },
+                    {
+                        id: "barra-fixa",
+                        name: "Barra Fixa (Pull-up)",
+                        difficulty: "advanced",
+                        equipment: "Barra Fixa",
+                        focus: "Força e Largura",
+                        type: "weight",
+                        image: "https://blog.gsuplementos.com.br/wp-content/uploads/2023/07/Pullover.jpg",
+                        muscles: {
+                            primary: ["Dorsal Grande", "Redondo Maior"],
+                            secondary: ["Bíceps Braquial", "Braquial", "Deltóide Posterior"],
+                            stabilizers: ["Core", "Flexores do Punho"]
+                        },
+                        instructions: [
+                            "Segure a barra com pegada pronada e larga",
+                            "Deixe o corpo pendurado com os braços estendidos",
+                            "Puxe o corpo até o queixo passar a barra",
+                            "Contraia as escápulas no topo",
+                            "Desça controladamente até extensão completa"
+                        ],
+                        tips: [
+                            "Comece com pegada supinada (chin-up) se for iniciante",
+                            "Mantenha o core contraído para evitar balanço",
+                            "Imagine puxar os cotovelos para baixo",
+                            "Respire: inspire descendo, expire subindo"
+                        ],
+                        errors: [
+                            "Não estender completamente os braços",
+                            "Balançar o corpo (kipping descontrolado)",
+                            "Cotovelos abertos demais",
+                            "Não subir até o queixo passar a barra"
+                        ],
+                        variations: ["Chin-up (Pegada Supinada)", "Pull-up Neutro", "Pull-up com Peso", "Pull-up Assistido"]
+                    },
+                    {
+                        id: "remada-baixa",
+                        name: "Remada Baixa no Cabo",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Espessura e Definição",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/blog/wp-content/uploads/2021/10/remada-articulada-aberta.jpg",
+                        muscles: {
+                            primary: ["Dorsal Grande", "Romboides"],
+                            secondary: ["Bíceps Braquial", "Deltóide Posterior"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina com os pés na plataforma",
+                            "Segure a barra com pegada neutra ou pronada",
+                            "Mantenha o torso ereto e coluna neutra",
+                            "Puxe a barra até o abdômen inferior",
+                            "Contraia as escápulas e segure brevemente"
+                        ],
+                        tips: [
+                            "Ajuste a altura do peito adequadamente",
+                            "Não incline o torso para trás excessivamente",
+                            "Sinta a contração no meio das costas",
+                            "Use pegada fechada para foco central"
+                        ],
+                        errors: [
+                            "Inclinar muito o torso (usa momentum)",
+                            "Puxar com os braços (não com as costas)",
+                            "Relaxar a escápula no topo",
+                            "Movimento muito rápido"
+                        ],
+                        variations: ["Remada com Triângulo", "Remada Unilateral", "Remada com Corda"]
+                    },
+                    {
+                        id: "remada-unilateral",
+                        name: "Remada Unilateral (Serrote)",
+                        difficulty: "beginner",
+                        equipment: "Halter e Banco",
+                        focus: "Isolamento Unilateral",
+                        type: "weight",
+                        image: "https://vedius.com.br/wp-content/uploads/2025/08/Remada-Unilateral-com-Halteres_-Fortalecimento-das-Costas.jpg",
+                        muscles: {
+                            primary: ["Dorsal Grande", "Romboides"],
+                            secondary: ["Bíceps Braquial", "Deltóide Posterior"],
+                            stabilizers: ["Core", "Quadríceps", "Lombar"]
+                        },
+                        instructions: [
+                            "Apoie uma mão e um joelho no banco",
+                            "Mantenha a coluna neutra e paralela ao chão",
+                            "Segure o halter com a mão livre, braço estendido",
+                            "Puxe o halter em direção ao quadril",
+                            "Contraia a escápula no topo"
+                        ],
+                        tips: [
+                            "Mantenha o cotovelo próximo ao corpo",
+                            "Rotação do tronco leve é aceitável",
+                            "Concentre-se em sentir o dorsal trabalhar",
+                            "Evite torcer excessivamente a coluna"
+                        ],
+                        errors: [
+                            "Coluna arqueada ou arredondada",
+                            "Cotovelo aberto demais",
+                            "Usar momentum com o tronco",
+                            "Não completar a amplitude"
+                        ],
+                        variations: ["Remada Unilateral em Pé", "Remada Unilateral no Cabo", "Remada Unilateral na Máquina"]
+                    }
                 ]
             },
             ombros: {
                 name: "Ombros",
                 color: "from-yellow-500 to-orange-600",
+                icon: "fa-dumbbell",
+                description: "Deltóides responsáveis pela abdução, flexão e extensão do braço",
                 exercises: [
-                    { name: "Desenvolvimento", variations: ["Halteres", "Barra", "Máquina"], focus: "Geral", type: "weight" },
-                    { name: "Elevação Lateral", variations: ["Halter", "Cabo", "Máquina"], focus: "Lateral", type: "weight" },
-                    { name: "Elevação Frontal", variations: ["Halter", "Anilha", "Cabo"], focus: "Anterior", type: "weight" },
-                    { name: "Crucifixo Invertido", variations: ["Halter", "Máquina"], focus: "Posterior", type: "weight" },
-                    { name: "Face Pull", variations: ["Cabo"], focus: "Posterior", type: "weight" },
-                    { name: "Elevação Lateral no Cabo", variations: ["Unilateral"], focus: "Lateral", type: "weight" },
-                    { name: "Remada Alta", variations: ["Barra", "Cabo"], focus: "Trapézio", type: "weight" }
+                    {
+                        id: "desenvolvimento",
+                        name: "Desenvolvimento com Halteres",
+                        difficulty: "intermediate",
+                        equipment: "Halteres ou Barra",
+                        focus: "Massa e Força",
+                        type: "weight",
+                        image: "https://treinoemalta.com.br/wp-content/uploads/2023/07/Desenvolvimento-com-Halteres-H.gif",
+                        muscles: {
+                            primary: ["Deltóide Anterior", "Deltóide Lateral"],
+                            secondary: ["Deltóide Posterior", "Trapézio Superior"],
+                            stabilizers: ["Core", "Tríceps Braquial"]
+                        },
+                        instructions: [
+                            "Sente-se com as costas apoiadas no banco",
+                            "Segure os halteres na altura dos ombros, palmas para frente",
+                            "Empurre os pesos para cima até os braços estenderem",
+                            "Aproxime levemente os halteres no topo",
+                            "Desça controladamente até a posição inicial"
+                        ],
+                        tips: [
+                            "Não estenda completamente os cotovelos (mantenha leve flexão)",
+                            "Mantenha o core contraído para estabilidade",
+                            "Ângulo de 45° no plano frontal é ideal",
+                            "Use cinto se usar pesos pesados"
+                        ],
+                        errors: [
+                            "Arco excessivo na lombar",
+                            "Esticar completamente os cotovelos (trava)",
+                            "Bater os halteres (momentum)",
+                            "Cotovelos muito abertos (estresse no ombro)"
+                        ],
+                        variations: ["Desenvolvimento na Barra", "Desenvolvimento Arnold", "Desenvolvimento na Máquina", "Desenvolvimento em Pé"]
+                    },
+                    {
+                        id: "elevacao-lateral",
+                        name: "Elevação Lateral",
+                        difficulty: "beginner",
+                        equipment: "Halteres ou Cabo",
+                        focus: "Deltóide Lateral",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2020/01/elevacao-lateral.jpg",
+                        muscles: {
+                            primary: ["Deltóide Lateral"],
+                            secondary: ["Deltóide Anterior"],
+                            stabilizers: ["Trapézio Superior", "Core"]
+                        },
+                        instructions: [
+                            "Fique em pé com halteres ao lado do corpo",
+                            "Mantenve leve flexão nos cotovelos (10-15°)",
+                            "Levante os braços lateralmente até a altura dos ombros",
+                            "Mantenha os cotovelos apontados para cima",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Cotovelos ligeiramente acima das mãos",
+                            "Não use momentum - movimento estrito",
+                            "Incline levemente o torso para frente (foca no lateral)",
+                            "Pausa de 1 segundo no topo aumenta intensidade"
+                        ],
+                        errors: [
+                            "Levantar os ombros (ativa trapézio)",
+                            "Cotovelos esticados",
+                            "Subir muito alto (acima dos ombros)",
+                            "Usar peso excessivo (compromete forma)"
+                        ],
+                        variations: ["Elevação Lateral no Cabo", "Elevação Lateral Inclinada", "Elevação Lateral Unilateral", "Elevação Lateral na Máquina"]
+                    },
+                    {
+                        id: "elevacao-frontal",
+                        name: "Elevação Frontal",
+                        difficulty: "beginner",
+                        equipment: "Halteres, Barra ou Cabo",
+                        focus: "Deltóide Anterior",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2020/02/elevacao-frontal.jpg",
+                        muscles: {
+                            primary: ["Deltóide Anterior"],
+                            secondary: ["Trapézio Superior", "Serrátil Anterior"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Fique em pé com halteres à frente das coxas",
+                            "Mantenve leve flexão nos cotovelos",
+                            "Levante os braços à frente até a altura dos ombros",
+                            "Mantenha os braços paralelos um ao outro",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Evitar balançar o corpo",
+                            "Mantenha os pulsos firmes",
+                            "Alternar os braços permite foco unilateral",
+                            "Pegada pronada ou neutra são válidas"
+                        ],
+                        errors: [
+                            "Usar momentum (balançar)",
+                            "Levantar acima da linha dos ombros",
+                            "Cotovelos muito flexionados",
+                            "Arquear a lombar"
+                        ],
+                        variations: ["Elevação Frontal Alternada", "Elevação Frontal no Cabo", "Elevação Frontal com Anilha"]
+                    },
+                    {
+                        id: "crucifixo-invertido",
+                        name: "Crucifixo Inverso",
+                        difficulty: "intermediate",
+                        equipment: "Halteres ou Cabo",
+                        focus: "Deltóide Posterior",
+                        type: "weight",
+                        image: "https://www.hipertrofia.org/blog/wp-content/uploads/2023/05/elevacao-lateral-inclinada-1.gif",
+                        muscles: {
+                            primary: ["Deltóide Posterior"],
+                            secondary: ["Romboides", "Trapézio Médio"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Incline o torso a 45° (chest supported no banco)",
+                            "Segure os halteres com os braços estendidos abaixo",
+                            "Abra os braços lateralmente em arco",
+                            "Contraia as escápulas no topo",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Mantenha o peito apoiado no banco",
+                            "Cotovelos levemente flexionados",
+                            "Sinta a contração no posterior do ombro",
+                            "Movimento controlado, sem momentum"
+                        ],
+                        errors: [
+                            "Levantar o torso do banco",
+                            "Cotovelos muito flexionados",
+                            "Usar peso excessivo",
+                            "Movimento muito rápido"
+                        ],
+                        variations: ["Face Pull", "Crucifixo Inverso no Cabo", "Máquina Reversa"]
+                    },
+                    {
+                        id: "remada-alta",
+                        name: "Remada Alta",
+                        difficulty: "intermediate",
+                        equipment: "Barra ou Cabo",
+                        focus: "Trapézio Superior",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/blog/wp-content/uploads/2020/02/remada-alta-execucao-e-musculos.jpg",
+                        muscles: {
+                            primary: ["Trapézio Superior", "Deltóide Lateral"],
+                            secondary: ["Deltóide Anterior", "Romboides"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Segure a barra com pegada larga (1,5x largura dos ombros)",
+                            "Mantenha os braços estendidos à frente do corpo",
+                            "Levante os cotovelos lateralmente e para cima",
+                            "Eleve até a altura dos ombros ou levemente acima",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Cotovelos sempre acima das mãos",
+                            "Não use as pernas (levantar o calcanhar)",
+                            "Contraia o trapézio no topo",
+                            "Pegada mais larga foca mais deltóides"
+                        ],
+                        errors: [
+                            "Usar momentum com as pernas",
+                            "Cotovelos abaixo das mãos",
+                            "Levantar muito acima (estresse no ombro)",
+                            "Pegada muito estreita"
+                        ],
+                        variations: ["Remada Alta no Cabo", "Remada Alta com Halteres", "Remada Alta Smith"]
+                    }
                 ]
             },
             biceps: {
                 name: "Bíceps",
                 color: "from-green-500 to-emerald-600",
+                icon: "fa-dumbbell",
+                description: "Músculos responsáveis pela flexão do cotovelo e supinação do antebraço",
                 exercises: [
-                    { name: "Rosca Direta", variations: ["Barra W", "Barra Reta"], focus: "Cabeça Curta", type: "weight" },
-                    { name: "Rosca Alternada", variations: ["Halteres"], focus: "Isolamento", type: "weight" },
-                    { name: "Rosca Martelo", variations: ["Halter", "Corda"], focus: "Braquial", type: "weight" },
-                    { name: "Rosca Scott", variations: ["Máquina", "Barra", "Halter"], focus: "Cabeça Longa", type: "weight" },
-                    { name: "Rosca Concentrada", variations: ["Halter"], focus: "Pico", type: "weight" },
-                    { name: "Rosca Inversa", variations: ["Barra", "Cabo"], focus: "Antebraço", type: "weight" },
-                    { name: "Rosca no Cabo", variations: ["Polia"], focus: "Tensão Constante", type: "weight" },
-                    { name: "Rosca Spider", variations: ["Banco Inclinado"], focus: "Cabeça Curta", type: "weight" }
+                    {
+                        id: "rosca-direta",
+                        name: "Rosca Direta",
+                        difficulty: "beginner",
+                        equipment: "Barra ou Halteres",
+                        focus: "Cabeça Curta do Bíceps",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2023/07/rosca-direta-com-halteres-como-fazer-musculos.jpg",
+                        muscles: {
+                            primary: ["Bíceps Braquial (cabeça curta)"],
+                            secondary: ["Braquial", "Braquiorradial"],
+                            stabilizers: ["Deltóide Anterior", "Core"]
+                        },
+                        instructions: [
+                            "Fique em pé com os pés na largura dos ombros",
+                            "Segure a barra com pegada supinada (palmas para cima)",
+                            "Mantenha os cotovelos fixos ao lado do corpo",
+                            "Flexione os cotovelos elevando o peso",
+                            "Contraia o bíceps no topo e desça controladamente"
+                        ],
+                        tips: [
+                            "Não balance o corpo (movimento estrito)",
+                            "Mantenha os cotovelos travados no lugar",
+                            "Contraia o bíceps no topo (pico)",
+                            "Fase excêntrica (descida) deve ser lenta"
+                        ],
+                        errors: [
+                            "Usar momentum (balançar)",
+                            "Cotovelos saírem do lugar",
+                            "Não estender completamente os braços",
+                            "Pegada muito estreita ou larga"
+                        ],
+                        variations: ["Rosca com Barra W", "Rosca com Barra Reta", "Rosca no Cabo", "Rosca 21"]
+                    },
+                    {
+                        id: "rosca-alternada",
+                        name: "Rosca Alternada",
+                        difficulty: "beginner",
+                        equipment: "Halteres",
+                        focus: "Isolamento Unilateral",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2020/10/rosca-alternada-com-halteres.jpg",
+                        muscles: {
+                            primary: ["Bíceps Braquial"],
+                            secondary: ["Braquial", "Braquiorradial"],
+                            stabilizers: ["Core", "Deltóide Anterior"]
+                        },
+                        instructions: [
+                            "Fique em pé com halteres ao lado do corpo",
+                            "Mantenha os cotovelos fixos ao lado do corpo",
+                            "Flexione um cotovelo de cada vez",
+                            "Supine o punho no topo (rotação externa)",
+                            "Alterne os braços de forma controlada"
+                        ],
+                        tips: [
+                            "Supinação no topo aumenta a contração",
+                            "Mantenha o braço não trabalhando flexionado (opcional)",
+                            "Foco na conexão mente-músculo",
+                            "Evite balançar o corpo"
+                        ],
+                        errors: [
+                            "Cotovelos saírem para trás (usar ombros)",
+                            "Não supinar o punho",
+                            "Movimento muito rápido",
+                            "Usar peso excessivo"
+                        ],
+                        variations: ["Rosca Alternada no Banco Inclinado", "Rosca Martelo Alternada", "Rosca Concentrada Alternada"]
+                    },
+                    {
+                        id: "rosca-martelo",
+                        name: "Rosca Martelo",
+                        difficulty: "beginner",
+                        equipment: "Halteres ou Corda",
+                        focus: "Braquial e Braquiorradial",
+                        type: "weight",
+                        image: "https://static.strengthlevel.com/images/exercises/dumbbell-concentration-curl/dumbbell-concentration-curl-800.jpg",
+                        muscles: {
+                            primary: ["Braquial", "Braquiorradial"],
+                            secondary: ["Bíceps Braquial"],
+                            stabilizers: ["Deltóide Anterior"]
+                        },
+                        instructions: [
+                            "Fique em pé com halteres ao lado do corpo",
+                            "Mantenha as palmas uma de frente para a outra (pegada neutra)",
+                            "Flexione os cotovelos mantendo a pegada neutra",
+                            "Contraia no topo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Excelente para desenvolver espessura do braço",
+                            "Menor ativação do bíceps, maior do braquial",
+                            "Pode ser feito simultâneo ou alternado",
+                            "Mantenha os punhos firmes"
+                        ],
+                        errors: [
+                            "Supinar durante o movimento",
+                            "Cotovelos saírem do lugar",
+                            "Usar momentum",
+                            "Pegada instável"
+                        ],
+                        variations: ["Rosca Martelo no Cabo", "Rosca Martelo Cruzada", "Rosca Martelo Inclinada"]
+                    },
+                    {
+                        id: "rosca-scott",
+                        name: "Rosca Scott",
+                        difficulty: "intermediate",
+                        equipment: "Banco Scott ou Máquina",
+                        focus: "Cabeça Longa do Bíceps",
+                        type: "weight",
+                        image: "https://saude.abril.com.br/wp-content/uploads/2025/02/rosca-scott.jpg?crop=1&resize=1212,909",
+                        muscles: {
+                            primary: ["Bíceps Braquial (cabeça longa)"],
+                            secondary: ["Braquial"],
+                            stabilizers: ["Deltóide Anterior"]
+                        },
+                        instructions: [
+                            "Sente-se no banco Scott com os braços apoiados na almofada",
+                            "Segure a barra ou halteres com pegada supinada",
+                            "Mantenha os cotovelos apoiados no banco",
+                            "Flexione os cotovelos completamente",
+                            "Desça até quase estender os braços (tensão constante)"
+                        ],
+                        tips: [
+                            "Não estenda completamente (mantenha tensão)",
+                            "Excelente para isolar o bíceps",
+                            "Evita uso de momentum",
+                            "Foco na cabeça longa (parte externa)"
+                        ],
+                        errors: [
+                            "Tirar os cotovelos do apoio",
+                            "Estender completamente (descanso)",
+                            "Usar peso excessivo",
+                            "Movimento muito curto"
+                        ],
+                        variations: ["Rosca Scott Unilateral", "Rosca Scott na Máquina", "Rosca Scott com Barra W"]
+                    },
+                    {
+                        id: "rosca-concentrada",
+                        name: "Rosca Concentrada",
+                        difficulty: "beginner",
+                        equipment: "Halter",
+                        focus: "Pico do Bíceps",
+                        type: "weight",
+                        image: "https://static.strengthlevel.com/images/exercises/dumbbell-concentration-curl/dumbbell-concentration-curl-800.jpg",
+                        muscles: {
+                            primary: ["Bíceps Braquial"],
+                            secondary: ["Braquial"],
+                            stabilizers: ["Deltóide Anterior"]
+                        },
+                        instructions: [
+                            "Sente-se na ponta do banco com as pernas abertas",
+                            "Apoie o cotovelo na parte interna da coxa",
+                            "Segure o halter com a mão livre",
+                            "Flexione o cotovelo elevando o halter em direção ao ombro",
+                            "Contraia no topo e desça controladamente"
+                        ],
+                        tips: [
+                            "Excelente para sentir o bíceps trabalhar",
+                            "Mantenha o braço apoiado estável",
+                            "Rotação externa no topo aumenta contração",
+                            "Movimento lento e controlado"
+                        ],
+                        errors: [
+                            "Levantar o cotovelo do apoio",
+                            "Usar o tronco para ajudar",
+                            "Movimento muito rápido",
+                            "Não completar a amplitude"
+                        ],
+                        variations: ["Rosca Concentrada em Pé", "Rosca Concentrada no Cabo"]
+                    }
                 ]
             },
             triceps: {
                 name: "Tríceps",
                 color: "from-purple-500 to-violet-600",
+                icon: "fa-dumbbell",
+                description: "Músculo com três cabeças responsável pela extensão do cotovelo",
                 exercises: [
-                    { name: "Tríceps Pulley", variations: ["Barra", "Corda"], focus: "Cabeça Lateral", type: "weight" },
-                    { name: "Tríceps Testa", variations: ["Barra W", "Reta", "Halter"], focus: "Cabeça Longa", type: "weight" },
-                    { name: "Tríceps Francês", variations: ["Halter", "Cabo"], focus: "Cabeça Longa", type: "weight" },
-                    { name: "Tríceps Paralelas", variations: ["Máquina", "Livre"], focus: "Geral", type: "weight" },
-                    { name: "Supino Fechado", variations: ["Barra", "Halter"], focus: "Geral", type: "weight" },
-                    { name: "Tríceps Coice", variations: ["Cabo", "Halter"], focus: "Cabeça Lateral", type: "weight" },
-                    { name: "Tríceps Máquina", variations: ["Articulada"], focus: "Isolamento", type: "weight" }
+                    {
+                        id: "triceps-pulley",
+                        name: "Tríceps Pulley",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Cabeça Lateral",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/08/triceps-pulley-corda-na-polia.jpg",
+                        muscles: {
+                            primary: ["Tríceps Braquial (cabeça lateral)"],
+                            secondary: ["Tríceps Braquial (cabeça longa)"],
+                            stabilizers: ["Core", "Deltóide Posterior"]
+                        },
+                        instructions: [
+                            "Posicione a polia na altura superior",
+                            "Segure a barra ou corda com pegada neutra",
+                            "Mantenha os cotovelos fixos ao lado do corpo",
+                            "Estenda os cotovelos empurrando para baixo",
+                            "Contraia o tríceps no final e retorne controladamente"
+                        ],
+                        tips: [
+                            "Mantenha os cotovelos sempre ao lado do corpo",
+                            "Separe as pontas da corda no final (maior contração)",
+                            "Não incline o torso para frente",
+                            "Fase excêntrica lenta (2-3 segundos)"
+                        ],
+                        errors: [
+                            "Cotovelos saírem para fora",
+                            "Usar o corpo para empurrar",
+                            "Não estender completamente",
+                            "Movimento muito rápido"
+                        ],
+                        variations: ["Tríceps com Barra", "Tríceps com Corda", "Tríceps Unilateral", "Tríceps Invertido"]
+                    },
+                    {
+                        id: "triceps-testa",
+                        name: "Tríceps Testa",
+                        difficulty: "beginner",
+                        equipment: "Barra W ou Halteres",
+                        focus: "Cabeça Longa",
+                        type: "weight",
+                        image: "https://p2.trrsf.com/image/fget/cf/500/0/images.terra.com/2024/02/12/2104145112-istock-1257493708.jpg",
+                        muscles: {
+                            primary: ["Tríceps Braquial (cabeça longa)"],
+                            secondary: ["Tríceps Braquial (cabeça lateral)"],
+                            stabilizers: ["Deltóide Anterior"]
+                        },
+                        instructions: [
+                            "Deite-se no banco com halteres estendidos",
+                            "Flexione os cotovelos levando os pesos em direção à testa",
+                            "Mantenha os cotovelos apontados para cima",
+                            "Estenda os braços voltando à posição inicial",
+                            "Contraia o tríceps no topo"
+                        ],
+                        tips: [
+                            "Mantenha os cotovelos estáveis (não abra)",
+                            "Movimento apenas no cotovelo",
+                            "Cabeça longa é alongada (ótimo para desenvolvimento)",
+                            "Use barra W para menor stress nos punhos"
+                        ],
+                        errors: [
+                            "Cotovelos abertos para os lados",
+                            "Bater os pesos na testa",
+                            "Não estender completamente",
+                            "Usar peso excessivo"
+                        ],
+                        variations: ["Tríceps Testa Unilateral", "Tríceps Testa no Cabo", "Tríceps Testa com Barra Reta"]
+                    },
+                    {
+                        id: "triceps-frances",
+                        name: "Tríceps Francês",
+                        difficulty: "intermediate",
+                        equipment: "Halter ou Cabo",
+                        focus: "Cabeça Longa",
+                        type: "weight",
+                        image: "https://p2.trrsf.com/image/fget/cf/500/0/images.terra.com/2024/02/12/2104145112-istock-1257493708.jpg",
+                        muscles: {
+                            primary: ["Tríceps Braquial (cabeça longa)"],
+                            secondary: ["Tríceps Braquial (cabeça medial)"],
+                            stabilizers: ["Core", "Deltóide Posterior"]
+                        },
+                        instructions: [
+                            "Segure o halter com as duas mãos acima da cabeça",
+                            "Mantenha os cotovelos próximos à cabeça",
+                            "Flexione os cotovelos levando o peso atrás da cabeça",
+                            "Estenda os braços voltando à posição inicial",
+                            "Mantenha os cotovelos apontados para frente"
+                        ],
+                        tips: [
+                            "Excelente para alongar a cabeça longa",
+                            "Mantenha os cotovelos sempre apontados para cima",
+                            "Não deixe os cotovelos abrirem",
+                            "Movimento controlado, sem momentum"
+                        ],
+                        errors: [
+                            "Cotovelos abertos para os lados",
+                            "Usar o corpo para empurrar",
+                            "Não descer completamente",
+                            "Punhos flexionados"
+                        ],
+                        variations: ["Tríceps Francês Sentado", "Tríceps Francês no Cabo", "Tríceps Francês Unilateral"]
+                    },
+                    {
+                        id: "triceps-paralelas",
+                        name: "Tríceps em Paralelas",
+                        difficulty: "intermediate",
+                        equipment: "Paralelas ou Máquina",
+                        focus: "Tríceps Completo",
+                        type: "weight",
+                        focus: "Força",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/08/triceps-pulley-corda-na-polia.jpg",
+                        muscles: {
+                            primary: ["Tríceps Braquial (todas as cabeças)"],
+                            secondary: ["Peitoral Menor", "Deltóide Anterior"],
+                            stabilizers: ["Core", "Oblíquos"]
+                        },
+                        instructions: [
+                            "Segure as barras das paralelas e suspenda-se",
+                            "Mantenha o corpo ereto (não incline para frente)",
+                            "Flexione os cotovelos descendo o corpo",
+                            "Desça até os ombros ficarem abaixo dos cotovelos",
+                            "Empurre para cima estendendo os braços"
+                        ],
+                        tips: [
+                            "Corpo ereto = foco em tríceps",
+                            "Corpo inclinado = foco em peito",
+                            "Adicione peso com cinto quando necessário",
+                            "Amplitude completa para máximo estímulo"
+                        ],
+                        errors: [
+                            "Não descer completamente",
+                            "Inclinar muito o corpo (vira exercício de peito)",
+                            "Cotovelos abertos para fora",
+                            "Usar momentum"
+                        ],
+                        variations: ["Paralelas na Máquina Assistida", "Paralelas com Peso", "Paralelas entre Bancos"]
+                    },
+                    {
+                        id: "triceps-coice",
+                        name: "Tríceps Coice",
+                        difficulty: "beginner",
+                        equipment: "Cabo ou Halter",
+                        focus: "Cabeça Lateral",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/08/triceps-pulley-corda-na-polia.jpg",
+                        muscles: {
+                            primary: ["Tríceps Braquial (cabeça lateral)"],
+                            secondary: ["Tríceps Braquial (cabeça longa)"],
+                            stabilizers: ["Deltóide Posterior", "Core"]
+                        },
+                        instructions: [
+                            "Segure a corda ou halter com uma mão",
+                            "Incline o torso para frente (45°)",
+                            "Mantenha o cotovelo fixo ao lado do corpo",
+                            "Estenda o braço para trás contraindo o tríceps",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Mantenha o cotovelo estável (pivô)",
+                            "Rotação do punho no final aumenta contração",
+                            "Movimento unilateral permite foco individual",
+                            "Evite usar o ombro"
+                        ],
+                        errors: [
+                            "Movimento no ombro (não no cotovelo)",
+                            "Cotovelo sair do lugar",
+                            "Não estender completamente",
+                            "Usar momentum"
+                        ],
+                        variations: ["Tríceps Coice no Cabo", "Tríceps Coice com Halter", "Tríceps Coice na Máquina"]
+                    }
                 ]
             },
             quadriceps: {
                 name: "Quadríceps",
                 color: "from-red-600 to-red-800",
+                icon: "fa-dumbbell",
+                description: "Grupo muscular frontal da coxa responsável pela extensão do joelho",
                 exercises: [
-                    { name: "Agachamento Livre", variations: ["Barra"], focus: "Geral", type: "weight" },
-                    { name: "Agachamento Hack", variations: ["Máquina"], focus: "Vasto Lateral", type: "weight" },
-                    { name: "Leg Press", variations: ["45º", "Horizontal"], focus: "Geral", type: "weight" },
-                    { name: "Cadeira Extensora", variations: ["Máquina"], focus: "Isolamento", type: "weight" },
-                    { name: "Afundo/Lunge", variations: ["Halteres", "Barra"], focus: "Funcional", type: "weight" },
-                    { name: "Agachamento Búlgaro", variations: ["Halteres"], focus: "Vasto Medial", type: "weight" },
-                    { name: "Agachamento Sumô", variations: ["Halter", "Barra"], focus: "Adutores", type: "weight" },
-                    { name: "Agachamento Frontal", variations: ["Barra"], focus: "Vasto Lateral", type: "weight" }
+                    {
+                        id: "agachamento-livre",
+                        name: "Agachamento Livre",
+                        difficulty: "advanced",
+                        equipment: "Barra",
+                        focus: "Força e Massa",
+                        type: "weight",
+                        image: "https://boaforma.abril.com.br/wp-content/uploads/sites/2/2026/01/determined-female-leggings-having-abdominal-crunch-workout-indoors-side-view-fit.jpg?crop=1&resize=1212,909",
+                        muscles: {
+                            primary: ["Quadríceps", "Glúteo Máximo"],
+                            secondary: ["Isquiotibiais", "Addutores", "Eretor da Espinha"],
+                            stabilizers: ["Core", "Lombar", "Panturrilha"]
+                        },
+                        instructions: [
+                            "Posicione a barra sobre os trapézios (não no pescoço)",
+                            "Mantenha os pés na largura dos ombros ou levemente mais largo",
+                            "Dedo dos pés apontados levemente para fora (15-30°)",
+                            "Desça flexionando os joelhos e quadril simultaneamente",
+                            "Mantenha o peito aberto e a coluna neutra",
+                            "Desça até as coxas ficarem paralelas ao chão ou abaixo",
+                            "Empurre o chão para subir, estendendo quadril e joelhos"
+                        ],
+                        tips: [
+                            "Mantenha o peso nos calcanhares",
+                            "Joelhos devem acompanhar a direção dos pés",
+                            "Mantenha o core contraído durante todo o movimento",
+                            "Respire: inspire descendo, expire subindo"
+                        ],
+                        errors: [
+                            "Calcanhares levantarem do chão",
+                            "Joelhos entrarem (valgo dinâmico)",
+                            "Coluna arqueada (posterior) ou arredondada",
+                            "Não descer suficientemente (parcial)",
+                            "Levantar o quadril primeiro (good morning squat)"
+                        ],
+                        variations: ["Agachamento Frontal", "Agachamento Sumô", "Agachamento Búlgaro", "Agachamento Hack"]
+                    },
+                    {
+                        id: "leg-press",
+                        name: "Leg Press 45°",
+                        difficulty: "beginner",
+                        equipment: "Máquina Leg Press",
+                        focus: "Massa e Força",
+                        type: "weight",
+                        image: "https://saude.abril.com.br/wp-content/uploads/2025/07/exercicio-quadriceps-leg-press.jpg?quality=50&strip=info&w=1024",
+                        muscles: {
+                            primary: ["Quadríceps", "Glúteo Máximo"],
+                            secondary: ["Isquiotibiais", "Addutores"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina com as costas apoiadas",
+                            "Posicione os pés na plataforma na largura dos ombros",
+                            "Solte o trava e desça controladamente",
+                            "Flexione os joelhos até 90° (ou conforme mobilidade)",
+                            "Empurre a plataforma estendendo as pernas",
+                            "Não estenda completamente (mantenha leve flexão)"
+                        ],
+                        tips: [
+                            "Pés altos na plataforma = foco em glúteos/isquios",
+                            "Pés baixos na plataforma = foco em quadríceps",
+                            "Não estenda completamente as pernas (trava)",
+                            "Mantenha a lombar sempre apoiada"
+                        ],
+                        errors: [
+                            "Estender completamente as pernas (hiperextensão)",
+                            "Levantar o quadril do banco",
+                            "Descer muito (lombar arquear)",
+                            "Pés muito juntos ou muito separados"
+                        ],
+                        variations: ["Leg Press Horizontal", "Leg Press Unilateral", "Leg Press com Pés Juntos", "Leg Press Sumô"]
+                    },
+                    {
+                        id: "cadeira-extensora",
+                        name: "Cadeira Extensora",
+                        difficulty: "beginner",
+                        equipment: "Máquina",
+                        focus: "Isolamento do Quadríceps",
+                        type: "weight",
+                        image: "https://image.tuasaude.com/media/article/ku/ib/treino-costas_73930.gif?width=686&height=487",
+                        muscles: {
+                            primary: ["Quadríceps (Vasto Lateral, Reto Femoral)"],
+                            secondary: ["Vasto Medial"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina ajustando o apoio do tornozelo",
+                            "Mantenha as costas apoiadas no encosto",
+                            "Segure as alças laterais para estabilidade",
+                            "Estenda as pernas elevando o peso",
+                            "Contraia o quadríceps no topo",
+                            "Desça controladamente sem deixar o peso descansar"
+                        ],
+                        tips: [
+                            "Excelente para isolar o quadríceps",
+                            "Pés flexionados ou neutros (não apontados)",
+                            "Contraia no topo por 1-2 segundos",
+                            "Movimento controlado, sem momentum"
+                        ],
+                        errors: [
+                            "Estender completamente (travar joelhos)",
+                            "Levantar o quadril do banco",
+                            "Usar momentum",
+                            "Não controlar a fase excêntrica"
+                        ],
+                        variations: ["Extensora Unilateral", "Extensora com Pés Alternados"]
+                    },
+                    {
+                        id: "afundo",
+                        name: "Afundo (Lunge)",
+                        difficulty: "intermediate",
+                        equipment: "Halteres ou Barra",
+                        focus: "Força Funcional",
+                        type: "weight",
+                        image: "https://boaforma.abril.com.br/wp-content/uploads/sites/2/2026/01/determined-female-leggings-having-abdominal-crunch-workout-indoors-side-view-fit.jpg?crop=1&resize=1212,909",
+                        muscles: {
+                            primary: ["Quadríceps", "Glúteo Máximo"],
+                            secondary: ["Isquiotibiais", "Addutores"],
+                            stabilizers: ["Core", "Panturrilha", "Estabilizadores do Tornozelo"]
+                        },
+                        instructions: [
+                            "Fique em pé com halteres ao lado do corpo",
+                            "Dê um passo à frente com uma perna",
+                            "Desça o quadril até ambos os joelhos formarem 90°",
+                            "O joelho de trás quase toca o chão",
+                            "Empurre com o calcanhar da frente para voltar",
+                            "Alterne as pernas ou faça todas de um lado"
+                        ],
+                        tips: [
+                            "Passo longo = foco em glúteos/isquios",
+                            "Passo curto = foco em quadríceps",
+                            "Mantenha o torso ereto",
+                            "Joelho da frente não passe muito da ponta do pé"
+                        ],
+                        errors: [
+                            "Torso inclinado para frente",
+                            "Joelho da frente entrar (valgo)",
+                            "Passo muito curto (joelho passa muito da ponta do pé)",
+                            "Não descer suficientemente"
+                        ],
+                        variations: ["Afundo Estático", "Afundo Reverso", "Afundo Búlgaro", "Afundo Caminhando"]
+                    }
                 ]
             },
             posterior: {
                 name: "Posterior de Coxa",
                 color: "from-orange-600 to-amber-700",
+                icon: "fa-dumbbell",
+                description: "Isquiotibiais responsáveis pela flexão do joelho e extensão do quadril",
                 exercises: [
-                    { name: "Mesa Flexora", variations: ["Deitado"], focus: "Isolamento", type: "weight" },
-                    { name: "Cadeira Flexora", variations: ["Sentado"], focus: "Isolamento", type: "weight" },
-                    { name: "Flexora em Pé", variations: ["Unilateral"], focus: "Isolamento", type: "weight" },
-                    { name: "Stiff", variations: ["Barra", "Halter"], focus: "Romanian", type: "weight" },
-                    { name: "Mesa Flexora", variations: ["Cabo"], focus: "Isolamento", type: "weight" },
-                    { name: "Bom Dia", variations: ["Barra"], focus: "Isquiotibiais", type: "weight" }
+                    {
+                        id: "mesa-flexora",
+                        name: "Mesa Flexora",
+                        difficulty: "beginner",
+                        equipment: "Máquina",
+                        focus: "Isolamento",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/07/mesa-flexora.jpg",
+                        muscles: {
+                            primary: ["Isquiotibiais (Bíceps Femoral)"],
+                            secondary: ["Gastrocnêmio"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Deite-se de bruços na máquina",
+                            "Ajuste o rolo acima dos calcanhares",
+                            "Segure as alças para estabilidade",
+                            "Flexione os joelhos levando os calcanhares em direção ao glúteo",
+                            "Contraia no topo",
+                            "Desça controladamente sem estender completamente"
+                        ],
+                        tips: [
+                            "Não estenda completamente (mantenha tensão)",
+                            "Ponta do pé pode ser flexionada ou neutra",
+                            "Contraia no topo por 1 segundo",
+                            "Movimento controlado, sem momentum"
+                        ],
+                        errors: [
+                            "Estender completamente as pernas",
+                            "Levantar o quadril do banco",
+                            "Usar momentum",
+                            "Não controlar a descida"
+                        ],
+                        variations: ["Mesa Flexora Unilateral", "Mesa Flexora com Pés Alternados"]
+                    },
+                    {
+                        id: "stiff",
+                        name: "Stiff (Levantamento Terra Romeno)",
+                        difficulty: "intermediate",
+                        equipment: "Barra ou Halteres",
+                        focus: "Cadeia Posterior",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/07/mesa-flexora.jpg",
+                        muscles: {
+                            primary: ["Isquiotibiais", "Glúteo Máximo"],
+                            secondary: ["Eretor da Espinha", "Trapézio"],
+                            stabilizers: ["Core", "Lombar", "Antebraço"]
+                        },
+                        instructions: [
+                            "Segure a barra com pegada pronada, braços estendidos",
+                            "Mantenha os pés na largura do quadril",
+                            "Joelhos levemente flexionados (10-15°)",
+                            "Incline o torso para frente flexionando no quadril",
+                            "Desça até sentir alongamento nos isquios",
+                            "Volte à posição estendendo o quadril"
+                        ],
+                        tips: [
+                            "Movimento no quadril, não na lombar",
+                            "Barra próxima às pernas durante todo o movimento",
+                            "Sinta o alongamento nos isquiotibiais",
+                            "Não arqueie a lombar"
+                        ],
+                        errors: [
+                            "Arquear a lombar",
+                            "Flexionar muito os joelhos (vira agachamento)",
+                            "Barra afastar das pernas",
+                            "Não sentir alongamento nos isquios"
+                        ],
+                        variations: ["Stiff com Halteres", "Stiff Sumô", "Stiff no Smith", "Stiff Unilateral"]
+                    },
+                    {
+                        id: "cadeira-flexora",
+                        name: "Cadeira Flexora",
+                        difficulty: "beginner",
+                        equipment: "Máquina",
+                        focus: "Isolamento",
+                        type: "weight",
+                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/07/mesa-flexora.jpg",
+                        muscles: {
+                            primary: ["Isquiotibiais"],
+                            secondary: ["Gastrocnêmio"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina com as costas apoiadas",
+                            "Ajuste o rolo acima dos calcanhares",
+                            "Segure as alças laterais",
+                            "Flexione os joelhos puxando o peso para baixo",
+                            "Contraia no topo",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Mantenha o quadril sempre no banco",
+                            "Não estenda completamente",
+                            "Contraia no topo",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Levantar o quadril do banco",
+                            "Estender completamente",
+                            "Usar momentum",
+                            "Movimento muito rápido"
+                        ],
+                        variations: ["Flexora Unilateral", "Flexora com Pés Alternados"]
+                    }
                 ]
             },
             gluteos: {
                 name: "Glúteos",
                 color: "from-pink-600 to-rose-700",
+                icon: "fa-dumbbell",
+                description: "Glúteo máximo, médio e mínimo responsáveis pela extensão e abdução do quadril",
                 exercises: [
-                    { name: "Elevação Pélvica", variations: ["Barra", "Máquina"], focus: "Máximo", type: "weight" },
-                    { name: "Glúteo Cabo", variations: ["Kickback"], focus: "Máximo", type: "weight" },
-                    { name: "Agachamento Búlgaro", variations: ["Foco Glúteo"], focus: "Médio", type: "weight" },
-                    { name: "Afundo no Smith", variations: ["Passada"], focus: "Máximo", type: "weight" },
-                    { name: "Glúteo na Máquina", variations: ["Hip Thrust"], focus: "Máximo", type: "weight" },
-                    { name: "Cadeira Abdutora", variations: ["Máquina"], focus: "Médio", type: "weight" }
+                    {
+                        id: "elevacao-pelvica",
+                        name: "Elevação Pélvica (Hip Thrust)",
+                        difficulty: "intermediate",
+                        equipment: "Barra ou Halter",
+                        focus: "Glúteo Máximo",
+                        type: "weight",
+                        image: "https://meujoelho.com.br/wp-content/uploads/2020/05/Imagem-6-3.png",
+                        muscles: {
+                            primary: ["Glúteo Máximo"],
+                            secondary: ["Isquiotibiais", "Quadríceps"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Sente-se no chão com as costas apoiadas em um banco",
+                            "Posicione a barra sobre o quadril (use protetor)",
+                            "Pés firmes no chão, joelhos flexionados 90°",
+                            "Empurre o quadril para cima estendendo-o",
+                            "Contraia o glúteo no topo (hiperextensão do quadril)",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Mantenha o queixo levemente encolhido",
+                            "Contraia o glúteo fortemente no topo",
+                            "Não arqueie a lombar no topo (use o quadril)",
+                            "Barra deve subir em linha reta"
+                        ],
+                        errors: [
+                            "Hiperextensão lombar (arquear costas)",
+                            "Não estender completamente o quadril",
+                            "Pés muito à frente (foca em isquios)",
+                            "Usar o impulso das costas"
+                        ],
+                        variations: ["Hip Thrust Unilateral", "Hip Thrust na Máquina", "Hip Thrust com Banda", "Hip Thrust com Pés Elevados"]
+                    },
+                    {
+                        id: "agachamento-bulgaro",
+                        name: "Agachamento Búlgaro",
+                        difficulty: "advanced",
+                        equipment: "Halteres ou Barra",
+                        focus: "Glúteo e Quadríceps",
+                        type: "weight",
+                        image: "https://boaforma.abril.com.br/wp-content/uploads/sites/2/2026/01/determined-female-leggings-having-abdominal-crunch-workout-indoors-side-view-fit.jpg?crop=1&resize=1212,909",
+                        muscles: {
+                            primary: ["Quadríceps", "Glúteo Máximo"],
+                            secondary: ["Isquiotibiais", "Addutores"],
+                            stabilizers: ["Core", "Panturrilha", "Estabilizadores do Tornozelo"]
+                        },
+                        instructions: [
+                            "Posicione um pé atrás em um banco ou step",
+                            "Pé da frente afastado do banco (passo longo)",
+                            "Mantenha o torso ereto",
+                            "Desça flexionando o joelho da frente",
+                            "Empurre com o calcanhar para subir",
+                            "Mantenha o equilíbrio durante todo o movimento"
+                        ],
+                        tips: [
+                            "Passo longo = foco em glúteos",
+                            "Passo curto = foco em quadríceps",
+                            "Mantenha o torso levemente inclinado para frente",
+                            "Excelente para desequilíbrios entre pernas"
+                        ],
+                        errors: [
+                            "Joelho da frente passar muito da ponta do pé",
+                            "Torso inclinado excessivamente",
+                            "Pé de trás muito alto ou baixo",
+                            "Perder o equilíbrio"
+                        ],
+                        variations: ["Búlgaro com Halteres", "Búlgaro na Smith", "Búlgaro Isométrico"]
+                    },
+                    {
+                        id: "cadeira-abdutora",
+                        name: "Cadeira Abdutora",
+                        difficulty: "beginner",
+                        equipment: "Máquina",
+                        focus: "Glúteo Médio",
+                        type: "weight",
+                        image: "https://meujoelho.com.br/wp-content/uploads/2020/05/Imagem-6-3.png",
+                        muscles: {
+                            primary: ["Glúteo Médio", "Glúteo Mínimo"],
+                            secondary: ["Tensor da Fáscia Lata"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina com as almofadas laterais nos joelhos",
+                            "Mantenha as costas apoiadas",
+                            "Empurre as almofadas para fora abrindo as pernas",
+                            "Contraia o glúteo no topo",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Incline levemente o torso para frente (maior ativação)",
+                            "Contraia no topo por 1-2 segundos",
+                            "Movimento controlado",
+                            "Não use momentum"
+                        ],
+                        errors: [
+                            "Levantar o quadril do banco",
+                            "Usar momentum",
+                            "Não abrir completamente",
+                            "Movimento muito rápido"
+                        ],
+                        variations: ["Abdução no Cabo", "Abdução Lateral com Banda", "Abdução em Pé"]
+                    }
                 ]
             },
             panturrilha: {
                 name: "Panturrilha",
                 color: "from-gray-500 to-gray-700",
+                icon: "fa-dumbbell",
+                description: "Gastrocnêmio e sóleo responsáveis pela flexão plantar do tornozelo",
                 exercises: [
-                    { name: "Gêmeos em Pé", variations: ["Máquina", "Smith"], focus: "Gastrocnêmio", type: "weight" },
-                    { name: "Gêmeos Sentado", variations: ["Máquina"], focus: "Soleus", type: "weight" },
-                    { name: "Gêmeos no Leg Press", variations: ["45º"], focus: "Geral", type: "weight" },
-                    { name: "Gêmeos no Hack", variations: ["Máquina"], focus: "Geral", type: "weight" }
+                    {
+                        id: "gemeos-em-pe",
+                        name: "Gêmeos em Pé",
+                        difficulty: "beginner",
+                        equipment: "Máquina ou Smith",
+                        focus: "Gastrocnêmio",
+                        type: "weight",
+                        image: "https://image.tuasaude.com/media/article/ku/ib/treino-costas_73930.gif?width=686&height=487",
+                        muscles: {
+                            primary: ["Gastrocnêmio"],
+                            secondary: ["Sóleo"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Posicione-se na máquina com os ombros sob o apoio",
+                            "Pés na plataforma, calcanhares para fora",
+                            "Desca esticando o tornozelo ao máximo (alongamento)",
+                            "Empurre com os dedos dos pés elevando os calcanhares",
+                            "Contraia no topo por 2-3 segundos",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Amplitude completa é crucial (alongar no fundo)",
+                            "Pausa longa no topo aumenta intensidade",
+                            "Joelhos estendidos focam gastrocnêmio",
+                            "Movimento lento e controlado"
+                        ],
+                        errors: [
+                            "Amplitude curta (não alongar nem contrair)",
+                            "Movimento muito rápido (bounce)",
+                            "Joelhos flexionados (foca em sóleo)",
+                            "Não pausar no topo"
+                        ],
+                        variations: ["Gêmeos no Smith", "Gêmeos com Halteres", "Gêmeos no Leg Press", "Gêmeos no Step"]
+                    },
+                    {
+                        id: "gemeos-sentado",
+                        name: "Gêmeos Sentado",
+                        difficulty: "beginner",
+                        equipment: "Máquina",
+                        focus: "Sóleo",
+                        type: "weight",
+                        image: "https://image.tuasaude.com/media/article/ku/ib/treino-costas_73930.gif?width=686&height=487",
+                        muscles: {
+                            primary: ["Sóleo"],
+                            secondary: ["Gastrocnêmio"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina com as coxas sob o apoio",
+                            "Pés na plataforma na largura dos ombros",
+                            "Desca alongando o máximo possível",
+                            "Empurre elevando os calcanhares",
+                            "Contraia no topo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Joelhos flexionados = foco em sóleo",
+                            "Sóleo responde melhor a repetições altas (15-20)",
+                            "Amplitude completa essencial",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Amplitude curta",
+                            "Movimento rápido",
+                            "Não pausar no topo",
+                            "Usar momentum"
+                        ],
+                        variations: ["Gêmeos Sentado Unilateral", "Gêmeos Sentado no Cabo"]
+                    }
                 ]
             },
             core: {
                 name: "Core",
                 color: "from-teal-500 to-cyan-600",
+                icon: "fa-dumbbell",
+                description: "Músculos abdominais e lombares responsáveis pela estabilização da coluna",
                 exercises: [
-                    { name: "Abdominal Infra", variations: ["Hanging", "Paralelas"], focus: "Reto Inferior", type: "weight" },
-                    { name: "Abdominal Supra", variations: ["Chão", "Máquina", "Cabo"], focus: "Reto Superior", type: "weight" },
-                    { name: "Prancha Isométrica", variations: ["Padrão", "Lateral"], focus: "Estabilidade", type: "time" },
-                    { name: "Abdominal Russo", variations: ["Russian Twist"], focus: "Oblíquos", type: "weight" },
-                    { name: "Abdominal com Roda", variations: ["Ab Wheel"], focus: "Reto", type: "weight" },
-                    { name: "Abdominal Oblíquo", variations: ["Cabo", "Halter"], focus: "Oblíquos", type: "weight" },
-                    { name: "Hiperextensão Lombar", variations: ["Banco Romano"], focus: "Lombar", type: "weight" },
-                    { name: "Vácuo Abdominal", variations: ["Stomach Vacuum"], focus: "Transverso", type: "time" }
-                ]
-            },
-            cardio: {
-                name: "Cardio",
-                color: "from-cyan-400 to-blue-500",
-                exercises: [
-                    { name: "Corrida", variations: ["Esteira", "Rua"], focus: "Resistência", type: "time", met: "cardio_moderate" },
-                    { name: "Caminhada", variations: ["Rápida", "Inclinada"], focus: "Queima Gordura", type: "time", met: "cardio_light" },
-                    { name: "Bicicleta", variations: ["Ergométrica", "Spinning"], focus: "Resistência", type: "time", met: "cardio_moderate" },
-                    { name: "Elíptico", variations: ["Padrão", "Inverso"], focus: "Baixo Impacto", type: "time", met: "cardio_moderate" },
-                    { name: "Remo", variations: ["Máquina", "Cabo"], focus: "Full Body", type: "time", met: "cardio_vigorous" },
-                    { name: "Escada", variations: ["Stepper", "Real"], focus: "Glúteos", type: "time", met: "cardio_vigorous" },
-                    { name: "Pular Corda", variations: ["Padrão", "Double Unders"], focus: "Coordenação", type: "time", met: "cardio_vigorous" },
-                    { name: "Burpees", variations: ["Padrão", "Com Plyo"], focus: "HIIT", type: "time", met: "cardio_vigorous" },
-                    { name: "Mountain Climbers", variations: ["Padrão", "Lentos"], focus: "Core + Cardio", type: "time", met: "cardio_moderate" },
-                    { name: "Jumping Jacks", variations: ["Padrão", "Com Step"], focus: "Aquecimento", type: "time", met: "cardio_light" }
+                    {
+                        id: "prancha",
+                        name: "Prancha Isométrica",
+                        difficulty: "beginner",
+                        equipment: "Peso Corporal",
+                        focus: "Estabilidade",
+                        type: "time",
+                        image: "https://blogscdn.thehut.net/app/uploads/sites/461/2020/09/Plank_1600178118.jpg",
+                        muscles: {
+                            primary: ["Reto Abdominal", "Transverso do Abdômen"],
+                            secondary: ["Oblíquos", "Eretor da Espinha"],
+                            stabilizers: ["Deltóides", "Peitoral", "Quadríceps", "Glúteos"]
+                        },
+                        instructions: [
+                            "Posição de apoio nos antebraços e ponta dos pés",
+                            "Cotovelos alinhados abaixo dos ombros",
+                            "Mantenha o corpo em linha reta (não arqueie nem afunde)",
+                            "Contraia o abdômen como se fosse receber um soco",
+                            "Mantenha a posição pelo tempo determinado",
+                            "Respire normalmente durante a execução"
+                        ],
+                        tips: [
+                            "Contraia o glúteo para ajudar na estabilização",
+                            "Olhe para o chão (não para frente nem para cima)",
+                            "Mantenha os ombros afastados das orelhas",
+                            "Progressão: aumente o tempo ou adicione peso"
+                        ],
+                        errors: [
+                            "Quadril muito alto (forma de 'A')",
+                            "Quadril afundado (lordose excessiva)",
+                            "Cabeça pendida ou erguida demais",
+                            "Prender a respiração"
+                        ],
+                        variations: ["Prancha Lateral", "Prancha com Elevação de Perna", "Prancha com Toque no Ombro", "Prancha Dinâmica"]
+                    },
+                    {
+                        id: "abdominal-infra",
+                        name: "Abdominal Infra",
+                        difficulty: "beginner",
+                        equipment: "Barra ou Máquina",
+                        focus: "Reto Inferior",
+                        type: "weight",
+                        image: "https://s2-ge.glbimg.com/5f5370d3bdd9283b6a43e351f33a05994c68453d.jpg",
+                        muscles: {
+                            primary: ["Reto Abdominal (porção inferior)"],
+                            secondary: ["Psoas Ilíaco", "Reto Femoral"],
+                            stabilizers: ["Deltóides", "Lombar"]
+                        },
+                        instructions: [
+                            "Suspenda-se na barra fixa ou apoie-se nas paralelas",
+                            "Mantenha as pernas estendidas (ou levemente flexionadas)",
+                            "Eleve as pernas flexionando o quadril",
+                            "Leve os joelhos em direção ao peito",
+                            "Desça controladamente sem balançar"
+                        ],
+                        tips: [
+                            "Movimento no quadril, não na lombar",
+                            "Evite balançar (use força do core)",
+                            "Joelhos juntos durante o movimento",
+                            "Expire ao elevar as pernas"
+                        ],
+                        errors: [
+                            "Usar momentum (balançar)",
+                            "Movimento apenas nos joelhos (sem flexão de quadril)",
+                            "Descer rápido demais",
+                            "Não elevar suficientemente"
+                        ],
+                        variations: ["Abdominal Infra na Máquina", "Abdominal Infra com Elevação de Pernas Retas", "Abdominal Infra Oblíquo"]
+                    },
+                    {
+                        id: "abdominal-supra",
+                        name: "Abdominal Supra",
+                        difficulty: "beginner",
+                        equipment: "Peso Corporal ou Anilha",
+                        focus: "Reto Superior",
+                        type: "weight",
+                        image: "https://boaforma.abril.com.br/wp-content/uploads/sites/2/2026/01/determined-female-leggings-having-abdominal-crunch-workout-indoors-side-view-fit.jpg?crop=1&resize=1212,909",
+                        muscles: {
+                            primary: ["Reto Abdominal (porção superior)"],
+                            secondary: ["Oblíquos"],
+                            stabilizers: ["Psoas", "Quadríceps"]
+                        },
+                        instructions: [
+                            "Deite-se de costas com joelhos flexionados e pés no chão",
+                            "Mãos atrás da cabeça ou cruzadas no peito",
+                            "Eleve os ombros do chão contraindo o abdômen",
+                            "Mantenha a lombar sempre no chão",
+                            "Desça controladamente sem relaxar completamente"
+                        ],
+                        tips: [
+                            "Não puxe a cabeça com as mãos",
+                            "Movimento curto e controlado",
+                            "Contraia o abdômen no topo",
+                            "Mantenha o queixo levemente encolhido"
+                        ],
+                        errors: [
+                            "Puxar a cabeça (estresse no pescoço)",
+                            "Arco na lombar (não mantém colada no chão)",
+                            "Usar momentum",
+                            "Relaxar completamente no fundo"
+                        ],
+                        variations: ["Abdominal com Rotação", "Abdominal na Máquina", "Abdominal com Peso", "Abdominal Invertido"]
+                    },
+                    {
+                        id: "abdominal-obliquo",
+                        name: "Abdominal Oblíquo",
+                        difficulty: "intermediate",
+                        equipment: "Halter ou Cabo",
+                        focus: "Oblíquos",
+                        type: "weight",
+                        image: "https://boaforma.abril.com.br/wp-content/uploads/sites/2/2026/01/determined-female-leggings-having-abdominal-crunch-workout-indoors-side-view-fit.jpg?crop=1&resize=1212,909",
+                        muscles: {
+                            primary: ["Oblíquo Externo", "Oblíquo Interno"],
+                            secondary: ["Reto Abdominal"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Segure o peso com as duas mãos",
+                            "Mantenha os braços estendidos à frente",
+                            "Gire o torso para um lado contraindo o oblíquo",
+                            "Retorne ao centro e gire para o outro lado",
+                            "Movimento controlado, sem momentum"
+                        ],
+                        tips: [
+                            "Rotação no torso, não apenas nos braços",
+                            "Sinta a contração lateral do abdômen",
+                            "Mantenha os quadris estáveis",
+                            "Movimento lento e controlado"
+                        ],
+                        errors: [
+                            "Movimento apenas nos braços",
+                            "Quadris girarem junto",
+                            "Usar momentum",
+                            "Movimento muito rápido"
+                        ],
+                        variations: ["Russian Twist", "Oblíquo no Cabo", "Oblíquo Lateral", "Oblíquo na Máquina"]
+                    }
                 ]
             }
         };
 
-        // State Management
+        // ==========================================
+        // DADOS E CONFIGURAÇÕES DO APLICATIVO
+        // ==========================================
+        
+        let userProfile = JSON.parse(localStorage.getItem('userProfile')) || {
+            weight: 70,
+            gender: 'male'
+        };
+
+        const exerciseMETs = {
+            weightlifting_light: 3.0,
+            weightlifting_moderate: 3.5,
+            weightlifting_vigorous: 5.0,
+            cardio_light: 4.0,
+            cardio_moderate: 7.0,
+            cardio_vigorous: 10.0,
+            isometric: 2.5
+        };
+
         let currentWorkout = {
             id: null,
             startTime: null,
@@ -1001,6 +2784,7 @@
         let selectedPlannerDate = new Date();
         let deleteTargetId = null;
         let deleteTargetType = null;
+        let currentLibraryMuscle = 'all';
         
         let newWorkoutState = {
             name: '',
@@ -1016,7 +2800,7 @@
             setCurrentDate();
             renderWeekPreview();
             initPlanner();
-            renderMuscleFilters();
+            renderLibraryFilters();
             updateUserAvatar();
         });
 
@@ -1030,48 +2814,353 @@
         }
 
         // ==========================================
-        // CÁLCULO DE CALORIAS (Baseado em METs)
+        // RENDERIZAÇÃO DOS GRUPOS MUSCULARES
+        // ==========================================
+        
+        function renderMuscleGroups() {
+            const grid = document.getElementById('muscle-grid');
+            grid.innerHTML = '';
+            
+            Object.entries(exerciseDatabase).forEach(([key, group]) => {
+                const card = document.createElement('div');
+                card.className = 'muscle-card rounded-2xl p-6 cursor-pointer border border-gray-700';
+                card.onclick = () => openLibrary(key);
+                
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br ${group.color} flex items-center justify-center shadow-lg">
+                            <i class="fas ${group.icon} text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-gray-600">${group.exercises.length}</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">${group.name}</h3>
+                    <p class="text-sm text-gray-400 mb-3">${group.description}</p>
+                    <div class="flex flex-wrap gap-2">
+                        ${group.exercises.slice(0, 3).map(ex => `
+                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">${ex.name.split(' ')[0]}</span>
+                        `).join('')}
+                        ${group.exercises.length > 3 ? `<span class="text-xs text-gray-500">+${group.exercises.length - 3}</span>` : ''}
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // ==========================================
+        // BIBLIOTECA DE EXERCÍCIOS
+        // ==========================================
+        
+        function openLibrary(muscleKey = 'all') {
+            currentLibraryMuscle = muscleKey;
+            const libraryTitle = document.getElementById('library-title');
+            const librarySubtitle = document.getElementById('library-subtitle');
+            
+            if (muscleKey === 'all') {
+                libraryTitle.textContent = 'Biblioteca Completa';
+                librarySubtitle.textContent = 'Todos os exercícios disponíveis';
+            } else {
+                const group = exerciseDatabase[muscleKey];
+                libraryTitle.textContent = group.name;
+                librarySubtitle.textContent = `${group.exercises.length} exercícios disponíveis`;
+            }
+            
+            renderLibrary(muscleKey);
+            showView('library');
+        }
+
+        function renderLibraryFilters() {
+            const container = document.getElementById('library-filters');
+            
+            Object.entries(exerciseDatabase).forEach(([key, group]) => {
+                const btn = document.createElement('button');
+                btn.className = 'library-filter-btn px-4 py-2 rounded-full bg-gray-800 border border-gray-700 text-sm font-medium whitespace-nowrap transition';
+                btn.textContent = group.name;
+                btn.onclick = () => filterLibraryByMuscle(key);
+                btn.dataset.muscle = key;
+                container.appendChild(btn);
+            });
+        }
+
+        function filterLibraryByMuscle(muscleKey) {
+            currentLibraryMuscle = muscleKey;
+            
+            document.querySelectorAll('.library-filter-btn').forEach(btn => {
+                if (btn.dataset.muscle === muscleKey) {
+                    btn.classList.add('active', 'bg-orange-500', 'text-white');
+                    btn.classList.remove('bg-gray-800');
+                } else {
+                    btn.classList.remove('active', 'bg-orange-500', 'text-white');
+                    btn.classList.add('bg-gray-800');
+                }
+            });
+            
+            const group = exerciseDatabase[muscleKey];
+            if (group) {
+                document.getElementById('library-title').textContent = group.name;
+                document.getElementById('library-subtitle').textContent = `${group.exercises.length} exercícios`;
+            } else {
+                document.getElementById('library-title').textContent = 'Biblioteca Completa';
+                document.getElementById('library-subtitle').textContent = 'Todos os exercícios';
+            }
+            
+            renderLibrary(muscleKey, document.getElementById('library-search').value);
+        }
+
+        function filterLibrary() {
+            const search = document.getElementById('library-search').value.toLowerCase();
+            renderLibrary(currentLibraryMuscle, search);
+        }
+
+        function renderLibrary(muscleFilter = 'all', searchFilter = '') {
+            const container = document.getElementById('library-grid');
+            container.innerHTML = '';
+            
+            let exercises = [];
+            
+            if (muscleFilter === 'all') {
+                Object.entries(exerciseDatabase).forEach(([key, group]) => {
+                    group.exercises.forEach(ex => {
+                        exercises.push({ ...ex, muscleGroup: group.name, muscleKey: key, color: group.color });
+                    });
+                });
+            } else {
+                const group = exerciseDatabase[muscleFilter];
+                if (group) {
+                    exercises = group.exercises.map(ex => ({
+                        ...ex,
+                        muscleGroup: group.name,
+                        muscleKey: muscleFilter,
+                        color: group.color
+                    }));
+                }
+            }
+            
+            if (searchFilter) {
+                exercises = exercises.filter(ex => 
+                    ex.name.toLowerCase().includes(searchFilter) ||
+                    ex.muscleGroup.toLowerCase().includes(searchFilter)
+                );
+            }
+            
+            exercises.forEach(exercise => {
+                const card = document.createElement('div');
+                card.className = 'exercise-card rounded-2xl overflow-hidden cursor-pointer';
+                card.onclick = () => showExerciseDetailFull(exercise);
+                
+                const difficultyClass = `difficulty-${exercise.difficulty}`;
+                
+                card.innerHTML = `
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="${exercise.image}" alt="${exercise.name}" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2">
+                            <span class="difficulty-badge ${difficultyClass}">${exercise.difficulty}</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 to-transparent p-4">
+                            <span class="text-xs text-orange-400 font-medium">${exercise.muscleGroup}</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">${exercise.name}</h3>
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="muscle-tag muscle-primary">
+                                <i class="fas fa-bullseye text-xs"></i>
+                                ${exercise.muscles.primary[0]}
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm text-gray-400">
+                            <span><i class="fas fa-dumbbell mr-1"></i> ${exercise.equipment}</span>
+                            <span><i class="fas fa-layer-group mr-1"></i> ${exercise.focus}</span>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // ==========================================
+        // DETALHES DO EXERCÍCIO
+        // ==========================================
+        
+        function showExerciseDetailFull(exercise) {
+            currentExerciseDetail = exercise;
+            
+            document.getElementById('detail-exercise-name').textContent = exercise.name;
+            
+            // Gallery
+            const gallery = document.getElementById('detail-gallery');
+            gallery.innerHTML = `
+                <div class="gallery-item" onclick="openImageModal('${exercise.image}')">
+                    <img src="${exercise.image}" alt="${exercise.name}">
+                </div>
+            `;
+            
+            // Tags
+            const tags = document.getElementById('detail-tags');
+            const difficultyClass = `difficulty-${exercise.difficulty}`;
+            tags.innerHTML = `
+                <span class="difficulty-badge ${difficultyClass}">${exercise.difficulty}</span>
+                <span class="equipment-tag"><i class="fas fa-dumbbell"></i> ${exercise.equipment}</span>
+                <span class="equipment-tag"><i class="fas fa-bullseye"></i> ${exercise.focus}</span>
+                <span class="muscle-tag muscle-primary">Primário: ${exercise.muscles.primary.join(', ')}</span>
+            `;
+            
+            // Muscles
+            const musclesContainer = document.getElementById('detail-muscles');
+            musclesContainer.innerHTML = '';
+            
+            exercise.muscles.primary.forEach(muscle => {
+                musclesContainer.innerHTML += `
+                    <div class="muscle-map-item">
+                        <div class="muscle-dot primary"></div>
+                        <span>${muscle}</span>
+                    </div>
+                `;
+            });
+            
+            exercise.muscles.secondary.forEach(muscle => {
+                musclesContainer.innerHTML += `
+                    <div class="muscle-map-item">
+                        <div class="muscle-dot secondary"></div>
+                        <span>${muscle}</span>
+                    </div>
+                `;
+            });
+            
+            exercise.muscles.stabilizers.forEach(muscle => {
+                musclesContainer.innerHTML += `
+                    <div class="muscle-map-item">
+                        <div class="muscle-dot stabilizer"></div>
+                        <span>${muscle} (estabilizador)</span>
+                    </div>
+                `;
+            });
+            
+            // Instructions
+            const instructions = document.getElementById('detail-instructions');
+            instructions.innerHTML = exercise.instructions.map((step, index) => `
+                <div class="instruction-step" data-step="${index + 1}">
+                    ${step}
+                </div>
+            `).join('');
+            
+            // Tips
+            const tips = document.getElementById('detail-tips');
+            tips.innerHTML = exercise.tips.map(tip => `
+                <li class="flex items-start gap-2">
+                    <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                    <span>${tip}</span>
+                </li>
+            `).join('');
+            
+            // Errors
+            const errors = document.getElementById('detail-errors');
+            errors.innerHTML = exercise.errors.map(error => `
+                <li class="flex items-start gap-2">
+                    <i class="fas fa-times-circle text-red-500 mt-1"></i>
+                    <span>${error}</span>
+                </li>
+            `).join('');
+            
+            // Variations
+            const variations = document.getElementById('detail-variations');
+            variations.innerHTML = exercise.variations.map(variation => `
+                <span class="variation-chip">${variation}</span>
+            `).join('');
+            
+            // Specifications
+            document.getElementById('detail-difficulty').textContent = exercise.difficulty.charAt(0).toUpperCase() + exercise.difficulty.slice(1);
+            document.getElementById('detail-equipment').textContent = exercise.equipment;
+            document.getElementById('detail-focus').textContent = exercise.focus;
+            
+            showView('exercise-detail');
+        }
+
+        function openImageModal(src) {
+            document.getElementById('modal-image').src = src;
+            document.getElementById('image-modal').classList.add('active');
+        }
+
+        function closeImageModal() {
+            document.getElementById('image-modal').classList.remove('active');
+        }
+
+        function backFromDetail() {
+            showView('library');
+        }
+
+        function addToCurrentWorkout() {
+            if (!currentExerciseDetail) return;
+            
+            const exercise = currentExerciseDetail;
+            const isTimeBased = exercise.type === 'time';
+            
+            if (!currentWorkout.id) {
+                startNewWorkout();
+            }
+            
+            const workoutExercise = {
+                id: Date.now(),
+                name: exercise.name,
+                muscleGroup: exercise.muscleGroup,
+                type: exercise.type,
+                met: exercise.met || null,
+                sets: isTimeBased 
+                    ? [
+                        { time: '30', weight: '', reps: '', completed: false },
+                        { time: '30', weight: '', reps: '', completed: false },
+                        { time: '30', weight: '', reps: '', completed: false }
+                      ]
+                    : [
+                        { weight: '', reps: '10', time: '', completed: false },
+                        { weight: '', reps: '10', time: '', completed: false },
+                        { weight: '', reps: '10', time: '', completed: false }
+                      ]
+            };
+            
+            currentWorkout.exercises.push(workoutExercise);
+            currentWorkout.muscleGroups.add(exercise.muscleGroup);
+            
+            renderCurrentWorkout();
+            updateWorkoutStats();
+            updateActiveCalories();
+            showView('workout');
+        }
+
+        // ==========================================
+        // FUNÇÕES EXISTENTES DO APLICATIVO
         // ==========================================
         
         function calculateCalories(durationMinutes, exerciseType = 'weightlifting_moderate', metValue = null) {
             const weightKg = userProfile.weight;
             let met = metValue || exerciseMETs[exerciseType] || 3.5;
-            
-            // Fórmula: Calorias = (MET × 3.5 × peso em kg) / 200 × minutos
             const calories = (met * 3.5 * weightKg) / 200 * durationMinutes;
-            
-            // Ajuste por sexo (homens queimam ~12% a mais em média)
             const genderMultiplier = userProfile.gender === 'male' ? 1.12 : 1.0;
-            
             return Math.round(calories * genderMultiplier);
         }
 
         function calculateWorkoutCalories(workout) {
             let totalCalories = 0;
-            const durationMinutes = workout.duration / 60;
             
             workout.exercises.forEach(ex => {
                 const isTimeBased = ex.sets && ex.sets[0] && ex.sets[0].time;
                 const isCardio = ex.met && ex.met.includes('cardio');
                 
                 if (isTimeBased || isCardio) {
-                    // Para cardio/tempo: calcular baseado no tempo total do exercício
                     const exerciseTime = ex.sets.reduce((acc, set) => acc + (parseInt(set.time) || 0), 0);
                     const met = ex.met || 'cardio_moderate';
                     totalCalories += calculateCalories(exerciseTime / 60, met);
                 } else {
-                    // Para musculação: estimar baseado no volume e duração
                     const volume = ex.sets.reduce((acc, set) => {
                         return acc + (parseFloat(set.weight || 0) * parseFloat(set.reps || 0));
                     }, 0);
                     
-                    // Quanto maior o volume, mais intenso o exercício
                     let intensity = 'weightlifting_moderate';
                     if (volume > 2000) intensity = 'weightlifting_vigorous';
                     else if (volume < 500) intensity = 'weightlifting_light';
                     
-                    // Tempo estimado por exercício (baseado em séries)
-                    const estimatedTime = ex.sets.length * 2; // ~2 min por série (incluindo descanso)
+                    const estimatedTime = ex.sets.length * 2;
                     totalCalories += calculateCalories(estimatedTime, intensity);
                 }
             });
@@ -1079,10 +3168,6 @@
             return totalCalories;
         }
 
-        // ==========================================
-        // PROFILE MODAL
-        // ==========================================
-        
         function showProfileModal() {
             document.getElementById('user-weight').value = userProfile.weight;
             selectGender(userProfile.gender);
@@ -1114,42 +3199,7 @@
             }
         }
 
-        // ==========================================
-        // RENDERIZAÇÃO E FUNÇÕES EXISTENTES
-        // ==========================================
-        
-        function renderMuscleGroups() {
-            const grid = document.getElementById('muscle-grid');
-            grid.innerHTML = '';
-            
-            Object.entries(muscleGroups).forEach(([key, group]) => {
-                if (key === 'cardio') return; // Cardio não aparece na grid principal
-                
-                const card = document.createElement('div');
-                card.className = 'muscle-card rounded-2xl p-6 cursor-pointer border border-gray-700';
-                card.onclick = () => selectMuscleGroup(key);
-                
-                card.innerHTML = `
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br ${group.color} flex items-center justify-center shadow-lg">
-                            <i class="fas fa-dumbbell text-white text-xl"></i>
-                        </div>
-                        <span class="text-2xl font-bold text-gray-600">${group.exercises.length}</span>
-                    </div>
-                    <h3 class="text-lg font-bold mb-1">${group.name}</h3>
-                    <p class="text-sm text-gray-400">${group.exercises.length} exercícios disponíveis</p>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        ${group.exercises.slice(0, 3).map(ex => `
-                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">${ex.name.split(' ')[0]}</span>
-                        `).join('')}
-                        ${group.exercises.length > 3 ? `<span class="text-xs text-gray-500">+${group.exercises.length - 3}</span>` : ''}
-                    </div>
-                `;
-                
-                grid.appendChild(card);
-            });
-        }
-
+        // Planner Functions
         function initPlanner() {
             renderPlannerWeek();
             renderDayWorkouts();
@@ -1275,10 +3325,7 @@
             });
         }
 
-        // ==========================================
-        // FLUXO DE CRIAÇÃO DE TREINO (3 PASSOS)
-        // ==========================================
-        
+        // Create Workout Flow
         function openCreateWorkoutFlow() {
             newWorkoutState = {
                 name: '',
@@ -1327,57 +3374,27 @@
             document.getElementById('create-workout-modal').classList.remove('hidden');
         }
 
-        function renderMuscleFilters() {
-            const container = document.getElementById('muscle-filters');
-            // Manter o "Todos" e adicionar os grupos + cardio
-            Object.entries(muscleGroups).forEach(([key, group]) => {
-                const btn = document.createElement('button');
-                btn.className = 'muscle-filter-btn px-4 py-2 rounded-full bg-gray-800 border border-gray-700 text-sm font-medium';
-                btn.textContent = group.name;
-                btn.onclick = () => filterByMuscle(key);
-                btn.dataset.muscle = key;
-                container.appendChild(btn);
-            });
-        }
-
-        function filterByMuscle(muscleKey) {
-            document.querySelectorAll('.muscle-filter-btn').forEach(btn => {
-                if (btn.dataset.muscle === muscleKey || (muscleKey === 'all' && !btn.dataset.muscle)) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-            
-            renderExercisesList(muscleKey, document.getElementById('exercise-search').value);
-        }
-
-        function filterExercises() {
-            const search = document.getElementById('exercise-search').value.toLowerCase();
-            const activeMuscle = document.querySelector('.muscle-filter-btn.active')?.dataset.muscle || 'all';
-            renderExercisesList(activeMuscle, search);
-        }
-
         function renderExercisesList(muscleFilter = 'all', searchFilter = '') {
             const container = document.getElementById('exercises-selection-list');
             container.innerHTML = '';
             
-            Object.entries(muscleGroups).forEach(([muscleKey, group]) => {
+            Object.entries(exerciseDatabase).forEach(([muscleKey, group]) => {
                 if (muscleFilter !== 'all' && muscleFilter !== muscleKey) return;
                 
-                group.exercises.forEach((exercise, exIndex) => {
+                group.exercises.forEach((exercise) => {
                     if (searchFilter && !exercise.name.toLowerCase().includes(searchFilter)) return;
                     
                     const isSelected = newWorkoutState.exercises.some(ex => 
-                        ex.muscleKey === muscleKey && ex.exerciseIndex === exIndex
+                        ex.name === exercise.name && ex.muscleGroup === group.name
                     );
                     
-                    const typeIcon = exercise.type === 'time' ? 'fa-clock' : 'fa-dumbbell';
-                    const typeLabel = exercise.type === 'time' ? 'Tempo' : 'Peso';
+                    const isTimeBased = exercise.type === 'time';
+                    const typeIcon = isTimeBased ? 'fa-clock' : 'fa-dumbbell';
+                    const typeLabel = isTimeBased ? 'Tempo' : 'Peso';
                     
                     const div = document.createElement('div');
                     div.className = `exercise-chip bg-gray-800 border ${isSelected ? 'border-orange-500 bg-orange-500/20' : 'border-gray-700'} rounded-xl p-3 flex items-center justify-between cursor-pointer`;
-                    div.onclick = () => toggleExerciseSelection(muscleKey, exIndex, exercise.name, group.name, exercise.type, exercise.met);
+                    div.onclick = () => toggleExerciseSelection(exercise, group.name, muscleKey);
                     
                     div.innerHTML = `
                         <div class="flex items-center gap-3">
@@ -1388,7 +3405,7 @@
                                 <h4 class="font-medium ${isSelected ? 'text-orange-400' : 'text-white'}">${exercise.name}</h4>
                                 <div class="flex items-center gap-2">
                                     <span class="text-xs text-gray-400">${group.name}</span>
-                                    <span class="text-xs px-2 py-0.5 rounded-full ${exercise.type === 'time' ? 'bg-blue-500/20 text-blue-400' : 'bg-orange-500/20 text-orange-400'}">${typeLabel}</span>
+                                    <span class="text-xs px-2 py-0.5 rounded-full ${isTimeBased ? 'bg-blue-500/20 text-blue-400' : 'bg-orange-500/20 text-orange-400'}">${typeLabel}</span>
                                 </div>
                             </div>
                         </div>
@@ -1402,16 +3419,16 @@
             });
         }
 
-        function toggleExerciseSelection(muscleKey, exerciseIndex, name, muscleGroup, type = 'weight', met = null) {
+        function toggleExerciseSelection(exercise, muscleGroup, muscleKey) {
             const existingIndex = newWorkoutState.exercises.findIndex(ex => 
-                ex.muscleKey === muscleKey && ex.exerciseIndex === exerciseIndex
+                ex.name === exercise.name && ex.muscleGroup === muscleGroup
             );
             
             if (existingIndex > -1) {
                 newWorkoutState.exercises.splice(existingIndex, 1);
             } else {
-                // Adicionar com séries padrão baseado no tipo
-                const defaultSets = type === 'time' 
+                const isTimeBased = exercise.type === 'time';
+                const defaultSets = isTimeBased 
                     ? [
                         { time: '30', weight: '', reps: '' },
                         { time: '30', weight: '', reps: '' },
@@ -1424,20 +3441,16 @@
                       ];
                 
                 newWorkoutState.exercises.push({
-                    muscleKey,
-                    exerciseIndex,
-                    name,
-                    muscleGroup,
-                    type, // 'weight' ou 'time'
-                    met, // MET value para cardio
+                    name: exercise.name,
+                    muscleGroup: muscleGroup,
+                    muscleKey: muscleKey,
+                    type: exercise.type,
+                    met: exercise.met || null,
                     sets: defaultSets
                 });
             }
             
-            renderExercisesList(
-                document.querySelector('.muscle-filter-btn.active')?.dataset.muscle || 'all',
-                document.getElementById('exercise-search').value
-            );
+            renderExercisesList('all', document.getElementById('exercise-search').value);
             updateSelectedCount();
         }
 
@@ -1469,13 +3482,10 @@
                 div.className = 'bg-gray-800 rounded-2xl p-4 mb-4 border border-gray-700';
                 
                 const isTimeBased = exercise.type === 'time';
-                const icon = isTimeBased ? 'fa-clock' : 'fa-dumbbell';
-                const unitLabel = isTimeBased ? 'seg' : 'kg';
                 
                 let setsHtml = '';
                 exercise.sets.forEach((set, setIndex) => {
                     if (isTimeBased) {
-                        // Interface para exercícios baseados em tempo (prancha, cardio)
                         setsHtml += `
                             <div class="set-row flex items-center gap-3 mb-2 bg-gray-900/50 p-3 rounded-lg">
                                 <span class="text-sm font-bold text-gray-500 w-8">S${setIndex + 1}</span>
@@ -1492,7 +3502,6 @@
                             </div>
                         `;
                     } else {
-                        // Interface para exercícios baseados em peso (musculação tradicional)
                         setsHtml += `
                             <div class="set-row flex items-center gap-3 mb-2 bg-gray-900/50 p-3 rounded-lg">
                                 <span class="text-sm font-bold text-gray-500 w-8">S${setIndex + 1}</span>
@@ -1516,7 +3525,7 @@
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-3">
                         <div class="flex items-center gap-2">
-                            <i class="fas ${icon} ${isTimeBased ? 'text-blue-400' : 'text-orange-400'}"></i>
+                            <i class="fas ${isTimeBased ? 'fa-clock text-blue-400' : 'fa-dumbbell text-orange-400'}"></i>
                             <span class="text-lg font-bold">${exercise.name}</span>
                             <span class="text-xs text-gray-400 bg-gray-700 px-2 py-1 rounded">${exercise.muscleGroup}</span>
                         </div>
@@ -1593,7 +3602,6 @@
             showConfetti();
         }
 
-        // Templates
         function applyTemplate(template) {
             const templates = {
                 abc: [
@@ -1632,16 +3640,15 @@
                 
                 const exercises = [];
                 item.muscles.forEach(muscleKey => {
-                    const group = muscleGroups[muscleKey];
+                    const group = exerciseDatabase[muscleKey];
                     if (group && group.exercises.length > 0) {
-                        group.exercises.slice(0, 2).forEach((ex, idx) => {
+                        group.exercises.slice(0, 2).forEach((ex) => {
                             const isTimeBased = ex.type === 'time';
                             exercises.push({
-                                muscleKey: muscleKey,
-                                exerciseIndex: idx,
                                 name: ex.name,
                                 muscleGroup: group.name,
-                                type: ex.type || 'weight',
+                                muscleKey: muscleKey,
+                                type: ex.type,
                                 met: ex.met || null,
                                 sets: isTimeBased 
                                     ? [{ time: '30', weight: '', reps: '' }, { time: '30', weight: '', reps: '' }, { time: '30', weight: '', reps: '' }]
@@ -1699,10 +3706,7 @@
             updateWorkoutStats();
         }
 
-        // ==========================================
-        // TREINO ATIVO COM CÁLCULO DE CALORIAS
-        // ==========================================
-        
+        // Workout Functions
         function updateActiveCalories() {
             const badge = document.getElementById('active-calories-badge');
             const calories = calculateWorkoutCalories(currentWorkout);
@@ -1713,132 +3717,6 @@
             } else {
                 badge.classList.add('hidden');
             }
-        }
-
-        function selectMuscleGroup(muscleKey) {
-            const group = muscleGroups[muscleKey];
-            currentWorkout.muscleGroups.add(group.name);
-            
-            document.getElementById('workout-title').textContent = group.name;
-            document.getElementById('workout-subtitle').textContent = `Selecione os exercícios de ${group.name.toLowerCase()}`;
-            
-            const list = document.getElementById('workout-exercises-list');
-            list.innerHTML = '';
-            
-            group.exercises.forEach((exercise, index) => {
-                const item = document.createElement('div');
-                item.className = 'bg-gray-900 rounded-2xl p-4 border border-gray-800 exercise-item cursor-pointer';
-                item.onclick = () => showExerciseDetail(muscleKey, index);
-                
-                const typeIcon = exercise.type === 'time' ? 'fa-clock text-blue-400' : 'fa-dumbbell text-orange-400';
-                const typeLabel = exercise.type === 'time' ? 'Tempo' : 'Peso';
-                
-                item.innerHTML = `
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <h4 class="font-bold text-lg">${exercise.name}</h4>
-                                <span class="text-xs px-2 py-0.5 rounded-full ${exercise.type === 'time' ? 'bg-blue-500/20 text-blue-400' : 'bg-orange-500/20 text-orange-400'}">${typeLabel}</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 mb-2">
-                                ${exercise.variations.map(v => `
-                                    <span class="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded border border-gray-700">${v}</span>
-                                `).join('')}
-                            </div>
-                            <span class="text-xs text-gray-500 bg-gray-800/50 px-2 py-1 rounded">Foco: ${exercise.focus}</span>
-                        </div>
-                        <button class="quick-add-btn w-10 h-10 rounded-full bg-gray-800 hover:bg-orange-500 hover:text-white transition flex items-center justify-center" onclick="event.stopPropagation(); quickAddExercise('${muscleKey}', ${index})">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                `;
-                
-                list.appendChild(item);
-            });
-            
-            showView('workout');
-        }
-
-        function showExerciseDetail(muscleKey, exerciseIndex) {
-            const group = muscleGroups[muscleKey];
-            const exercise = group.exercises[exerciseIndex];
-            
-            currentExerciseDetail = { muscleKey, exerciseIndex, exercise };
-            
-            document.getElementById('detail-exercise-name').textContent = exercise.name;
-            document.getElementById('detail-muscle-group').textContent = group.name;
-            
-            const instructions = generateInstructions(exercise.name, group.name, exercise.type);
-            document.getElementById('detail-instructions').innerHTML = instructions;
-            
-            showView('exercise-detail');
-        }
-
-        function generateInstructions(exerciseName, muscleGroup, type = 'weight') {
-            if (type === 'time') {
-                return 'Mantenha a posição com a técnica correta pelo tempo determinado. Respire de forma controlada e mantenha a contração muscular constante.';
-            }
-            
-            const baseInstructions = {
-                'Supino': 'Deite-se no banco com os pés firmes no chão. Segure a barra com pegada larga. Desça controladamente até tocar o peito, mantendo os cotovelos a 45°. Empurre para cima contraindo o peitoral.',
-                'Agachamento': 'Posicione a barra sobre os trapézios. Mantenha o peito aberto e a coluna neutra. Desça flexionando os joelhos até as coxas ficarem paralelas ao chão. Volte à posição inicial empurrando os calcanhares.',
-                'Remada': 'Mantenha a coluna neutra e as escápulas retraídas. Puxe o peso em direção ao abdômen, focando na contração das costas. Retorne controladamente.',
-                'Rosca': 'Mantenha os cotovelos fixos ao lado do corpo. Flexione os cotovelos elevando o peso, contraindo o bíceps no topo. Desça controladamente.'
-            };
-            
-            let instruction = baseInstructions['Supino'];
-            if (exerciseName.includes('Agachamento')) instruction = baseInstructions['Agachamento'];
-            else if (exerciseName.includes('Remada') || exerciseName.includes('Puxada')) instruction = baseInstructions['Remada'];
-            else if (exerciseName.includes('Rosca')) instruction = baseInstructions['Rosca'];
-            
-            return instruction;
-        }
-
-        function backFromDetail() {
-            showView('workout');
-        }
-
-        function addToCurrentWorkout() {
-            if (!currentExerciseDetail) return;
-            
-            const { muscleKey, exerciseIndex } = currentExerciseDetail;
-            quickAddExercise(muscleKey, exerciseIndex);
-            showView('workout');
-        }
-
-        function quickAddExercise(muscleKey, exerciseIndex) {
-            const group = muscleGroups[muscleKey];
-            const exercise = group.exercises[exerciseIndex];
-            
-            if (!currentWorkout.id) {
-                startNewWorkout();
-            }
-            
-            const isTimeBased = exercise.type === 'time';
-            
-            const workoutExercise = {
-                id: Date.now(),
-                name: exercise.name,
-                muscleGroup: group.name,
-                type: exercise.type || 'weight',
-                met: exercise.met || null,
-                sets: isTimeBased 
-                    ? [
-                        { time: '30', weight: '', reps: '', completed: false },
-                        { time: '30', weight: '', reps: '', completed: false },
-                        { time: '30', weight: '', reps: '', completed: false }
-                      ]
-                    : [
-                        { weight: '', reps: '10', time: '', completed: false },
-                        { weight: '', reps: '10', time: '', completed: false },
-                        { weight: '', reps: '10', time: '', completed: false }
-                      ]
-            };
-            
-            currentWorkout.exercises.push(workoutExercise);
-            renderCurrentWorkout();
-            updateWorkoutStats();
-            updateActiveCalories();
         }
 
         function startNewWorkout() {
@@ -1864,7 +3742,6 @@
                 document.getElementById('workout-timer').textContent = 
                     `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 
-                // Atualizar calorias a cada minuto
                 if (seconds === 0) {
                     updateActiveCalories();
                 }
@@ -1891,7 +3768,6 @@
                 let setsHtml = '';
                 exercise.sets.forEach((set, setIndex) => {
                     if (isTimeBased) {
-                        // Interface para exercícios de tempo (prancha, cardio)
                         setsHtml += `
                             <div class="flex items-center gap-3 mb-2 bg-gray-800/50 p-2 rounded-lg">
                                 <span class="text-sm font-bold text-gray-500 w-6">${setIndex + 1}</span>
@@ -1908,7 +3784,6 @@
                             </div>
                         `;
                     } else {
-                        // Interface para exercícios de peso (musculação)
                         setsHtml += `
                             <div class="flex items-center gap-3 mb-2 bg-gray-800/50 p-2 rounded-lg">
                                 <span class="text-sm font-bold text-gray-500 w-6">${setIndex + 1}</span>
@@ -2135,35 +4010,6 @@
             
             const totalCalories = workoutHistory.reduce((acc, w) => acc + (w.totalCalories || 0), 0);
             document.getElementById('total-calories').textContent = totalCalories.toLocaleString();
-            
-            const streak = calculateStreak();
-            document.getElementById('current-streak').textContent = streak;
-        }
-
-        function calculateStreak() {
-            if (workoutHistory.length === 0) return 0;
-            
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            
-            let streak = 0;
-            let currentDate = new Date(today);
-            
-            for (let i = 0; i < 365; i++) {
-                const dateStr = currentDate.toISOString().split('T')[0];
-                const hasWorkout = workoutHistory.some(w => w.date.startsWith(dateStr));
-                
-                if (hasWorkout) {
-                    streak++;
-                    currentDate.setDate(currentDate.getDate() - 1);
-                } else if (i === 0) {
-                    currentDate.setDate(currentDate.getDate() - 1);
-                } else {
-                    break;
-                }
-            }
-            
-            return streak;
         }
 
         function renderHistory() {
@@ -2176,7 +4022,7 @@
             
             container.innerHTML = '';
             
-            workoutHistory.forEach((workout, index) => {
+            workoutHistory.forEach((workout) => {
                 const date = new Date(workout.date);
                 const div = document.createElement('div');
                 div.className = 'bg-gray-900 rounded-2xl p-4 border border-gray-800 flex items-center justify-between group';
@@ -2233,11 +4079,6 @@
                 renderDayWorkouts();
                 renderPlannerWeek();
                 renderWeekPreview();
-            } else if (deleteTargetType === 'all') {
-                workoutHistory = [];
-                localStorage.setItem('workoutHistory', JSON.stringify(workoutHistory));
-                renderHistory();
-                updateStats();
             }
             
             closeDeleteModal();
@@ -2372,11 +4213,14 @@
         }
 
         function showView(viewName) {
-            ['dashboard', 'planner', 'workout', 'exercise-detail', 'history', 'stats'].forEach(v => {
-                document.getElementById(v + '-view').classList.add('hidden');
+            const views = ['dashboard', 'library', 'exercise-detail', 'planner', 'workout', 'history', 'stats'];
+            views.forEach(v => {
+                const el = document.getElementById(v + '-view');
+                if (el) el.classList.add('hidden');
             });
             
-            document.getElementById(viewName + '-view').classList.remove('hidden');
+            const targetView = document.getElementById(viewName + '-view');
+            if (targetView) targetView.classList.remove('hidden');
             
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active-nav');
@@ -2399,11 +4243,12 @@
         }
 
         function addExerciseToWorkout() {
-            showView('dashboard');
+            openLibrary();
         }
     </script>
 </body>
 </html>
+
 
 
 
