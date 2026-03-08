@@ -134,7 +134,6 @@
             border-left: 3px solid #f97316;
         }
         
-        /* Novos estilos para o fluxo simplificado */
         .exercise-search {
             background: rgba(31, 41, 55, 0.8);
             border: 1px solid rgba(75, 85, 99, 0.4);
@@ -262,6 +261,49 @@
             from { transform: translateY(100%); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
+        
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            background: #374151;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .toggle-switch.active {
+            background: #f97316;
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(24px);
+        }
+        
+        .calories-badge {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .time-input {
+            font-variant-numeric: tabular-nums;
+        }
     </style>
 </head>
 <body class="bg-gray-950 text-white min-h-screen pb-20">
@@ -282,9 +324,9 @@
                     <i class="fas fa-calendar-week text-gray-400"></i>
                     <span id="planner-badge" class="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full text-xs flex items-center justify-center hidden">!</span>
                 </button>
-                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-sm font-bold">
+                <button onclick="showProfileModal()" class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-sm font-bold">
                     <span id="user-avatar">U</span>
-                </div>
+                </button>
             </div>
         </div>
     </header>
@@ -321,11 +363,11 @@
                 </div>
                 <div class="stat-card rounded-2xl p-4">
                     <div class="flex items-center gap-2 mb-2">
-                        <i class="fas fa-trophy text-yellow-500"></i>
-                        <span class="text-xs text-gray-400">Streak</span>
+                        <i class="fas fa-fire-alt text-red-500"></i>
+                        <span class="text-xs text-gray-400">Calorias</span>
                     </div>
-                    <p class="text-2xl font-bold" id="current-streak">0</p>
-                    <p class="text-xs text-orange-400 mt-1">dias seguidos</p>
+                    <p class="text-2xl font-bold" id="total-calories">0</p>
+                    <p class="text-xs text-orange-400 mt-1">kcal queimadas</p>
                 </div>
             </div>
 
@@ -374,22 +416,21 @@
             </div>
         </div>
 
-        <!-- NOVO: Planner View - Fluxo Simplificado -->
+        <!-- Planner View -->
         <div id="planner-view" class="hidden space-y-6">
-            <!-- Header do Planner -->
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-4">
                     <button onclick="showView('dashboard')" class="p-2 rounded-lg hover:bg-gray-800 transition">
                         <i class="fas fa-arrow-left"></i>
                     </button>
                     <div>
-                        <h2 class="text-2xl font-bold">Planejar Semana</h2>
+                        <h2 class="text-2xl font-bold">Planejamento Semanal</h2>
                         <p class="text-gray-400 text-sm">Toque em um dia para criar treino</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Seletor de Semana -->
+            <!-- Week Selector -->
             <div class="bg-gray-900 rounded-2xl p-4 border border-gray-800">
                 <div class="flex justify-between items-center mb-4">
                     <button onclick="changeWeek(-1)" class="p-2 hover:bg-gray-800 rounded-lg transition">
@@ -401,13 +442,12 @@
                     </button>
                 </div>
                 
-                <!-- Dias da Semana -->
                 <div class="grid grid-cols-7 gap-2" id="planner-week-days">
-                    <!-- Populated by JS -->
+                    <!-- Days populated by JS -->
                 </div>
             </div>
 
-            <!-- Lista de Treinos do Dia Selecionado -->
+            <!-- Selected Day Workouts -->
             <div id="day-workouts-section" class="space-y-4">
                 <div class="flex justify-between items-center">
                     <h3 class="text-lg font-bold" id="selected-day-label">Segunda-feira, 10 Mar</h3>
@@ -419,13 +459,6 @@
 
                 <div id="day-workouts-list" class="space-y-3">
                     <!-- Treinos planejados aparecem aqui -->
-                    <div class="text-center py-8 text-gray-500">
-                        <i class="fas fa-dumbbell text-4xl mb-3 opacity-30"></i>
-                        <p>Nenhum treino planejado para este dia</p>
-                        <button onclick="openCreateWorkoutFlow()" class="mt-4 text-orange-400 hover:text-orange-300 text-sm">
-                            Criar primeiro treino
-                        </button>
-                    </div>
                 </div>
             </div>
 
@@ -453,7 +486,7 @@
             </div>
         </div>
 
-        <!-- NOVO: Modal de Criação de Treino - Passo 1: Nome -->
+        <!-- Create Workout Modal - Step 1 -->
         <div id="create-workout-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
             <div class="bg-gray-900 w-full sm:max-w-md sm:rounded-3xl rounded-t-3xl border border-gray-800 max-h-[90vh] overflow-y-auto slide-up">
                 <div class="p-6">
@@ -494,7 +527,7 @@
             </div>
         </div>
 
-        <!-- NOVO: Modal de Criação de Treino - Passo 2: Selecionar Exercícios -->
+        <!-- Select Exercises Modal - Step 2 -->
         <div id="select-exercises-modal" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col">
             <div class="flex items-center justify-between p-4 border-b border-gray-800 bg-gray-900">
                 <div class="flex items-center gap-3">
@@ -521,23 +554,21 @@
                             oninput="filterExercises()">
                     </div>
                     
-                    <!-- Filtros de grupo muscular -->
+                    <!-- Filtros -->
                     <div class="flex gap-2 mt-3 overflow-x-auto pb-2" id="muscle-filters">
                         <button onclick="filterByMuscle('all')" class="muscle-filter-btn active px-4 py-2 rounded-full bg-gray-800 border border-gray-700 text-sm font-medium">
                             Todos
                         </button>
-                        <!-- Populated by JS -->
                     </div>
                 </div>
 
-                <!-- Lista de Exercícios -->
                 <div id="exercises-selection-list" class="space-y-2 mt-2">
                     <!-- Populated by JS -->
                 </div>
             </div>
         </div>
 
-        <!-- NOVO: Modal de Criação de Treino - Passo 3: Configurar Séries -->
+        <!-- Configure Sets Modal - Step 3 -->
         <div id="configure-sets-modal" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col">
             <div class="flex items-center justify-between p-4 border-b border-gray-800 bg-gray-900">
                 <div class="flex items-center gap-3">
@@ -559,15 +590,52 @@
             </div>
         </div>
 
-        <!-- Workout View (Active Workout) -->
+        <!-- Profile Modal (Peso do usuário) -->
+        <div id="profile-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+            <div class="bg-gray-900 rounded-3xl p-6 max-w-sm w-full border border-gray-800">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold">Seu Perfil</h3>
+                    <button onclick="closeProfileModal()" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Seu Peso (kg)</label>
+                        <input type="number" id="user-weight" placeholder="70" 
+                            class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition"
+                            value="70">
+                        <p class="text-xs text-gray-500 mt-1">Usado para calcular calorias queimadas</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Sexo</label>
+                        <div class="flex gap-3">
+                            <button onclick="selectGender('male')" id="gender-male" class="flex-1 py-3 rounded-xl bg-orange-500 text-white font-medium transition">Masculino</button>
+                            <button onclick="selectGender('female')" id="gender-female" class="flex-1 py-3 rounded-xl bg-gray-800 text-gray-400 font-medium transition">Feminino</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="saveProfile()" class="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-bold transition">
+                    Salvar
+                </button>
+            </div>
+        </div>
+
+        <!-- Workout View -->
         <div id="workout-view" class="hidden space-y-6">
             <div class="flex items-center gap-4 mb-6">
                 <button onclick="showView('dashboard')" class="p-2 rounded-lg hover:bg-gray-800 transition">
                     <i class="fas fa-arrow-left"></i>
                 </button>
-                <div>
+                <div class="flex-1">
                     <h2 class="text-2xl font-bold" id="workout-title">Treino</h2>
                     <p class="text-gray-400 text-sm" id="workout-subtitle">Selecione os exercícios</p>
+                </div>
+                <div id="active-calories-badge" class="calories-badge hidden">
+                    <i class="fas fa-fire mr-1"></i> <span id="active-calories">0</span> kcal
                 </div>
             </div>
 
@@ -740,139 +808,176 @@
     </div>
 
     <script>
-        // Data Structure
+        // ==========================================
+        // DADOS E CONFIGURAÇÕES
+        // ==========================================
+        
+        // Dados do usuário
+        let userProfile = JSON.parse(localStorage.getItem('userProfile')) || {
+            weight: 70,
+            gender: 'male' // 'male' ou 'female'
+        };
+
+        // METs para cálculo de calorias (valores científicos)
+        const exerciseMETs = {
+            weightlifting_light: 3.0,    // Leve (alta repetição, pouco peso)
+            weightlifting_moderate: 3.5, // Moderado (8-12 reps)
+            weightlifting_vigorous: 5.0, // Intenso (powerlifting, poucas reps pesadas)
+            cardio_light: 4.0,           // Cardio leve
+            cardio_moderate: 7.0,        // Cardio moderado
+            cardio_vigorous: 10.0,       // Cardio intenso
+            isometric: 2.5               // Exercícios isométricos (prancha, etc)
+        };
+
+        // Grupos musculares com exercícios
         const muscleGroups = {
             peitoral: {
                 name: "Peitoral",
                 color: "from-red-500 to-pink-600",
                 exercises: [
-                    { name: "Supino Reto", variations: ["Barra", "Halter"], focus: "Geral" },
-                    { name: "Supino Inclinado", variations: ["Barra", "Halter"], focus: "Superior" },
-                    { name: "Supino Declinado", variations: ["Barra", "Halter"], focus: "Inferior" },
-                    { name: "Crucifixo", variations: ["Reto", "Inclinado"], focus: "Isolamento" },
-                    { name: "Crossover", variations: ["Polia Alta", "Baixa", "Média"], focus: "Isolamento" },
-                    { name: "Voador/Pec Deck", variations: ["Máquina"], focus: "Isolamento" },
-                    { name: "Flexão de Braço", variations: ["Padrão", "Diamond"], focus: "Funcional" },
-                    { name: "Supino na Máquina", variations: ["Vertical"], focus: "Máquina" },
-                    { name: "Pull Over", variations: ["Halter", "Máquina"], focus: "Superior" }
+                    { name: "Supino Reto", variations: ["Barra", "Halter"], focus: "Geral", type: "weight" },
+                    { name: "Supino Inclinado", variations: ["Barra", "Halter"], focus: "Superior", type: "weight" },
+                    { name: "Supino Declinado", variations: ["Barra", "Halter"], focus: "Inferior", type: "weight" },
+                    { name: "Crucifixo", variations: ["Reto", "Inclinado"], focus: "Isolamento", type: "weight" },
+                    { name: "Crossover", variations: ["Polia Alta", "Baixa", "Média"], focus: "Isolamento", type: "weight" },
+                    { name: "Voador/Pec Deck", variations: ["Máquina"], focus: "Isolamento", type: "weight" },
+                    { name: "Flexão de Braço", variations: ["Padrão", "Diamond"], focus: "Funcional", type: "weight" },
+                    { name: "Supino na Máquina", variations: ["Vertical"], focus: "Máquina", type: "weight" },
+                    { name: "Pull Over", variations: ["Halter", "Máquina"], focus: "Superior", type: "weight" }
                 ]
             },
             costas: {
                 name: "Costas",
                 color: "from-blue-500 to-cyan-600",
                 exercises: [
-                    { name: "Puxada Alta", variations: ["Aberta", "Fechada", "Supinada"], focus: "Largura" },
-                    { name: "Remada Curvada", variations: ["Barra", "Halter"], focus: "Espessura" },
-                    { name: "Remada Baixa", variations: ["Cabo"], focus: "Espessura" },
-                    { name: "Remada Cavalinho", variations: ["T-Bar"], focus: "Espessura" },
-                    { name: "Remada Articulada", variations: ["Máquina"], focus: "Espessura" },
-                    { name: "Barra Fixa", variations: ["Pull-up", "Chin-up"], focus: "Largura" },
-                    { name: "Levantamento Terra", variations: ["Convencional", "Sumô"], focus: "Geral" },
-                    { name: "Remada Unilateral", variations: ["Serrote"], focus: "Isolamento" },
-                    { name: "Pull Down", variations: ["Braços Estendidos"], focus: "Largura" },
-                    { name: "Remada Renegade", variations: ["Halter"], focus: "Funcional" }
+                    { name: "Puxada Alta", variations: ["Aberta", "Fechada", "Supinada"], focus: "Largura", type: "weight" },
+                    { name: "Remada Curvada", variations: ["Barra", "Halter"], focus: "Espessura", type: "weight" },
+                    { name: "Remada Baixa", variations: ["Cabo"], focus: "Espessura", type: "weight" },
+                    { name: "Remada Cavalinho", variations: ["T-Bar"], focus: "Espessura", type: "weight" },
+                    { name: "Remada Articulada", variations: ["Máquina"], focus: "Espessura", type: "weight" },
+                    { name: "Barra Fixa", variations: ["Pull-up", "Chin-up"], focus: "Largura", type: "weight" },
+                    { name: "Levantamento Terra", variations: ["Convencional", "Sumô"], focus: "Geral", type: "weight" },
+                    { name: "Remada Unilateral", variations: ["Serrote"], focus: "Isolamento", type: "weight" },
+                    { name: "Pull Down", variations: ["Braços Estendidos"], focus: "Largura", type: "weight" },
+                    { name: "Remada Renegade", variations: ["Halter"], focus: "Funcional", type: "weight" }
                 ]
             },
             ombros: {
                 name: "Ombros",
                 color: "from-yellow-500 to-orange-600",
                 exercises: [
-                    { name: "Desenvolvimento", variations: ["Halteres", "Barra", "Máquina"], focus: "Geral" },
-                    { name: "Elevação Lateral", variations: ["Halter", "Cabo", "Máquina"], focus: "Lateral" },
-                    { name: "Elevação Frontal", variations: ["Halter", "Anilha", "Cabo"], focus: "Anterior" },
-                    { name: "Crucifixo Invertido", variations: ["Halter", "Máquina"], focus: "Posterior" },
-                    { name: "Face Pull", variations: ["Cabo"], focus: "Posterior" },
-                    { name: "Elevação Lateral no Cabo", variations: ["Unilateral"], focus: "Lateral" },
-                    { name: "Remada Alta", variations: ["Barra", "Cabo"], focus: "Trapézio" }
+                    { name: "Desenvolvimento", variations: ["Halteres", "Barra", "Máquina"], focus: "Geral", type: "weight" },
+                    { name: "Elevação Lateral", variations: ["Halter", "Cabo", "Máquina"], focus: "Lateral", type: "weight" },
+                    { name: "Elevação Frontal", variations: ["Halter", "Anilha", "Cabo"], focus: "Anterior", type: "weight" },
+                    { name: "Crucifixo Invertido", variations: ["Halter", "Máquina"], focus: "Posterior", type: "weight" },
+                    { name: "Face Pull", variations: ["Cabo"], focus: "Posterior", type: "weight" },
+                    { name: "Elevação Lateral no Cabo", variations: ["Unilateral"], focus: "Lateral", type: "weight" },
+                    { name: "Remada Alta", variations: ["Barra", "Cabo"], focus: "Trapézio", type: "weight" }
                 ]
             },
             biceps: {
                 name: "Bíceps",
                 color: "from-green-500 to-emerald-600",
                 exercises: [
-                    { name: "Rosca Direta", variations: ["Barra W", "Barra Reta"], focus: "Cabeça Curta" },
-                    { name: "Rosca Alternada", variations: ["Halteres"], focus: "Isolamento" },
-                    { name: "Rosca Martelo", variations: ["Halter", "Corda"], focus: "Braquial" },
-                    { name: "Rosca Scott", variations: ["Máquina", "Barra", "Halter"], focus: "Cabeça Longa" },
-                    { name: "Rosca Concentrada", variations: ["Halter"], focus: "Pico" },
-                    { name: "Rosca Inversa", variations: ["Barra", "Cabo"], focus: "Antebraço" },
-                    { name: "Rosca no Cabo", variations: ["Polia"], focus: "Tensão Constante" },
-                    { name: "Rosca Spider", variations: ["Banco Inclinado"], focus: "Cabeça Curta" }
+                    { name: "Rosca Direta", variations: ["Barra W", "Barra Reta"], focus: "Cabeça Curta", type: "weight" },
+                    { name: "Rosca Alternada", variations: ["Halteres"], focus: "Isolamento", type: "weight" },
+                    { name: "Rosca Martelo", variations: ["Halter", "Corda"], focus: "Braquial", type: "weight" },
+                    { name: "Rosca Scott", variations: ["Máquina", "Barra", "Halter"], focus: "Cabeça Longa", type: "weight" },
+                    { name: "Rosca Concentrada", variations: ["Halter"], focus: "Pico", type: "weight" },
+                    { name: "Rosca Inversa", variations: ["Barra", "Cabo"], focus: "Antebraço", type: "weight" },
+                    { name: "Rosca no Cabo", variations: ["Polia"], focus: "Tensão Constante", type: "weight" },
+                    { name: "Rosca Spider", variations: ["Banco Inclinado"], focus: "Cabeça Curta", type: "weight" }
                 ]
             },
             triceps: {
                 name: "Tríceps",
                 color: "from-purple-500 to-violet-600",
                 exercises: [
-                    { name: "Tríceps Pulley", variations: ["Barra", "Corda"], focus: "Cabeça Lateral" },
-                    { name: "Tríceps Testa", variations: ["Barra W", "Reta", "Halter"], focus: "Cabeça Longa" },
-                    { name: "Tríceps Francês", variations: ["Halter", "Cabo"], focus: "Cabeça Longa" },
-                    { name: "Tríceps Paralelas", variations: ["Máquina", "Livre"], focus: "Geral" },
-                    { name: "Supino Fechado", variations: ["Barra", "Halter"], focus: "Geral" },
-                    { name: "Tríceps Coice", variations: ["Cabo", "Halter"], focus: "Cabeça Lateral" },
-                    { name: "Tríceps Máquina", variations: ["Articulada"], focus: "Isolamento" }
+                    { name: "Tríceps Pulley", variations: ["Barra", "Corda"], focus: "Cabeça Lateral", type: "weight" },
+                    { name: "Tríceps Testa", variations: ["Barra W", "Reta", "Halter"], focus: "Cabeça Longa", type: "weight" },
+                    { name: "Tríceps Francês", variations: ["Halter", "Cabo"], focus: "Cabeça Longa", type: "weight" },
+                    { name: "Tríceps Paralelas", variations: ["Máquina", "Livre"], focus: "Geral", type: "weight" },
+                    { name: "Supino Fechado", variations: ["Barra", "Halter"], focus: "Geral", type: "weight" },
+                    { name: "Tríceps Coice", variations: ["Cabo", "Halter"], focus: "Cabeça Lateral", type: "weight" },
+                    { name: "Tríceps Máquina", variations: ["Articulada"], focus: "Isolamento", type: "weight" }
                 ]
             },
             quadriceps: {
                 name: "Quadríceps",
                 color: "from-red-600 to-red-800",
                 exercises: [
-                    { name: "Agachamento Livre", variations: ["Barra"], focus: "Geral" },
-                    { name: "Agachamento Hack", variations: ["Máquina"], focus: "Vasto Lateral" },
-                    { name: "Leg Press", variations: ["45º", "Horizontal"], focus: "Geral" },
-                    { name: "Cadeira Extensora", variations: ["Máquina"], focus: "Isolamento" },
-                    { name: "Afundo/Lunge", variations: ["Halteres", "Barra"], focus: "Funcional" },
-                    { name: "Agachamento Búlgaro", variations: ["Halteres"], focus: "Vasto Medial" },
-                    { name: "Agachamento Sumô", variations: ["Halter", "Barra"], focus: "Adutores" },
-                    { name: "Agachamento Frontal", variations: ["Barra"], focus: "Vasto Lateral" }
+                    { name: "Agachamento Livre", variations: ["Barra"], focus: "Geral", type: "weight" },
+                    { name: "Agachamento Hack", variations: ["Máquina"], focus: "Vasto Lateral", type: "weight" },
+                    { name: "Leg Press", variations: ["45º", "Horizontal"], focus: "Geral", type: "weight" },
+                    { name: "Cadeira Extensora", variations: ["Máquina"], focus: "Isolamento", type: "weight" },
+                    { name: "Afundo/Lunge", variations: ["Halteres", "Barra"], focus: "Funcional", type: "weight" },
+                    { name: "Agachamento Búlgaro", variations: ["Halteres"], focus: "Vasto Medial", type: "weight" },
+                    { name: "Agachamento Sumô", variations: ["Halter", "Barra"], focus: "Adutores", type: "weight" },
+                    { name: "Agachamento Frontal", variations: ["Barra"], focus: "Vasto Lateral", type: "weight" }
                 ]
             },
             posterior: {
                 name: "Posterior de Coxa",
                 color: "from-orange-600 to-amber-700",
                 exercises: [
-                    { name: "Mesa Flexora", variations: ["Deitado"], focus: "Isolamento" },
-                    { name: "Cadeira Flexora", variations: ["Sentado"], focus: "Isolamento" },
-                    { name: "Flexora em Pé", variations: ["Unilateral"], focus: "Isolamento" },
-                    { name: "Stiff", variations: ["Barra", "Halter"], focus: "Romanian" },
-                    { name: "Mesa Flexora", variations: ["Cabo"], focus: "Isolamento" },
-                    { name: "Bom Dia", variations: ["Barra"], focus: "Isquiotibiais" }
+                    { name: "Mesa Flexora", variations: ["Deitado"], focus: "Isolamento", type: "weight" },
+                    { name: "Cadeira Flexora", variations: ["Sentado"], focus: "Isolamento", type: "weight" },
+                    { name: "Flexora em Pé", variations: ["Unilateral"], focus: "Isolamento", type: "weight" },
+                    { name: "Stiff", variations: ["Barra", "Halter"], focus: "Romanian", type: "weight" },
+                    { name: "Mesa Flexora", variations: ["Cabo"], focus: "Isolamento", type: "weight" },
+                    { name: "Bom Dia", variations: ["Barra"], focus: "Isquiotibiais", type: "weight" }
                 ]
             },
             gluteos: {
                 name: "Glúteos",
                 color: "from-pink-600 to-rose-700",
                 exercises: [
-                    { name: "Elevação Pélvica", variations: ["Barra", "Máquina"], focus: "Máximo" },
-                    { name: "Glúteo Cabo", variations: ["Kickback"], focus: "Máximo" },
-                    { name: "Agachamento Búlgaro", variations: ["Foco Glúteo"], focus: "Médio" },
-                    { name: "Afundo no Smith", variations: ["Passada"], focus: "Máximo" },
-                    { name: "Glúteo na Máquina", variations: ["Hip Thrust"], focus: "Máximo" },
-                    { name: "Cadeira Abdutora", variations: ["Máquina"], focus: "Médio" }
+                    { name: "Elevação Pélvica", variations: ["Barra", "Máquina"], focus: "Máximo", type: "weight" },
+                    { name: "Glúteo Cabo", variations: ["Kickback"], focus: "Máximo", type: "weight" },
+                    { name: "Agachamento Búlgaro", variations: ["Foco Glúteo"], focus: "Médio", type: "weight" },
+                    { name: "Afundo no Smith", variations: ["Passada"], focus: "Máximo", type: "weight" },
+                    { name: "Glúteo na Máquina", variations: ["Hip Thrust"], focus: "Máximo", type: "weight" },
+                    { name: "Cadeira Abdutora", variations: ["Máquina"], focus: "Médio", type: "weight" }
                 ]
             },
             panturrilha: {
                 name: "Panturrilha",
                 color: "from-gray-500 to-gray-700",
                 exercises: [
-                    { name: "Gêmeos em Pé", variations: ["Máquina", "Smith"], focus: "Gastrocnêmio" },
-                    { name: "Gêmeos Sentado", variations: ["Máquina"], focus: "Soleus" },
-                    { name: "Gêmeos no Leg Press", variations: ["45º"], focus: "Geral" },
-                    { name: "Gêmeos no Hack", variations: ["Máquina"], focus: "Geral" }
+                    { name: "Gêmeos em Pé", variations: ["Máquina", "Smith"], focus: "Gastrocnêmio", type: "weight" },
+                    { name: "Gêmeos Sentado", variations: ["Máquina"], focus: "Soleus", type: "weight" },
+                    { name: "Gêmeos no Leg Press", variations: ["45º"], focus: "Geral", type: "weight" },
+                    { name: "Gêmeos no Hack", variations: ["Máquina"], focus: "Geral", type: "weight" }
                 ]
             },
             core: {
                 name: "Core",
                 color: "from-teal-500 to-cyan-600",
                 exercises: [
-                    { name: "Abdominal Infra", variations: ["Hanging", "Paralelas"], focus: "Reto Inferior" },
-                    { name: "Abdominal Supra", variations: ["Chão", "Máquina", "Cabo"], focus: "Reto Superior" },
-                    { name: "Prancha Isométrica", variations: ["Padrão", "Lateral"], focus: "Estabilidade" },
-                    { name: "Abdominal Russo", variations: ["Russian Twist"], focus: "Oblíquos" },
-                    { name: "Abdominal com Roda", variations: ["Ab Wheel"], focus: "Reto" },
-                    { name: "Abdominal Oblíquo", variations: ["Cabo", "Halter"], focus: "Oblíquos" },
-                    { name: "Hiperextensão Lombar", variations: ["Banco Romano"], focus: "Lombar" },
-                    { name: "Vácuo Abdominal", variations: ["Stomach Vacuum"], focus: "Transverso" }
+                    { name: "Abdominal Infra", variations: ["Hanging", "Paralelas"], focus: "Reto Inferior", type: "weight" },
+                    { name: "Abdominal Supra", variations: ["Chão", "Máquina", "Cabo"], focus: "Reto Superior", type: "weight" },
+                    { name: "Prancha Isométrica", variations: ["Padrão", "Lateral"], focus: "Estabilidade", type: "time" },
+                    { name: "Abdominal Russo", variations: ["Russian Twist"], focus: "Oblíquos", type: "weight" },
+                    { name: "Abdominal com Roda", variations: ["Ab Wheel"], focus: "Reto", type: "weight" },
+                    { name: "Abdominal Oblíquo", variations: ["Cabo", "Halter"], focus: "Oblíquos", type: "weight" },
+                    { name: "Hiperextensão Lombar", variations: ["Banco Romano"], focus: "Lombar", type: "weight" },
+                    { name: "Vácuo Abdominal", variations: ["Stomach Vacuum"], focus: "Transverso", type: "time" }
+                ]
+            },
+            cardio: {
+                name: "Cardio",
+                color: "from-cyan-400 to-blue-500",
+                exercises: [
+                    { name: "Corrida", variations: ["Esteira", "Rua"], focus: "Resistência", type: "time", met: "cardio_moderate" },
+                    { name: "Caminhada", variations: ["Rápida", "Inclinada"], focus: "Queima Gordura", type: "time", met: "cardio_light" },
+                    { name: "Bicicleta", variations: ["Ergométrica", "Spinning"], focus: "Resistência", type: "time", met: "cardio_moderate" },
+                    { name: "Elíptico", variations: ["Padrão", "Inverso"], focus: "Baixo Impacto", type: "time", met: "cardio_moderate" },
+                    { name: "Remo", variations: ["Máquina", "Cabo"], focus: "Full Body", type: "time", met: "cardio_vigorous" },
+                    { name: "Escada", variations: ["Stepper", "Real"], focus: "Glúteos", type: "time", met: "cardio_vigorous" },
+                    { name: "Pular Corda", variations: ["Padrão", "Double Unders"], focus: "Coordenação", type: "time", met: "cardio_vigorous" },
+                    { name: "Burpees", variations: ["Padrão", "Com Plyo"], focus: "HIIT", type: "time", met: "cardio_vigorous" },
+                    { name: "Mountain Climbers", variations: ["Padrão", "Lentos"], focus: "Core + Cardio", type: "time", met: "cardio_moderate" },
+                    { name: "Jumping Jacks", variations: ["Padrão", "Com Step"], focus: "Aquecimento", type: "time", met: "cardio_light" }
                 ]
             }
         };
@@ -897,11 +1002,10 @@
         let deleteTargetId = null;
         let deleteTargetType = null;
         
-        // Novo: Estado do fluxo de criação
         let newWorkoutState = {
             name: '',
             color: 'orange',
-            exercises: [], // { muscleKey, exerciseIndex, name, muscleGroup, sets: [{weight, reps}] }
+            exercises: [],
             date: null
         };
 
@@ -913,18 +1017,114 @@
             renderWeekPreview();
             initPlanner();
             renderMuscleFilters();
+            updateUserAvatar();
         });
+
+        function updateUserAvatar() {
+            document.getElementById('user-avatar').textContent = userProfile.weight;
+        }
 
         function setCurrentDate() {
             const options = { weekday: 'long', day: 'numeric', month: 'long' };
             document.getElementById('current-date').textContent = new Date().toLocaleDateString('pt-BR', options);
         }
 
+        // ==========================================
+        // CÁLCULO DE CALORIAS (Baseado em METs)
+        // ==========================================
+        
+        function calculateCalories(durationMinutes, exerciseType = 'weightlifting_moderate', metValue = null) {
+            const weightKg = userProfile.weight;
+            let met = metValue || exerciseMETs[exerciseType] || 3.5;
+            
+            // Fórmula: Calorias = (MET × 3.5 × peso em kg) / 200 × minutos
+            const calories = (met * 3.5 * weightKg) / 200 * durationMinutes;
+            
+            // Ajuste por sexo (homens queimam ~12% a mais em média)
+            const genderMultiplier = userProfile.gender === 'male' ? 1.12 : 1.0;
+            
+            return Math.round(calories * genderMultiplier);
+        }
+
+        function calculateWorkoutCalories(workout) {
+            let totalCalories = 0;
+            const durationMinutes = workout.duration / 60;
+            
+            workout.exercises.forEach(ex => {
+                const isTimeBased = ex.sets && ex.sets[0] && ex.sets[0].time;
+                const isCardio = ex.met && ex.met.includes('cardio');
+                
+                if (isTimeBased || isCardio) {
+                    // Para cardio/tempo: calcular baseado no tempo total do exercício
+                    const exerciseTime = ex.sets.reduce((acc, set) => acc + (parseInt(set.time) || 0), 0);
+                    const met = ex.met || 'cardio_moderate';
+                    totalCalories += calculateCalories(exerciseTime / 60, met);
+                } else {
+                    // Para musculação: estimar baseado no volume e duração
+                    const volume = ex.sets.reduce((acc, set) => {
+                        return acc + (parseFloat(set.weight || 0) * parseFloat(set.reps || 0));
+                    }, 0);
+                    
+                    // Quanto maior o volume, mais intenso o exercício
+                    let intensity = 'weightlifting_moderate';
+                    if (volume > 2000) intensity = 'weightlifting_vigorous';
+                    else if (volume < 500) intensity = 'weightlifting_light';
+                    
+                    // Tempo estimado por exercício (baseado em séries)
+                    const estimatedTime = ex.sets.length * 2; // ~2 min por série (incluindo descanso)
+                    totalCalories += calculateCalories(estimatedTime, intensity);
+                }
+            });
+            
+            return totalCalories;
+        }
+
+        // ==========================================
+        // PROFILE MODAL
+        // ==========================================
+        
+        function showProfileModal() {
+            document.getElementById('user-weight').value = userProfile.weight;
+            selectGender(userProfile.gender);
+            document.getElementById('profile-modal').classList.remove('hidden');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profile-modal').classList.add('hidden');
+        }
+
+        function selectGender(gender) {
+            userProfile.gender = gender;
+            document.getElementById('gender-male').className = gender === 'male' 
+                ? 'flex-1 py-3 rounded-xl bg-orange-500 text-white font-medium transition'
+                : 'flex-1 py-3 rounded-xl bg-gray-800 text-gray-400 font-medium transition';
+            document.getElementById('gender-female').className = gender === 'female'
+                ? 'flex-1 py-3 rounded-xl bg-orange-500 text-white font-medium transition'
+                : 'flex-1 py-3 rounded-xl bg-gray-800 text-gray-400 font-medium transition';
+        }
+
+        function saveProfile() {
+            const weight = parseFloat(document.getElementById('user-weight').value);
+            if (weight && weight > 0) {
+                userProfile.weight = weight;
+                localStorage.setItem('userProfile', JSON.stringify(userProfile));
+                updateUserAvatar();
+                updateStats();
+                closeProfileModal();
+            }
+        }
+
+        // ==========================================
+        // RENDERIZAÇÃO E FUNÇÕES EXISTENTES
+        // ==========================================
+        
         function renderMuscleGroups() {
             const grid = document.getElementById('muscle-grid');
             grid.innerHTML = '';
             
             Object.entries(muscleGroups).forEach(([key, group]) => {
+                if (key === 'cardio') return; // Cardio não aparece na grid principal
+                
                 const card = document.createElement('div');
                 card.className = 'muscle-card rounded-2xl p-6 cursor-pointer border border-gray-700';
                 card.onclick = () => selectMuscleGroup(key);
@@ -949,10 +1149,6 @@
                 grid.appendChild(card);
             });
         }
-
-        // ==========================================
-        // NOVO: FLUXO SIMPLIFICADO DE PLANEJAMENTO
-        // ==========================================
 
         function initPlanner() {
             renderPlannerWeek();
@@ -988,7 +1184,6 @@
                 container.appendChild(btn);
             }
             
-            // Update week label
             const weekStart = new Date(startOfWeek);
             const weekEnd = new Date(startOfWeek);
             weekEnd.setDate(weekStart.getDate() + 6);
@@ -1043,9 +1238,12 @@
                 const div = document.createElement('div');
                 div.className = 'bg-gray-800 rounded-2xl p-4 border border-gray-700 hover:border-gray-600 transition';
                 
-                const exerciseList = workout.exercises.map(ex => 
+                const exerciseList = workout.exercises.slice(0, 3).map(ex => 
                     `<span class="text-xs text-gray-400">${ex.name}</span>`
                 ).join('<span class="text-gray-600 mx-1">•</span>');
+                
+                const moreExercises = workout.exercises.length > 3 ? 
+                    `<span class="text-xs text-gray-500">+${workout.exercises.length - 3} mais</span>` : '';
                 
                 div.innerHTML = `
                     <div class="flex justify-between items-start mb-3">
@@ -1069,6 +1267,7 @@
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-xs">
                         ${exerciseList}
+                        ${moreExercises}
                     </div>
                 `;
                 
@@ -1076,7 +1275,10 @@
             });
         }
 
-        // Passo 1: Abrir modal de nome
+        // ==========================================
+        // FLUXO DE CRIAÇÃO DE TREINO (3 PASSOS)
+        // ==========================================
+        
         function openCreateWorkoutFlow() {
             newWorkoutState = {
                 name: '',
@@ -1115,7 +1317,6 @@
             newWorkoutState.name = name;
             closeCreateWorkoutModal();
             
-            // Preparar lista de exercícios
             renderExercisesList();
             document.getElementById('select-exercises-modal').classList.remove('hidden');
             updateSelectedCount();
@@ -1126,10 +1327,9 @@
             document.getElementById('create-workout-modal').classList.remove('hidden');
         }
 
-        // Passo 2: Selecionar exercícios
         function renderMuscleFilters() {
             const container = document.getElementById('muscle-filters');
-            // Manter o "Todos" e adicionar os grupos
+            // Manter o "Todos" e adicionar os grupos + cardio
             Object.entries(muscleGroups).forEach(([key, group]) => {
                 const btn = document.createElement('button');
                 btn.className = 'muscle-filter-btn px-4 py-2 rounded-full bg-gray-800 border border-gray-700 text-sm font-medium';
@@ -1141,7 +1341,6 @@
         }
 
         function filterByMuscle(muscleKey) {
-            // Atualizar botões ativos
             document.querySelectorAll('.muscle-filter-btn').forEach(btn => {
                 if (btn.dataset.muscle === muscleKey || (muscleKey === 'all' && !btn.dataset.muscle)) {
                     btn.classList.add('active');
@@ -1173,18 +1372,24 @@
                         ex.muscleKey === muscleKey && ex.exerciseIndex === exIndex
                     );
                     
+                    const typeIcon = exercise.type === 'time' ? 'fa-clock' : 'fa-dumbbell';
+                    const typeLabel = exercise.type === 'time' ? 'Tempo' : 'Peso';
+                    
                     const div = document.createElement('div');
                     div.className = `exercise-chip bg-gray-800 border ${isSelected ? 'border-orange-500 bg-orange-500/20' : 'border-gray-700'} rounded-xl p-3 flex items-center justify-between cursor-pointer`;
-                    div.onclick = () => toggleExerciseSelection(muscleKey, exIndex, exercise.name, group.name);
+                    div.onclick = () => toggleExerciseSelection(muscleKey, exIndex, exercise.name, group.name, exercise.type, exercise.met);
                     
                     div.innerHTML = `
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-lg bg-gradient-to-br ${group.color} flex items-center justify-center">
-                                <i class="fas fa-dumbbell text-white text-sm"></i>
+                                <i class="fas ${typeIcon} text-white text-sm"></i>
                             </div>
                             <div>
                                 <h4 class="font-medium ${isSelected ? 'text-orange-400' : 'text-white'}">${exercise.name}</h4>
-                                <p class="text-xs text-gray-400">${group.name} • ${exercise.focus}</p>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs text-gray-400">${group.name}</span>
+                                    <span class="text-xs px-2 py-0.5 rounded-full ${exercise.type === 'time' ? 'bg-blue-500/20 text-blue-400' : 'bg-orange-500/20 text-orange-400'}">${typeLabel}</span>
+                                </div>
                             </div>
                         </div>
                         <div class="w-6 h-6 rounded-full border-2 ${isSelected ? 'border-orange-500 bg-orange-500' : 'border-gray-600'} flex items-center justify-center">
@@ -1197,7 +1402,7 @@
             });
         }
 
-        function toggleExerciseSelection(muscleKey, exerciseIndex, name, muscleGroup) {
+        function toggleExerciseSelection(muscleKey, exerciseIndex, name, muscleGroup, type = 'weight', met = null) {
             const existingIndex = newWorkoutState.exercises.findIndex(ex => 
                 ex.muscleKey === muscleKey && ex.exerciseIndex === exerciseIndex
             );
@@ -1205,17 +1410,27 @@
             if (existingIndex > -1) {
                 newWorkoutState.exercises.splice(existingIndex, 1);
             } else {
-                // Adicionar com 3 séries padrão
+                // Adicionar com séries padrão baseado no tipo
+                const defaultSets = type === 'time' 
+                    ? [
+                        { time: '30', weight: '', reps: '' },
+                        { time: '30', weight: '', reps: '' },
+                        { time: '30', weight: '', reps: '' }
+                      ]
+                    : [
+                        { weight: '', reps: '10', time: '' },
+                        { weight: '', reps: '10', time: '' },
+                        { weight: '', reps: '10', time: '' }
+                      ];
+                
                 newWorkoutState.exercises.push({
                     muscleKey,
                     exerciseIndex,
                     name,
                     muscleGroup,
-                    sets: [
-                        { weight: '', reps: '10' },
-                        { weight: '', reps: '10' },
-                        { weight: '', reps: '10' }
-                    ]
+                    type, // 'weight' ou 'time'
+                    met, // MET value para cardio
+                    sets: defaultSets
                 });
             }
             
@@ -1245,7 +1460,6 @@
             document.getElementById('select-exercises-modal').classList.remove('hidden');
         }
 
-        // Passo 3: Configurar séries
         function renderSetsConfiguration() {
             const container = document.getElementById('sets-configuration-list');
             container.innerHTML = '';
@@ -1254,32 +1468,55 @@
                 const div = document.createElement('div');
                 div.className = 'bg-gray-800 rounded-2xl p-4 mb-4 border border-gray-700';
                 
+                const isTimeBased = exercise.type === 'time';
+                const icon = isTimeBased ? 'fa-clock' : 'fa-dumbbell';
+                const unitLabel = isTimeBased ? 'seg' : 'kg';
+                
                 let setsHtml = '';
                 exercise.sets.forEach((set, setIndex) => {
-                    setsHtml += `
-                        <div class="set-row flex items-center gap-3 mb-2 bg-gray-900/50 p-3 rounded-lg">
-                            <span class="text-sm font-bold text-gray-500 w-6">S${setIndex + 1}</span>
-                            <div class="flex-1">
-                                <input type="number" placeholder="kg" value="${set.weight}" 
-                                    onchange="updateSetConfig(${exIndex}, ${setIndex}, 'weight', this.value)"
-                                    class="number-input w-full px-3 py-2 rounded-lg text-center text-sm">
+                    if (isTimeBased) {
+                        // Interface para exercícios baseados em tempo (prancha, cardio)
+                        setsHtml += `
+                            <div class="set-row flex items-center gap-3 mb-2 bg-gray-900/50 p-3 rounded-lg">
+                                <span class="text-sm font-bold text-gray-500 w-8">S${setIndex + 1}</span>
+                                <div class="flex-1 flex items-center gap-2">
+                                    <i class="fas fa-clock text-blue-400 text-sm"></i>
+                                    <input type="number" placeholder="tempo" value="${set.time}" 
+                                        onchange="updateSetConfig(${exIndex}, ${setIndex}, 'time', this.value)"
+                                        class="number-input w-20 px-3 py-2 rounded-lg text-center text-sm">
+                                    <span class="text-gray-400 text-sm">segundos</span>
+                                </div>
+                                <button onclick="removeSetFromExercise(${exIndex}, ${setIndex})" class="text-gray-600 hover:text-red-500 p-1">
+                                    <i class="fas fa-times"></i>
+                                </button>
                             </div>
-                            <span class="text-gray-600">×</span>
-                            <div class="flex-1">
-                                <input type="number" placeholder="reps" value="${set.reps}" 
-                                    onchange="updateSetConfig(${exIndex}, ${setIndex}, 'reps', this.value)"
-                                    class="number-input w-full px-3 py-2 rounded-lg text-center text-sm">
+                        `;
+                    } else {
+                        // Interface para exercícios baseados em peso (musculação tradicional)
+                        setsHtml += `
+                            <div class="set-row flex items-center gap-3 mb-2 bg-gray-900/50 p-3 rounded-lg">
+                                <span class="text-sm font-bold text-gray-500 w-8">S${setIndex + 1}</span>
+                                <div class="flex-1 flex items-center gap-2">
+                                    <input type="number" placeholder="kg" value="${set.weight}" 
+                                        onchange="updateSetConfig(${exIndex}, ${setIndex}, 'weight', this.value)"
+                                        class="number-input w-20 px-3 py-2 rounded-lg text-center text-sm">
+                                    <span class="text-gray-600">×</span>
+                                    <input type="number" placeholder="reps" value="${set.reps}" 
+                                        onchange="updateSetConfig(${exIndex}, ${setIndex}, 'reps', this.value)"
+                                        class="number-input w-20 px-3 py-2 rounded-lg text-center text-sm">
+                                </div>
+                                <button onclick="removeSetFromExercise(${exIndex}, ${setIndex})" class="text-gray-600 hover:text-red-500 p-1">
+                                    <i class="fas fa-times"></i>
+                                </button>
                             </div>
-                            <button onclick="removeSetFromExercise(${exIndex}, ${setIndex})" class="text-gray-600 hover:text-red-500 p-1">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    `;
+                        `;
+                    }
                 });
                 
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-3">
                         <div class="flex items-center gap-2">
+                            <i class="fas ${icon} ${isTimeBased ? 'text-blue-400' : 'text-orange-400'}"></i>
                             <span class="text-lg font-bold">${exercise.name}</span>
                             <span class="text-xs text-gray-400 bg-gray-700 px-2 py-1 rounded">${exercise.muscleGroup}</span>
                         </div>
@@ -1309,7 +1546,15 @@
         }
 
         function addSetToExercise(exIndex) {
-            newWorkoutState.exercises[exIndex].sets.push({ weight: '', reps: '10' });
+            const exercise = newWorkoutState.exercises[exIndex];
+            const isTimeBased = exercise.type === 'time';
+            
+            if (isTimeBased) {
+                exercise.sets.push({ time: '30', weight: '', reps: '' });
+            } else {
+                exercise.sets.push({ weight: '', reps: '10', time: '' });
+            }
+            
             renderSetsConfiguration();
         }
 
@@ -1343,7 +1588,6 @@
             renderPlannerWeek();
             renderWeekPreview();
             
-            // Reset state
             newWorkoutState = { name: '', color: 'orange', exercises: [], date: null };
             
             showConfetti();
@@ -1386,23 +1630,22 @@
                 
                 if (!weeklyPlan[dateStr]) weeklyPlan[dateStr] = [];
                 
-                // Adicionar exercícios dos grupos selecionados
                 const exercises = [];
                 item.muscles.forEach(muscleKey => {
                     const group = muscleGroups[muscleKey];
                     if (group && group.exercises.length > 0) {
-                        // Pegar os 2 primeiros exercícios de cada grupo
                         group.exercises.slice(0, 2).forEach((ex, idx) => {
+                            const isTimeBased = ex.type === 'time';
                             exercises.push({
                                 muscleKey: muscleKey,
                                 exerciseIndex: idx,
                                 name: ex.name,
                                 muscleGroup: group.name,
-                                sets: [
-                                    { weight: '', reps: '10' },
-                                    { weight: '', reps: '10' },
-                                    { weight: '', reps: '10' }
-                                ]
+                                type: ex.type || 'weight',
+                                met: ex.met || null,
+                                sets: isTimeBased 
+                                    ? [{ time: '30', weight: '', reps: '' }, { time: '30', weight: '', reps: '' }, { time: '30', weight: '', reps: '' }]
+                                    : [{ weight: '', reps: '10', time: '' }, { weight: '', reps: '10', time: '' }, { weight: '', reps: '10', time: '' }]
                             });
                         });
                     }
@@ -1434,7 +1677,7 @@
 
         function startPlannedWorkout(dateStr, index) {
             const workout = weeklyPlan[dateStr][index];
-            // Converter para formato de treino ativo
+            
             currentWorkout = {
                 id: Date.now(),
                 startTime: new Date(),
@@ -1442,72 +1685,36 @@
                     id: Date.now() + Math.random(),
                     name: ex.name,
                     muscleGroup: ex.muscleGroup,
+                    type: ex.type || 'weight',
+                    met: ex.met || null,
                     sets: ex.sets.map(s => ({ ...s, completed: false }))
                 })),
                 muscleGroups: new Set(workout.exercises.map(ex => ex.muscleGroup))
             };
             
             startWorkoutTimer();
+            updateActiveCalories();
             showView('workout');
             renderCurrentWorkout();
             updateWorkoutStats();
         }
 
-        // Funções existentes...
-        function renderWeekPreview() {
-            const container = document.getElementById('week-preview');
-            container.innerHTML = '';
+        // ==========================================
+        // TREINO ATIVO COM CÁLCULO DE CALORIAS
+        // ==========================================
+        
+        function updateActiveCalories() {
+            const badge = document.getElementById('active-calories-badge');
+            const calories = calculateWorkoutCalories(currentWorkout);
             
-            const today = new Date();
-            const startOfWeek = new Date(today);
-            startOfWeek.setDate(today.getDate() - today.getDay());
-            
-            const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-            
-            for (let i = 0; i < 7; i++) {
-                const date = new Date(startOfWeek);
-                date.setDate(startOfWeek.getDate() + i);
-                const dateStr = date.toISOString().split('T')[0];
-                const isToday = date.toDateString() === today.toDateString();
-                const hasWorkout = weeklyPlan[dateStr] && weeklyPlan[dateStr].length > 0;
-                
-                const div = document.createElement('div');
-                div.className = `text-center p-2 rounded-xl ${isToday ? 'bg-orange-500/20 border border-orange-500' : 'bg-gray-800'} ${hasWorkout ? 'ring-2 ring-orange-500/50' : ''}`;
-                div.innerHTML = `
-                    <div class="text-xs text-gray-400 mb-1">${days[i]}</div>
-                    <div class="text-lg font-bold ${isToday ? 'text-orange-400' : 'text-white'}">${date.getDate()}</div>
-                    ${hasWorkout ? '<div class="w-1 h-1 bg-orange-500 rounded-full mx-auto mt-1"></div>' : ''}
-                `;
-                container.appendChild(div);
+            if (calories > 0) {
+                badge.classList.remove('hidden');
+                document.getElementById('active-calories').textContent = calories;
+            } else {
+                badge.classList.add('hidden');
             }
         }
 
-        // ... (restante das funções existentes: selectMuscleGroup, showExerciseDetail, etc)
-        
-        function showView(viewName) {
-            ['dashboard', 'planner', 'workout', 'exercise-detail', 'history', 'stats'].forEach(v => {
-                document.getElementById(v + '-view').classList.add('hidden');
-            });
-            
-            document.getElementById(viewName + '-view').classList.remove('hidden');
-            
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active-nav');
-                if (btn.dataset.view === viewName) {
-                    btn.classList.add('active-nav');
-                }
-            });
-            
-            if (viewName === 'history') renderHistory();
-            if (viewName === 'stats') renderStats();
-            if (viewName === 'planner') {
-                renderPlannerWeek();
-                renderDayWorkouts();
-            }
-        }
-
-        // ... (demais funções mantidas do código anterior)
-        
         function selectMuscleGroup(muscleKey) {
             const group = muscleGroups[muscleKey];
             currentWorkout.muscleGroups.add(group.name);
@@ -1523,13 +1730,19 @@
                 item.className = 'bg-gray-900 rounded-2xl p-4 border border-gray-800 exercise-item cursor-pointer';
                 item.onclick = () => showExerciseDetail(muscleKey, index);
                 
+                const typeIcon = exercise.type === 'time' ? 'fa-clock text-blue-400' : 'fa-dumbbell text-orange-400';
+                const typeLabel = exercise.type === 'time' ? 'Tempo' : 'Peso';
+                
                 item.innerHTML = `
                     <div class="flex items-center justify-between">
                         <div class="flex-1">
-                            <h4 class="font-bold text-lg mb-1">${exercise.name}</h4>
+                            <div class="flex items-center gap-2 mb-1">
+                                <h4 class="font-bold text-lg">${exercise.name}</h4>
+                                <span class="text-xs px-2 py-0.5 rounded-full ${exercise.type === 'time' ? 'bg-blue-500/20 text-blue-400' : 'bg-orange-500/20 text-orange-400'}">${typeLabel}</span>
+                            </div>
                             <div class="flex flex-wrap gap-2 mb-2">
                                 ${exercise.variations.map(v => `
-                                    <span class="text-xs bg-gray-800 text-orange-400 px-2 py-1 rounded border border-gray-700">${v}</span>
+                                    <span class="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded border border-gray-700">${v}</span>
                                 `).join('')}
                             </div>
                             <span class="text-xs text-gray-500 bg-gray-800/50 px-2 py-1 rounded">Foco: ${exercise.focus}</span>
@@ -1555,13 +1768,17 @@
             document.getElementById('detail-exercise-name').textContent = exercise.name;
             document.getElementById('detail-muscle-group').textContent = group.name;
             
-            const instructions = generateInstructions(exercise.name, group.name);
+            const instructions = generateInstructions(exercise.name, group.name, exercise.type);
             document.getElementById('detail-instructions').innerHTML = instructions;
             
             showView('exercise-detail');
         }
 
-        function generateInstructions(exerciseName, muscleGroup) {
+        function generateInstructions(exerciseName, muscleGroup, type = 'weight') {
+            if (type === 'time') {
+                return 'Mantenha a posição com a técnica correta pelo tempo determinado. Respire de forma controlada e mantenha a contração muscular constante.';
+            }
+            
             const baseInstructions = {
                 'Supino': 'Deite-se no banco com os pés firmes no chão. Segure a barra com pegada larga. Desça controladamente até tocar o peito, mantendo os cotovelos a 45°. Empurre para cima contraindo o peitoral.',
                 'Agachamento': 'Posicione a barra sobre os trapézios. Mantenha o peito aberto e a coluna neutra. Desça flexionando os joelhos até as coxas ficarem paralelas ao chão. Volte à posição inicial empurrando os calcanhares.',
@@ -1597,20 +1814,31 @@
                 startNewWorkout();
             }
             
+            const isTimeBased = exercise.type === 'time';
+            
             const workoutExercise = {
                 id: Date.now(),
                 name: exercise.name,
                 muscleGroup: group.name,
-                sets: [
-                    { reps: '', weight: '', completed: false },
-                    { reps: '', weight: '', completed: false },
-                    { reps: '', weight: '', completed: false }
-                ]
+                type: exercise.type || 'weight',
+                met: exercise.met || null,
+                sets: isTimeBased 
+                    ? [
+                        { time: '30', weight: '', reps: '', completed: false },
+                        { time: '30', weight: '', reps: '', completed: false },
+                        { time: '30', weight: '', reps: '', completed: false }
+                      ]
+                    : [
+                        { weight: '', reps: '10', time: '', completed: false },
+                        { weight: '', reps: '10', time: '', completed: false },
+                        { weight: '', reps: '10', time: '', completed: false }
+                      ]
             };
             
             currentWorkout.exercises.push(workoutExercise);
             renderCurrentWorkout();
             updateWorkoutStats();
+            updateActiveCalories();
         }
 
         function startNewWorkout() {
@@ -1635,6 +1863,11 @@
                 
                 document.getElementById('workout-timer').textContent = 
                     `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Atualizar calorias a cada minuto
+                if (seconds === 0) {
+                    updateActiveCalories();
+                }
             }, 1000);
         }
 
@@ -1652,31 +1885,57 @@
                 const div = document.createElement('div');
                 div.className = 'bg-gray-900 rounded-2xl p-4 border border-gray-800 slide-in';
                 
+                const isTimeBased = exercise.type === 'time';
+                const icon = isTimeBased ? 'fa-clock text-blue-400' : 'fa-dumbbell text-orange-400';
+                
                 let setsHtml = '';
                 exercise.sets.forEach((set, setIndex) => {
-                    setsHtml += `
-                        <div class="flex items-center gap-3 mb-2 bg-gray-800/50 p-2 rounded-lg">
-                            <span class="text-sm font-bold text-gray-500 w-6">${setIndex + 1}</span>
-                            <input type="number" placeholder="kg" class="w-16 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-center text-sm" 
-                                value="${set.weight}" onchange="updateSet(${exIndex}, ${setIndex}, 'weight', this.value)">
-                            <span class="text-gray-600">×</span>
-                            <input type="number" placeholder="reps" class="w-16 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-center text-sm" 
-                                value="${set.reps}" onchange="updateSet(${exIndex}, ${setIndex}, 'reps', this.value)">
-                            <button onclick="toggleSetComplete(${exIndex}, ${setIndex})" class="ml-auto w-8 h-8 rounded-full ${set.completed ? 'bg-green-500' : 'bg-gray-700'} flex items-center justify-center transition">
-                                <i class="fas fa-check text-white text-xs"></i>
-                            </button>
-                            <button onclick="removeSet(${exIndex}, ${setIndex})" class="text-gray-600 hover:text-red-500">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    `;
+                    if (isTimeBased) {
+                        // Interface para exercícios de tempo (prancha, cardio)
+                        setsHtml += `
+                            <div class="flex items-center gap-3 mb-2 bg-gray-800/50 p-2 rounded-lg">
+                                <span class="text-sm font-bold text-gray-500 w-6">${setIndex + 1}</span>
+                                <i class="fas fa-clock text-blue-400"></i>
+                                <input type="number" placeholder="seg" class="w-20 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-center text-sm" 
+                                    value="${set.time}" onchange="updateSet(${exIndex}, ${setIndex}, 'time', this.value)">
+                                <span class="text-gray-600 text-sm">seg</span>
+                                <button onclick="toggleSetComplete(${exIndex}, ${setIndex})" class="ml-auto w-8 h-8 rounded-full ${set.completed ? 'bg-green-500' : 'bg-gray-700'} flex items-center justify-center transition">
+                                    <i class="fas fa-check text-white text-xs"></i>
+                                </button>
+                                <button onclick="removeSet(${exIndex}, ${setIndex})" class="text-gray-600 hover:text-red-500">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        `;
+                    } else {
+                        // Interface para exercícios de peso (musculação)
+                        setsHtml += `
+                            <div class="flex items-center gap-3 mb-2 bg-gray-800/50 p-2 rounded-lg">
+                                <span class="text-sm font-bold text-gray-500 w-6">${setIndex + 1}</span>
+                                <input type="number" placeholder="kg" class="w-16 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-center text-sm" 
+                                    value="${set.weight}" onchange="updateSet(${exIndex}, ${setIndex}, 'weight', this.value)">
+                                <span class="text-gray-600">×</span>
+                                <input type="number" placeholder="reps" class="w-16 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-center text-sm" 
+                                    value="${set.reps}" onchange="updateSet(${exIndex}, ${setIndex}, 'reps', this.value)">
+                                <button onclick="toggleSetComplete(${exIndex}, ${setIndex})" class="ml-auto w-8 h-8 rounded-full ${set.completed ? 'bg-green-500' : 'bg-gray-700'} flex items-center justify-center transition">
+                                    <i class="fas fa-check text-white text-xs"></i>
+                                </button>
+                                <button onclick="removeSet(${exIndex}, ${setIndex})" class="text-gray-600 hover:text-red-500">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        `;
+                    }
                 });
                 
                 div.innerHTML = `
                     <div class="flex justify-between items-start mb-3">
-                        <div>
-                            <h4 class="font-bold text-lg">${exercise.name}</h4>
-                            <span class="text-xs text-orange-400">${exercise.muscleGroup}</span>
+                        <div class="flex items-center gap-2">
+                            <i class="fas ${icon}"></i>
+                            <div>
+                                <h4 class="font-bold text-lg">${exercise.name}</h4>
+                                <span class="text-xs text-gray-400">${exercise.muscleGroup}</span>
+                            </div>
                         </div>
                         <button onclick="removeExercise(${exIndex})" class="text-gray-600 hover:text-red-500 p-1">
                             <i class="fas fa-trash"></i>
@@ -1696,6 +1955,7 @@
 
         function updateSet(exIndex, setIndex, field, value) {
             currentWorkout.exercises[exIndex].sets[setIndex][field] = value;
+            updateActiveCalories();
         }
 
         function toggleSetComplete(exIndex, setIndex) {
@@ -1708,10 +1968,19 @@
             
             renderCurrentWorkout();
             updateWorkoutStats();
+            updateActiveCalories();
         }
 
         function addSet(exIndex) {
-            currentWorkout.exercises[exIndex].sets.push({ reps: '', weight: '', completed: false });
+            const exercise = currentWorkout.exercises[exIndex];
+            const isTimeBased = exercise.type === 'time';
+            
+            if (isTimeBased) {
+                exercise.sets.push({ time: '30', weight: '', reps: '', completed: false });
+            } else {
+                exercise.sets.push({ weight: '', reps: '10', time: '', completed: false });
+            }
+            
             renderCurrentWorkout();
         }
 
@@ -1719,12 +1988,14 @@
             currentWorkout.exercises[exIndex].sets.splice(setIndex, 1);
             renderCurrentWorkout();
             updateWorkoutStats();
+            updateActiveCalories();
         }
 
         function removeExercise(exIndex) {
             currentWorkout.exercises.splice(exIndex, 1);
             renderCurrentWorkout();
             updateWorkoutStats();
+            updateActiveCalories();
         }
 
         function updateWorkoutStats() {
@@ -1793,6 +2064,7 @@
             
             const duration = Math.floor((new Date() - currentWorkout.startTime) / 1000);
             const totalVolume = calculateTotalVolume();
+            const totalCalories = calculateWorkoutCalories(currentWorkout);
             
             const workout = {
                 id: currentWorkout.id,
@@ -1800,7 +2072,8 @@
                 duration: duration,
                 exercises: currentWorkout.exercises,
                 muscleGroups: Array.from(currentWorkout.muscleGroups),
-                totalVolume: totalVolume
+                totalVolume: totalVolume,
+                totalCalories: totalCalories
             };
             
             workoutHistory.unshift(workout);
@@ -1811,7 +2084,7 @@
             renderHistory();
             renderWeekPreview();
             
-            alert(`Treino finalizado!\nDuração: ${formatDuration(duration)}\nVolume: ${totalVolume}kg`);
+            alert(`Treino finalizado!\nDuração: ${formatDuration(duration)}\nVolume: ${totalVolume}kg\nCalorias: ${totalCalories} kcal`);
             
             currentWorkout = { id: null, startTime: null, exercises: [], muscleGroups: new Set() };
             showView('dashboard');
@@ -1820,11 +2093,13 @@
         function calculateTotalVolume() {
             let volume = 0;
             currentWorkout.exercises.forEach(ex => {
-                ex.sets.forEach(set => {
-                    if (set.completed && set.weight && set.reps) {
-                        volume += parseFloat(set.weight) * parseFloat(set.reps);
-                    }
-                });
+                if (ex.type !== 'time') {
+                    ex.sets.forEach(set => {
+                        if (set.completed && set.weight && set.reps) {
+                            volume += parseFloat(set.weight) * parseFloat(set.reps);
+                        }
+                    });
+                }
             });
             return Math.round(volume);
         }
@@ -1857,6 +2132,9 @@
             
             const totalVolume = workoutHistory.reduce((acc, w) => acc + (w.totalVolume || 0), 0);
             document.getElementById('total-volume').textContent = totalVolume.toLocaleString();
+            
+            const totalCalories = workoutHistory.reduce((acc, w) => acc + (w.totalCalories || 0), 0);
+            document.getElementById('total-calories').textContent = totalCalories.toLocaleString();
             
             const streak = calculateStreak();
             document.getElementById('current-streak').textContent = streak;
@@ -1919,8 +2197,8 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="text-right mr-2">
-                            <p class="text-lg font-bold text-orange-500">${workout.totalVolume || 0}kg</p>
-                            <p class="text-xs text-gray-500">volume</p>
+                            <p class="text-lg font-bold text-orange-500">${workout.totalCalories || 0} <span class="text-xs">kcal</span></p>
+                            <p class="text-xs text-gray-500">${workout.totalVolume || 0}kg</p>
                         </div>
                         <button onclick="deleteWorkout(${workout.id})" class="w-10 h-10 rounded-full bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition opacity-0 group-hover:opacity-100">
                             <i class="fas fa-trash"></i>
@@ -1984,6 +2262,7 @@
             
             const last7Days = [];
             const volumeData = [];
+            const caloriesData = [];
             
             for (let i = 6; i >= 0; i--) {
                 const date = new Date();
@@ -1992,32 +2271,51 @@
                 
                 const dayWorkouts = workoutHistory.filter(w => w.date.startsWith(dateStr));
                 const dayVolume = dayWorkouts.reduce((acc, w) => acc + (w.totalVolume || 0), 0);
+                const dayCalories = dayWorkouts.reduce((acc, w) => acc + (w.totalCalories || 0), 0);
                 
                 last7Days.push(date.toLocaleDateString('pt-BR', { weekday: 'short' }));
                 volumeData.push(dayVolume);
+                caloriesData.push(dayCalories);
             }
             
             new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: last7Days,
-                    datasets: [{
-                        label: 'Volume (kg)',
-                        data: volumeData,
-                        backgroundColor: '#f97316',
-                        borderRadius: 6
-                    }]
+                    datasets: [
+                        {
+                            label: 'Volume (kg)',
+                            data: volumeData,
+                            backgroundColor: '#f97316',
+                            borderRadius: 6,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Calorias',
+                            data: caloriesData,
+                            backgroundColor: '#3b82f6',
+                            borderRadius: 6,
+                            yAxisID: 'y1'
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
                     plugins: {
-                        legend: { display: false }
+                        legend: { display: true }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
                             grid: { color: '#374151' },
-                            ticks: { color: '#9ca3af' }
+                            ticks: { color: '#9ca3af' },
+                            position: 'left'
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            grid: { display: false },
+                            ticks: { color: '#3b82f6' },
+                            position: 'right'
                         },
                         x: {
                             grid: { display: false },
@@ -2045,6 +2343,56 @@
             document.getElementById('avg-duration').textContent = avgDur + 'min';
         }
 
+        function renderWeekPreview() {
+            const container = document.getElementById('week-preview');
+            container.innerHTML = '';
+            
+            const today = new Date();
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay());
+            
+            const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+            
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + i);
+                const dateStr = date.toISOString().split('T')[0];
+                const isToday = date.toDateString() === today.toDateString();
+                const hasWorkout = weeklyPlan[dateStr] && weeklyPlan[dateStr].length > 0;
+                
+                const div = document.createElement('div');
+                div.className = `text-center p-2 rounded-xl ${isToday ? 'bg-orange-500/20 border border-orange-500' : 'bg-gray-800'} ${hasWorkout ? 'ring-2 ring-orange-500/50' : ''}`;
+                div.innerHTML = `
+                    <div class="text-xs text-gray-400 mb-1">${days[i]}</div>
+                    <div class="text-lg font-bold ${isToday ? 'text-orange-400' : 'text-white'}">${date.getDate()}</div>
+                    ${hasWorkout ? '<div class="w-1 h-1 bg-orange-500 rounded-full mx-auto mt-1"></div>' : ''}
+                `;
+                container.appendChild(div);
+            }
+        }
+
+        function showView(viewName) {
+            ['dashboard', 'planner', 'workout', 'exercise-detail', 'history', 'stats'].forEach(v => {
+                document.getElementById(v + '-view').classList.add('hidden');
+            });
+            
+            document.getElementById(viewName + '-view').classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active-nav');
+                if (btn.dataset.view === viewName) {
+                    btn.classList.add('active-nav');
+                }
+            });
+            
+            if (viewName === 'history') renderHistory();
+            if (viewName === 'stats') renderStats();
+            if (viewName === 'planner') {
+                renderPlannerWeek();
+                renderDayWorkouts();
+            }
+        }
+
         function startQuickWorkout() {
             startNewWorkout();
             showView('workout');
@@ -2056,5 +2404,6 @@
     </script>
 </body>
 </html>
+
 
 
