@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="IronTrack Pro">
     <title>IronTrack Pro - Seu Companheiro de Treino</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -12,6 +15,7 @@
         
         * {
             font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .glass-effect {
@@ -37,10 +41,6 @@
         .exercise-item:hover {
             background: rgba(249, 115, 22, 0.1);
             transform: translateX(5px);
-        }
-        
-        .progress-ring {
-            transform: rotate(-90deg);
         }
         
         .timer-display {
@@ -71,6 +71,7 @@
             height: 10px;
             background: #f97316;
             animation: confetti-fall 3s linear forwards;
+            z-index: 9999;
         }
         
         @keyframes confetti-fall {
@@ -100,18 +101,50 @@
             border-radius: 2px;
         }
         
-        .checkbox-wrapper input:checked + div {
-            background: #f97316;
-            border-color: #f97316;
-        }
-        
-        .checkbox-wrapper input:checked + div svg {
-            display: block;
-        }
-        
         .stat-card {
             background: linear-gradient(135deg, rgba(31, 41, 55, 0.8), rgba(17, 24, 39, 0.9));
             border: 1px solid rgba(249, 115, 22, 0.2);
+        }
+        
+        .day-card {
+            transition: all 0.3s ease;
+        }
+        
+        .day-card.active {
+            border-color: #f97316;
+            background: rgba(249, 115, 22, 0.1);
+        }
+        
+        .swipe-action {
+            transition: transform 0.2s ease;
+        }
+        
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+        }
+        
+        .week-day {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .week-day:hover {
+            transform: scale(1.05);
+        }
+        
+        .week-day.selected {
+            background: #f97316;
+            color: white;
+            border-color: #f97316;
+        }
+        
+        .planned-workout {
+            border-left: 3px solid #f97316;
         }
     </style>
 </head>
@@ -129,8 +162,9 @@
                 </div>
             </div>
             <div class="flex items-center gap-4">
-                <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-gray-800 transition">
-                    <i class="fas fa-moon text-gray-400"></i>
+                <button onclick="showView('planner')" class="p-2 rounded-lg hover:bg-gray-800 transition relative">
+                    <i class="fas fa-calendar-week text-gray-400"></i>
+                    <span id="planner-badge" class="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full text-xs flex items-center justify-center hidden">!</span>
                 </button>
                 <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-sm font-bold">
                     <span id="user-avatar">U</span>
@@ -201,6 +235,17 @@
                 </div>
             </div>
 
+            <!-- Weekly Preview -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">Esta Semana</h3>
+                    <button onclick="showView('planner')" class="text-orange-400 text-sm hover:underline">Ver Planejamento</button>
+                </div>
+                <div class="grid grid-cols-7 gap-2" id="week-preview">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
             <!-- Muscle Groups Grid -->
             <div>
                 <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
@@ -209,6 +254,72 @@
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="muscle-grid">
                     <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Planner View (NEW) -->
+        <div id="planner-view" class="hidden space-y-6">
+            <div class="flex items-center gap-4 mb-6">
+                <button onclick="showView('dashboard')" class="p-2 rounded-lg hover:bg-gray-800 transition">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div>
+                    <h2 class="text-2xl font-bold">Planejamento Semanal</h2>
+                    <p class="text-gray-400 text-sm">Organize seus treinos da semana</p>
+                </div>
+            </div>
+
+            <!-- Week Selector -->
+            <div class="bg-gray-900 rounded-2xl p-4 border border-gray-800">
+                <div class="flex justify-between items-center mb-4">
+                    <button onclick="changeWeek(-1)" class="p-2 hover:bg-gray-800 rounded-lg">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h3 class="font-bold text-lg" id="current-week-label">Esta Semana</h3>
+                    <button onclick="changeWeek(1)" class="p-2 hover:bg-gray-800 rounded-lg">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-7 gap-2" id="planner-week-days">
+                    <!-- Days populated by JS -->
+                </div>
+            </div>
+
+            <!-- Selected Day Workouts -->
+            <div id="planner-day-detail" class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold" id="selected-day-name">Segunda-feira</h3>
+                    <button onclick="openAddWorkoutModal()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                        <i class="fas fa-plus mr-1"></i> Adicionar Treino
+                    </button>
+                </div>
+
+                <div id="planned-workouts-list" class="space-y-3">
+                    <p class="text-gray-500 text-center py-8">Nenhum treino planejado para este dia</p>
+                </div>
+            </div>
+
+            <!-- Quick Templates -->
+            <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800">
+                <h3 class="text-lg font-bold mb-4">Templates Rápidos</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <button onclick="applyTemplate('abc')" class="p-4 bg-gray-800 rounded-xl text-left hover:bg-gray-700 transition">
+                        <div class="font-semibold text-orange-400 mb-1">ABC Split</div>
+                        <div class="text-xs text-gray-400">Peito/Ombro/Tríceps • Costas/Bíceps • Pernas</div>
+                    </button>
+                    <button onclick="applyTemplate('ab')" class="p-4 bg-gray-800 rounded-xl text-left hover:bg-gray-700 transition">
+                        <div class="font-semibold text-orange-400 mb-1">AB Split</div>
+                        <div class="text-xs text-gray-400">Superior • Inferior (alternados)</div>
+                    </button>
+                    <button onclick="applyTemplate('fullbody')" class="p-4 bg-gray-800 rounded-xl text-left hover:bg-gray-700 transition">
+                        <div class="font-semibold text-orange-400 mb-1">Full Body</div>
+                        <div class="text-xs text-gray-400">Corpo inteiro 3x por semana</div>
+                    </button>
+                    <button onclick="applyTemplate('pushpull')" class="p-4 bg-gray-800 rounded-xl text-left hover:bg-gray-700 transition">
+                        <div class="font-semibold text-orange-400 mb-1">Push/Pull/Legs</div>
+                        <div class="text-xs text-gray-400">Empurrar/Puxar/Pernas</div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -310,7 +421,12 @@
 
         <!-- History View -->
         <div id="history-view" class="hidden space-y-6">
-            <h2 class="text-2xl font-bold mb-4">Histórico de Treinos</h2>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">Histórico de Treinos</h2>
+                <button onclick="clearAllHistory()" class="text-red-400 text-sm hover:text-red-300">
+                    <i class="fas fa-trash-alt mr-1"></i> Limpar Tudo
+                </button>
+            </div>
             <div id="workout-history-list" class="space-y-4">
                 <!-- Populated by JavaScript -->
             </div>
@@ -370,6 +486,61 @@
                 <button onclick="adjustRest(10)" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-gray-700 flex items-center justify-center text-xl">+</button>
             </div>
             <button onclick="skipRest()" class="mt-4 text-gray-400 hover:text-white text-sm">Pular Descanso</button>
+        </div>
+    </div>
+
+    <!-- Add Workout to Planner Modal -->
+    <div id="planner-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-900 rounded-3xl p-6 max-w-md w-full border border-gray-800 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Adicionar Treino</h3>
+                <button onclick="closePlannerModal()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3 mb-4">
+                <label class="text-sm text-gray-400">Nome do Treino</label>
+                <input type="text" id="planner-workout-name" placeholder="Ex: Treino A - Peito" 
+                    class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-orange-500 focus:outline-none">
+            </div>
+
+            <div class="space-y-3 mb-4">
+                <label class="text-sm text-gray-400">Grupos Musculares</label>
+                <div class="grid grid-cols-2 gap-2" id="planner-muscle-selection">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <div class="space-y-3 mb-6">
+                <label class="text-sm text-gray-400">Cor do Card</label>
+                <div class="flex gap-2">
+                    <button onclick="selectPlannerColor('orange')" class="w-10 h-10 rounded-full bg-orange-500 ring-2 ring-offset-2 ring-offset-gray-900 ring-orange-500 color-select selected" data-color="orange"></button>
+                    <button onclick="selectPlannerColor('blue')" class="w-10 h-10 rounded-full bg-blue-500 ring-2 ring-offset-2 ring-offset-gray-900 ring-transparent color-select" data-color="blue"></button>
+                    <button onclick="selectPlannerColor('green')" class="w-10 h-10 rounded-full bg-green-500 ring-2 ring-offset-2 ring-offset-gray-900 ring-transparent color-select" data-color="green"></button>
+                    <button onclick="selectPlannerColor('purple')" class="w-10 h-10 rounded-full bg-purple-500 ring-2 ring-offset-2 ring-offset-gray-900 ring-transparent color-select" data-color="purple"></button>
+                    <button onclick="selectPlannerColor('red')" class="w-10 h-10 rounded-full bg-red-500 ring-2 ring-offset-2 ring-offset-gray-900 ring-transparent color-select" data-color="red"></button>
+                </div>
+            </div>
+
+            <button onclick="savePlannedWorkout()" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-bold transition">
+                Salvar Treino
+            </button>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-900 rounded-3xl p-6 max-w-sm w-full border border-gray-800 text-center">
+            <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Excluir Treino?</h3>
+            <p class="text-gray-400 mb-6" id="delete-modal-text">Tem certeza que deseja excluir este treino do histórico?</p>
+            <div class="flex gap-3">
+                <button onclick="closeDeleteModal()" class="flex-1 py-3 rounded-xl border border-gray-700 text-gray-400 hover:bg-gray-800 transition">Cancelar</button>
+                <button onclick="confirmDelete()" class="flex-1 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold transition">Excluir</button>
+            </div>
         </div>
     </div>
 
@@ -530,18 +701,25 @@
         };
         
         let workoutHistory = JSON.parse(localStorage.getItem('workoutHistory')) || [];
+        let weeklyPlan = JSON.parse(localStorage.getItem('weeklyPlan')) || {};
         let restTimerInterval;
         let restTimeRemaining = 60;
         let isRestPaused = false;
         let workoutTimerInterval;
         let currentExerciseDetail = null;
+        let currentPlannerDate = new Date();
+        let selectedPlannerDate = new Date();
+        let selectedPlannerColor = 'orange';
+        let deleteTargetId = null;
+        let deleteTargetType = null; // 'history' or 'planned'
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             renderMuscleGroups();
             updateStats();
             setCurrentDate();
-            checkDailyWorkout();
+            renderWeekPreview();
+            initPlanner();
         });
 
         function setCurrentDate() {
@@ -579,6 +757,325 @@
             });
         }
 
+        // Weekly Planner Functions
+        function initPlanner() {
+            renderPlannerWeek();
+            renderPlannerDayDetail();
+            renderMuscleSelection();
+        }
+
+        function renderWeekPreview() {
+            const container = document.getElementById('week-preview');
+            container.innerHTML = '';
+            
+            const today = new Date();
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay());
+            
+            const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+            
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + i);
+                const dateStr = date.toISOString().split('T')[0];
+                const isToday = date.toDateString() === today.toDateString();
+                const hasWorkout = weeklyPlan[dateStr] && weeklyPlan[dateStr].length > 0;
+                
+                const div = document.createElement('div');
+                div.className = `text-center p-2 rounded-xl ${isToday ? 'bg-orange-500/20 border border-orange-500' : 'bg-gray-800'} ${hasWorkout ? 'ring-2 ring-orange-500/50' : ''}`;
+                div.innerHTML = `
+                    <div class="text-xs text-gray-400 mb-1">${days[i]}</div>
+                    <div class="text-lg font-bold ${isToday ? 'text-orange-400' : 'text-white'}">${date.getDate()}</div>
+                    ${hasWorkout ? '<div class="w-1 h-1 bg-orange-500 rounded-full mx-auto mt-1"></div>' : ''}
+                `;
+                container.appendChild(div);
+            }
+        }
+
+        function renderPlannerWeek() {
+            const container = document.getElementById('planner-week-days');
+            container.innerHTML = '';
+            
+            const startOfWeek = new Date(currentPlannerDate);
+            startOfWeek.setDate(currentPlannerDate.getDate() - currentPlannerDate.getDay());
+            
+            const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+            const fullDays = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+            
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + i);
+                const dateStr = date.toISOString().split('T')[0];
+                const isSelected = date.toDateString() === selectedPlannerDate.toDateString();
+                const hasWorkout = weeklyPlan[dateStr] && weeklyPlan[dateStr].length > 0;
+                
+                const btn = document.createElement('button');
+                btn.className = `week-day p-3 rounded-xl text-center ${isSelected ? 'selected' : 'bg-gray-800 text-gray-400'}`;
+                btn.onclick = () => selectPlannerDay(date);
+                
+                btn.innerHTML = `
+                    <div class="text-xs mb-1 opacity-80">${days[i]}</div>
+                    <div class="text-lg font-bold">${date.getDate()}</div>
+                    ${hasWorkout ? '<div class="w-1.5 h-1.5 bg-white rounded-full mx-auto mt-1"></div>' : ''}
+                `;
+                
+                container.appendChild(btn);
+            }
+            
+            // Update week label
+            const weekStart = new Date(startOfWeek);
+            const weekEnd = new Date(startOfWeek);
+            weekEnd.setDate(weekStart.getDate() + 6);
+            
+            const today = new Date();
+            const currentWeekStart = new Date(today);
+            currentWeekStart.setDate(today.getDate() - today.getDay());
+            
+            if (weekStart.toDateString() === currentWeekStart.toDateString()) {
+                document.getElementById('current-week-label').textContent = 'Esta Semana';
+            } else {
+                document.getElementById('current-week-label').textContent = 
+                    `${weekStart.getDate()}/${weekStart.getMonth()+1} - ${weekEnd.getDate()}/${weekEnd.getMonth()+1}`;
+            }
+        }
+
+        function selectPlannerDay(date) {
+            selectedPlannerDate = date;
+            renderPlannerWeek();
+            renderPlannerDayDetail();
+        }
+
+        function changeWeek(direction) {
+            currentPlannerDate.setDate(currentPlannerDate.getDate() + (direction * 7));
+            renderPlannerWeek();
+        }
+
+        function renderPlannerDayDetail() {
+            const dateStr = selectedPlannerDate.toISOString().split('T')[0];
+            const dayWorkouts = weeklyPlan[dateStr] || [];
+            
+            document.getElementById('selected-day-name').textContent = 
+                selectedPlannerDate.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+            
+            const container = document.getElementById('planned-workouts-list');
+            
+            if (dayWorkouts.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-8">Nenhum treino planejado para este dia</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            dayWorkouts.forEach((workout, index) => {
+                const div = document.createElement('div');
+                div.className = 'planned-workout bg-gray-800 rounded-xl p-4 flex justify-between items-center';
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-${workout.color}-500/20 flex items-center justify-center">
+                            <i class="fas fa-dumbbell text-${workout.color}-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">${workout.name}</h4>
+                            <p class="text-xs text-gray-400">${workout.muscles.join(', ')}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="startPlannedWorkout('${dateStr}', ${index})" class="p-2 bg-orange-500/20 text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button onclick="deletePlannedWorkout('${dateStr}', ${index})" class="p-2 bg-red-500/20 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderMuscleSelection() {
+            const container = document.getElementById('planner-muscle-selection');
+            container.innerHTML = '';
+            
+            Object.entries(muscleGroups).forEach(([key, group]) => {
+                const label = document.createElement('label');
+                label.className = 'flex items-center gap-2 p-3 bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-700 transition';
+                label.innerHTML = `
+                    <input type="checkbox" value="${key}" class="planner-muscle-check w-4 h-4 rounded border-gray-600 text-orange-500 focus:ring-orange-500 bg-gray-700">
+                    <span class="text-sm">${group.name}</span>
+                `;
+                container.appendChild(label);
+            });
+        }
+
+        function openAddWorkoutModal() {
+            document.getElementById('planner-modal').classList.remove('hidden');
+            document.getElementById('planner-workout-name').value = '';
+            document.querySelectorAll('.planner-muscle-check').forEach(cb => cb.checked = false);
+        }
+
+        function closePlannerModal() {
+            document.getElementById('planner-modal').classList.add('hidden');
+        }
+
+        function selectPlannerColor(color) {
+            selectedPlannerColor = color;
+            document.querySelectorAll('.color-select').forEach(btn => {
+                btn.classList.remove('ring-orange-500', 'ring-blue-500', 'ring-green-500', 'ring-purple-500', 'ring-red-500');
+                btn.classList.add('ring-transparent');
+                if (btn.dataset.color === color) {
+                    btn.classList.remove('ring-transparent');
+                    btn.classList.add(`ring-${color}-500`);
+                }
+            });
+        }
+
+        function savePlannedWorkout() {
+            const name = document.getElementById('planner-workout-name').value.trim();
+            if (!name) {
+                alert('Digite um nome para o treino');
+                return;
+            }
+            
+            const selectedMuscles = Array.from(document.querySelectorAll('.planner-muscle-check:checked'))
+                .map(cb => muscleGroups[cb.value].name);
+            
+            if (selectedMuscles.length === 0) {
+                alert('Selecione pelo menos um grupo muscular');
+                return;
+            }
+            
+            const dateStr = selectedPlannerDate.toISOString().split('T')[0];
+            if (!weeklyPlan[dateStr]) {
+                weeklyPlan[dateStr] = [];
+            }
+            
+            weeklyPlan[dateStr].push({
+                name: name,
+                muscles: selectedMuscles,
+                color: selectedPlannerColor,
+                exercises: []
+            });
+            
+            localStorage.setItem('weeklyPlan', JSON.stringify(weeklyPlan));
+            closePlannerModal();
+            renderPlannerDayDetail();
+            renderPlannerWeek();
+            renderWeekPreview();
+        }
+
+        function deletePlannedWorkout(dateStr, index) {
+            deleteTargetId = { dateStr, index };
+            deleteTargetType = 'planned';
+            document.getElementById('delete-modal-text').textContent = 'Tem certeza que deseja remover este treino planejado?';
+            document.getElementById('delete-modal').classList.remove('hidden');
+        }
+
+        function startPlannedWorkout(dateStr, index) {
+            const workout = weeklyPlan[dateStr][index];
+            // Pre-fill workout with planned muscles
+            currentWorkout.muscleGroups = new Set(workout.muscles);
+            startNewWorkout();
+            showView('workout');
+        }
+
+        // Templates
+        function applyTemplate(template) {
+            const templates = {
+                abc: [
+                    { day: 1, muscles: ['Peitoral', 'Ombros', 'Tríceps'], name: 'Treino A' },
+                    { day: 3, muscles: ['Costas', 'Bíceps'], name: 'Treino B' },
+                    { day: 5, muscles: ['Quadríceps', 'Posterior de Coxa', 'Glúteos', 'Panturrilha'], name: 'Treino C' }
+                ],
+                ab: [
+                    { day: 1, muscles: ['Peitoral', 'Costas', 'Ombros', 'Bíceps', 'Tríceps'], name: 'Superior' },
+                    { day: 3, muscles: ['Quadríceps', 'Posterior de Coxa', 'Glúteos', 'Panturrilha', 'Core'], name: 'Inferior' },
+                    { day: 5, muscles: ['Peitoral', 'Costas', 'Ombros', 'Bíceps', 'Tríceps'], name: 'Superior' }
+                ],
+                fullbody: [
+                    { day: 1, muscles: ['Peitoral', 'Costas', 'Quadríceps', 'Ombros'], name: 'Full Body A' },
+                    { day: 3, muscles: ['Costas', 'Peitoral', 'Posterior de Coxa', 'Bíceps'], name: 'Full Body B' },
+                    { day: 5, muscles: ['Quadríceps', 'Glúteos', 'Ombros', 'Tríceps'], name: 'Full Body C' }
+                ],
+                pushpull: [
+                    { day: 1, muscles: ['Peitoral', 'Ombros', 'Tríceps'], name: 'Push' },
+                    { day: 2, muscles: ['Costas', 'Bíceps', 'Posterior de Coxa'], name: 'Pull' },
+                    { day: 3, muscles: ['Quadríceps', 'Glúteos', 'Panturrilha', 'Core'], name: 'Legs' },
+                    { day: 5, muscles: ['Peitoral', 'Ombros', 'Tríceps'], name: 'Push' },
+                    { day: 6, muscles: ['Costas', 'Bíceps', 'Posterior de Coxa'], name: 'Pull' }
+                ]
+            };
+            
+            const startOfWeek = new Date(currentPlannerDate);
+            startOfWeek.setDate(currentPlannerDate.getDate() - currentPlannerDate.getDay());
+            
+            templates[template].forEach(item => {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + item.day);
+                const dateStr = date.toISOString().split('T')[0];
+                
+                if (!weeklyPlan[dateStr]) weeklyPlan[dateStr] = [];
+                
+                // Check if already exists
+                const exists = weeklyPlan[dateStr].some(w => w.name === item.name);
+                if (!exists) {
+                    weeklyPlan[dateStr].push({
+                        name: item.name,
+                        muscles: item.muscles,
+                        color: 'orange',
+                        exercises: []
+                    });
+                }
+            });
+            
+            localStorage.setItem('weeklyPlan', JSON.stringify(weeklyPlan));
+            renderPlannerWeek();
+            renderPlannerDayDetail();
+            renderWeekPreview();
+            
+            alert('Template aplicado com sucesso!');
+        }
+
+        // Delete Functions
+        function confirmDelete() {
+            if (deleteTargetType === 'history') {
+                workoutHistory = workoutHistory.filter(w => w.id !== deleteTargetId);
+                localStorage.setItem('workoutHistory', JSON.stringify(workoutHistory));
+                renderHistory();
+                updateStats();
+            } else if (deleteTargetType === 'planned') {
+                const { dateStr, index } = deleteTargetId;
+                weeklyPlan[dateStr].splice(index, 1);
+                if (weeklyPlan[dateStr].length === 0) {
+                    delete weeklyPlan[dateStr];
+                }
+                localStorage.setItem('weeklyPlan', JSON.stringify(weeklyPlan));
+                renderPlannerDayDetail();
+                renderPlannerWeek();
+                renderWeekPreview();
+            } else if (deleteTargetType === 'all') {
+                workoutHistory = [];
+                localStorage.setItem('workoutHistory', JSON.stringify(workoutHistory));
+                renderHistory();
+                updateStats();
+            }
+            
+            closeDeleteModal();
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('delete-modal').classList.add('hidden');
+            deleteTargetId = null;
+            deleteTargetType = null;
+        }
+
+        function clearAllHistory() {
+            if (workoutHistory.length === 0) return;
+            deleteTargetType = 'all';
+            document.getElementById('delete-modal-text').textContent = 
+                `Tem certeza que deseja excluir todos os ${workoutHistory.length} treinos do histórico? Esta ação não pode ser desfeita.`;
+            document.getElementById('delete-modal').classList.remove('hidden');
+        }
+
+        // Existing functions...
         function selectMuscleGroup(muscleKey) {
             const group = muscleGroups[muscleKey];
             currentWorkout.muscleGroups.add(group.name);
@@ -626,7 +1123,6 @@
             document.getElementById('detail-exercise-name').textContent = exercise.name;
             document.getElementById('detail-muscle-group').textContent = group.name;
             
-            // Generate specific instructions based on exercise
             const instructions = generateInstructions(exercise.name, group.name);
             document.getElementById('detail-instructions').innerHTML = instructions;
             
@@ -848,7 +1344,6 @@
         }
 
         function playBeep() {
-            // Visual feedback instead of audio
             document.getElementById('rest-timer').classList.add('pulse-animation');
             setTimeout(() => {
                 document.getElementById('rest-timer').classList.remove('pulse-animation');
@@ -882,6 +1377,7 @@
             showConfetti();
             updateStats();
             renderHistory();
+            renderWeekPreview();
             
             alert(`Treino finalizado!\nDuração: ${formatDuration(duration)}\nVolume: ${totalVolume}kg`);
             
@@ -930,7 +1426,6 @@
             const totalVolume = workoutHistory.reduce((acc, w) => acc + (w.totalVolume || 0), 0);
             document.getElementById('total-volume').textContent = totalVolume.toLocaleString();
             
-            // Calculate streak
             const streak = calculateStreak();
             document.getElementById('current-streak').textContent = streak;
         }
@@ -952,7 +1447,6 @@
                     streak++;
                     currentDate.setDate(currentDate.getDate() - 1);
                 } else if (i === 0) {
-                    // Check if yesterday had workout for current streak
                     currentDate.setDate(currentDate.getDate() - 1);
                 } else {
                     break;
@@ -972,25 +1466,33 @@
             
             container.innerHTML = '';
             
-            workoutHistory.slice(0, 10).forEach(workout => {
+            workoutHistory.forEach((workout, index) => {
                 const date = new Date(workout.date);
                 const div = document.createElement('div');
-                div.className = 'bg-gray-900 rounded-2xl p-4 border border-gray-800 flex items-center justify-between';
+                div.className = 'bg-gray-900 rounded-2xl p-4 border border-gray-800 flex items-center justify-between group';
                 
                 div.innerHTML = `
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-4 flex-1">
                         <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
                             <i class="fas fa-dumbbell text-white"></i>
                         </div>
-                        <div>
-                            <h4 class="font-bold">${date.toLocaleDateString('pt-BR')}</h4>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-bold">${date.toLocaleDateString('pt-BR')}</h4>
+                                <span class="text-xs text-gray-500">${date.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'})}</span>
+                            </div>
                             <p class="text-sm text-gray-400">${workout.muscleGroups.join(', ')}</p>
                             <p class="text-xs text-gray-500">${workout.exercises.length} exercícios • ${formatDuration(workout.duration)}</p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-lg font-bold text-orange-500">${workout.totalVolume || 0}kg</p>
-                        <p class="text-xs text-gray-500">volume</p>
+                    <div class="flex items-center gap-3">
+                        <div class="text-right mr-2">
+                            <p class="text-lg font-bold text-orange-500">${workout.totalVolume || 0}kg</p>
+                            <p class="text-xs text-gray-500">volume</p>
+                        </div>
+                        <button onclick="deleteWorkout(${workout.id})" class="w-10 h-10 rounded-full bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition opacity-0 group-hover:opacity-100">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                 `;
                 
@@ -998,16 +1500,20 @@
             });
         }
 
+        function deleteWorkout(id) {
+            deleteTargetId = id;
+            deleteTargetType = 'history';
+            document.getElementById('delete-modal-text').textContent = 'Tem certeza que deseja excluir este treino do histórico?';
+            document.getElementById('delete-modal').classList.remove('hidden');
+        }
+
         function showView(viewName) {
-            // Hide all views
-            ['dashboard', 'workout', 'exercise-detail', 'history', 'stats'].forEach(v => {
+            ['dashboard', 'planner', 'workout', 'exercise-detail', 'history', 'stats'].forEach(v => {
                 document.getElementById(v + '-view').classList.add('hidden');
             });
             
-            // Show selected view
             document.getElementById(viewName + '-view').classList.remove('hidden');
             
-            // Update nav
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active-nav');
                 if (btn.dataset.view === viewName) {
@@ -1015,15 +1521,17 @@
                 }
             });
             
-            // Special handling
             if (viewName === 'history') renderHistory();
             if (viewName === 'stats') renderStats();
+            if (viewName === 'planner') {
+                renderPlannerWeek();
+                renderPlannerDayDetail();
+            }
         }
 
         function renderStats() {
             const ctx = document.getElementById('progressChart').getContext('2d');
             
-            // Prepare data
             const last7Days = [];
             const volumeData = [];
             
@@ -1069,7 +1577,6 @@
                 }
             });
             
-            // Calculate favorite muscle
             const muscleCount = {};
             workoutHistory.forEach(w => {
                 w.muscleGroups.forEach(m => {
@@ -1082,7 +1589,6 @@
                 document.getElementById('favorite-muscle').textContent = favorite[0];
             }
             
-            // Average duration
             const avgDur = workoutHistory.length > 0 
                 ? Math.round(workoutHistory.reduce((acc, w) => acc + w.duration, 0) / workoutHistory.length / 60)
                 : 0;
@@ -1097,27 +1603,7 @@
         function addExerciseToWorkout() {
             showView('dashboard');
         }
-
-        function checkDailyWorkout() {
-            // Suggest workout based on last training
-            const today = new Date().toISOString().split('T')[0];
-            const todayWorkout = workoutHistory.find(w => w.date.startsWith(today));
-            
-            if (!todayWorkout && workoutHistory.length > 0) {
-                const lastWorkout = workoutHistory[0];
-                const muscles = lastWorkout.muscleGroups;
-                document.getElementById('muscle-groups-tags').innerHTML = 
-                    `<span class="text-xs bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full border border-orange-500/30">Último: ${muscles.join(', ')}</span>`;
-            }
-        }
-
-        function toggleTheme() {
-            // Toggle dark/light mode
-            document.body.classList.toggle('bg-gray-50');
-            document.body.classList.toggle('text-gray-900');
-            document.body.classList.toggle('bg-gray-950');
-            document.body.classList.toggle('text-white');
-        }
     </script>
 </body>
 </html>
+
