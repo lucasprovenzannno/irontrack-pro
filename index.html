@@ -305,45 +305,6 @@
             font-variant-numeric: tabular-nums;
         }
         
-        .exercise-image-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 1rem;
-        }
-        
-        .exercise-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .exercise-image-container:hover img {
-            transform: scale(1.05);
-        }
-        
-        .muscle-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        
-        .muscle-primary {
-            background: rgba(249, 115, 22, 0.2);
-            color: #f97316;
-            border: 1px solid rgba(249, 115, 22, 0.3);
-        }
-        
-        .muscle-secondary {
-            background: rgba(59, 130, 246, 0.2);
-            color: #60a5fa;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-        
         .exercise-card {
             background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
             border: 1px solid rgba(75, 85, 99, 0.3);
@@ -473,84 +434,6 @@
             color: #f97316;
         }
         
-        .exercise-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-        }
-        
-        .gallery-item {
-            aspect-ratio: 4/3;
-            border-radius: 0.75rem;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-        
-        .gallery-item:hover {
-            border-color: #f97316;
-            transform: scale(1.02);
-        }
-        
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-        
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .modal-content {
-            max-width: 90vw;
-            max-height: 90vh;
-            border-radius: 1rem;
-            overflow: hidden;
-        }
-        
-        .modal-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .close-modal:hover {
-            background: #f97316;
-        }
-        
         .equipment-tag {
             display: inline-flex;
             align-items: center;
@@ -562,19 +445,31 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
+        
+        .muscle-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .muscle-primary {
+            background: rgba(249, 115, 22, 0.2);
+            color: #f97316;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+        
+        .muscle-secondary {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
     </style>
 </head>
 <body class="bg-gray-950 text-white min-h-screen pb-20">
-    <!-- Image Modal -->
-    <div id="image-modal" class="modal-overlay" onclick="closeImageModal()">
-        <div class="close-modal" onclick="event.stopPropagation(); closeImageModal()">
-            <i class="fas fa-times"></i>
-        </div>
-        <div class="modal-content">
-            <img id="modal-image" src="" alt="Exercise demonstration">
-        </div>
-    </div>
-
     <!-- Header -->
     <header class="fixed top-0 w-full z-50 glass-effect border-b border-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -725,11 +620,6 @@
                     <i class="fas fa-arrow-left"></i>
                 </button>
                 <h2 class="text-2xl font-bold" id="detail-exercise-name">Exercício</h2>
-            </div>
-
-            <!-- Image Gallery -->
-            <div class="exercise-gallery" id="detail-gallery">
-                <!-- Images populated by JS -->
             </div>
 
             <!-- Main Info Card -->
@@ -1149,7 +1039,7 @@
 
     <script>
         // ==========================================
-        // BIBLIOTECA COMPLETA DE EXERCÍCIOS COM IMAGENS
+        // BIBLIOTECA EXPANDIDA DE EXERCÍCIOS (SEM IMAGENS)
         // ==========================================
         
         const exerciseDatabase = {
@@ -1161,12 +1051,11 @@
                 exercises: [
                     {
                         id: "supino-reto",
-                        name: "Supino Reto",
+                        name: "Supino Reto com Barra",
                         difficulty: "intermediate",
-                        equipment: "Barra ou Halteres",
+                        equipment: "Barra",
                         focus: "Hipertrofia",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/09/supino.jpg",
                         muscles: {
                             primary: ["Peitoral Maior (porção esternal)"],
                             secondary: ["Deltóide Anterior", "Tríceps Braquial"],
@@ -1194,13 +1083,45 @@
                         variations: ["Supino com Halteres", "Supino na Máquina", "Supino com Pés Elevados"]
                     },
                     {
+                        id: "supino-reto-halteres",
+                        name: "Supino Reto com Halteres",
+                        difficulty: "beginner",
+                        equipment: "Halteres",
+                        focus: "Hipertrofia",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Peitoral Maior"],
+                            secondary: ["Deltóide Anterior", "Tríceps Braquial"],
+                            stabilizers: ["Core", "Estabilizadores do Ombro"]
+                        },
+                        instructions: [
+                            "Deite-se no banco com halteres acima do peito",
+                            "Palmas das mãos voltadas para frente",
+                            "Desça os halteres controladamente",
+                            "Mantenha cotovelos a 45°",
+                            "Empurre para cima unindo os halteres no topo"
+                        ],
+                        tips: [
+                            "Maior amplitude que a barra",
+                            "Permite correção de desequilíbrios",
+                            "Una os halteres no topo para máxima contração",
+                            "Movimento unilateral natural"
+                        ],
+                        errors: [
+                            "Bater os halteres no topo",
+                            "Descer muito baixo (estresse no ombro)",
+                            "Cotovelos abertos demais",
+                            "Arco excessivo na lombar"
+                        ],
+                        variations: ["Supino com Rotação", "Supino Neutro", "Supino Alternado"]
+                    },
+                    {
                         id: "supino-inclinado",
-                        name: "Supino Inclinado",
+                        name: "Supino Inclinado com Barra",
                         difficulty: "intermediate",
-                        equipment: "Barra ou Halteres",
+                        equipment: "Barra",
                         focus: "Parte Superior do Peito",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2022/07/supino-inclinado-com-halteres-.jpg",
                         muscles: {
                             primary: ["Peitoral Maior (porção clavicular)"],
                             secondary: ["Deltóide Anterior", "Tríceps Braquial"],
@@ -1228,14 +1149,45 @@
                         variations: ["Inclinado com Halteres", "Inclinado na Máquina", "Inclinado com Pegada Neutra"]
                     },
                     {
+                        id: "supino-inclinado-halteres",
+                        name: "Supino Inclinado com Halteres",
+                        difficulty: "beginner",
+                        equipment: "Halteres",
+                        focus: "Parte Superior do Peito",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Peitoral Maior (cabeça clavicular)"],
+                            secondary: ["Deltóide Anterior", "Tríceps"],
+                            stabilizers: ["Core", "Estabilizadores do Ombro"]
+                        },
+                        instructions: [
+                            "Banco inclinado entre 30-45 graus",
+                            "Halteres acima do peito com palmas para frente",
+                            "Desça controladamente sentindo o alongamento",
+                            "Empurre para cima unindo os halteres",
+                            "Contraia o peito superior no topo"
+                        ],
+                        tips: [
+                            "Excelente para desenvolver a parte superior",
+                            "Maior amplitude que a barra",
+                            "Rotação natural dos punhos permitida",
+                            "Foco na conexão mente-músculo"
+                        ],
+                        errors: [
+                            "Ângulo do banco muito alto",
+                            "Não controlar a descida",
+                            "Bater os halteres no topo",
+                            "Cotovelos muito abertos"
+                        ],
+                        variations: ["Inclinado 30°", "Inclinado 45°", "Inclinado com Rotação"]
+                    },
+                    {
                         id: "supino-declinado",
                         name: "Supino Declinado",
                         difficulty: "advanced",
                         equipment: "Barra ou Halteres",
                         focus: "Parte Inferior do Peito",
                         type: "weight",
-                        focus: "Hipertrofia",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/09/supino.jpg",
                         muscles: {
                             primary: ["Peitoral Maior (porção inferior)"],
                             secondary: ["Tríceps Braquial", "Deltóide Anterior"],
@@ -1263,13 +1215,12 @@
                         variations: ["Declinado com Halteres", "Declinado na Máquina"]
                     },
                     {
-                        id: "crucifixo",
-                        name: "Crucifixo com Halteres",
+                        id: "crucifixo-reto",
+                        name: "Crucifixo Reto com Halteres",
                         difficulty: "beginner",
                         equipment: "Halteres",
                         focus: "Isolamento do Peitoral",
                         type: "weight",
-                        image: "https://www.bodynutry.ind.br/images/uploads/FILE-20170531-1653NV23BHDWHBLM.jpg",
                         muscles: {
                             primary: ["Peitoral Maior (porção esternal)"],
                             secondary: ["Deltóide Anterior"],
@@ -1297,30 +1248,62 @@
                         variations: ["Crucifixo Inclinado", "Crucifixo Declinado", "Crucifixo no Cabo", "Crucifixo na Máquina"]
                     },
                     {
-                        id: "crossover",
-                        name: "Crossover na Polia",
+                        id: "crucifixo-inclinado",
+                        name: "Crucifixo Inclinado",
+                        difficulty: "beginner",
+                        equipment: "Halteres",
+                        focus: "Parte Superior do Peito",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Peitoral Maior (cabeça clavicular)"],
+                            secondary: ["Deltóide Anterior"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Banco inclinado 30-45 graus",
+                            "Halteres acima do peito com cotovelos levemente flexionados",
+                            "Abra os braços lateralmente em arco",
+                            "Sinta o alongamento no peito superior",
+                            "Feche os braços contraindo o músculo"
+                        ],
+                        tips: [
+                            "Foco na parte superior do peitoral",
+                            "Movimento em arco, não reto",
+                            "Mantenha os cotovelos apontados para cima",
+                            "Contraia no topo por 1 segundo"
+                        ],
+                        errors: [
+                            "Cotovelos muito flexionados",
+                            "Abrir os braços demais",
+                            "Usar peso excessivo",
+                            "Não sentir o alongamento"
+                        ],
+                        variations: ["Crucifixo Inclinado no Cabo", "Crucifixo Inclinado Unilateral"]
+                    },
+                    {
+                        id: "crossover-alto",
+                        name: "Crossover Alto (Polia para Baixo)",
                         difficulty: "beginner",
                         equipment: "Máquina de Cabos",
-                        focus: "Isolamento e Definição",
+                        focus: "Parte Inferior do Peito",
                         type: "weight",
-                        image: "https://www.hsefitness.com/wp-content/uploads/2025/01/High-to-Low-Cable-Crossover-600x600.png.webp",
                         muscles: {
-                            primary: ["Peitoral Maior"],
+                            primary: ["Peitoral Maior (porção inferior)"],
                             secondary: ["Deltóide Anterior"],
                             stabilizers: ["Core", "Oblíquos"]
                         },
                         instructions: [
-                            "Posicione as polias na altura dos ombros (ou superior/inferior)",
+                            "Posicione as polias na altura alta (acima da cabeça)",
                             "Segure as alças com os braços estendidos",
-                            "Mantenve leve flexão nos cotovelos",
+                            "Mantenha leve flexão nos cotovelos",
                             "Cruze os braços à frente do corpo contraindo o peito",
                             "Retorne controladamente sentindo o alongamento"
                         ],
                         tips: [
-                            "Polia alta: foco inferior do peito",
-                            "Polia baixa: foco superior do peito",
+                            "Foco na parte inferior do peitoral",
                             "Cruze os braços para máxima contração",
-                            "Mantenha o torso estável"
+                            "Mantenha o torso estável",
+                            "Movimento controlado sem momentum"
                         ],
                         errors: [
                             "Usar peso excessivo (perde isolamento)",
@@ -1328,16 +1311,48 @@
                             "Movimento com o tronco",
                             "Não cruzar os braços (perde contração)"
                         ],
-                        variations: ["Crossover Alto", "Crossover Baixo", "Crossover Unilateral"]
+                        variations: ["Crossover Unilateral Alto", "Crossover com Corda Alta"]
+                    },
+                    {
+                        id: "crossover-baixo",
+                        name: "Crossover Baixo (Polia para Cima)",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Parte Superior do Peito",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Peitoral Maior (porção clavicular)"],
+                            secondary: ["Deltóide Anterior"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione as polias na altura baixa (nível do chão)",
+                            "Segure as alças com braços estendidos para baixo",
+                            "Leve os braços para cima em arco",
+                            "Cruze as mãos acima da cabeça contraindo o peito",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Foco na parte superior do peitoral",
+                            "Movimento em arco ascendente",
+                            "Contraia o peito no topo",
+                            "Mantenha leve flexão nos cotovelos"
+                        ],
+                        errors: [
+                            "Usar o corpo para puxar",
+                            "Esticar os cotovelos",
+                            "Não cruzar as mãos no topo",
+                            "Movimento muito rápido"
+                        ],
+                        variations: ["Crossover Baixo Unilateral", "Crossover Baixo com Pausa"]
                     },
                     {
                         id: "flexao",
-                        name: "Flexão de Braço",
+                        name: "Flexão de Braço (Push-up)",
                         difficulty: "beginner",
                         equipment: "Peso Corporal",
                         focus: "Força e Resistência",
                         type: "weight",
-                        image: "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/12/flexao-peitoral.jpg?w=1024",
                         muscles: {
                             primary: ["Peitoral Maior"],
                             secondary: ["Tríceps Braquial", "Deltóide Anterior"],
@@ -1365,13 +1380,78 @@
                         variations: ["Flexão Diamond", "Flexão Inclinada", "Flexão Declinada", "Flexão com Palmas", "Flexão Arqueiro"]
                     },
                     {
-                        id: "pullover",
-                        name: "Pullover",
+                        id: "flexao-inclinada",
+                        name: "Flexão Inclinada",
+                        difficulty: "beginner",
+                        equipment: "Peso Corporal",
+                        focus: "Parte Inferior do Peito",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Peitoral Maior (porção inferior)"],
+                            secondary: ["Tríceps", "Deltóide Anterior"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Mãos apoiadas em um banco ou superfície elevada",
+                            "Pés no chão, corpo em linha reta",
+                            "Desça o peito em direção ao banco",
+                            "Cotovelos a 45° do corpo",
+                            "Empurre para voltar à posição inicial"
+                        ],
+                        tips: [
+                            "Quanto mais alto o apoio, mais fácil",
+                            "Excelente para iniciantes",
+                            "Foco na parte inferior do peito",
+                            "Mantenha o core contraído"
+                        ],
+                        errors: [
+                            "Quadril para cima ou para baixo",
+                            "Cotovelos abertos demais",
+                            "Não descer completamente",
+                            "Movimento rápido sem controle"
+                        ],
+                        variations: ["Flexão Inclinada Larga", "Flexão Inclinada Fechada"]
+                    },
+                    {
+                        id: "flexao-declinada",
+                        name: "Flexão Declinada",
                         difficulty: "intermediate",
-                        equipment: "Halter ou Barra",
+                        equipment: "Peso Corporal",
+                        focus: "Parte Superior do Peito",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Peitoral Maior (porção clavicular)"],
+                            secondary: ["Deltóide Anterior", "Tríceps"],
+                            stabilizers: ["Core", "Ombros"]
+                        },
+                        instructions: [
+                            "Pés apoiados em um banco ou superfície elevada",
+                            "Mãos no chão na largura dos ombros",
+                            "Desça o peito mantendo o corpo reto",
+                            "Cotovelos a 45°",
+                            "Empurre o chão para subir"
+                        ],
+                        tips: [
+                            "Foco na parte superior do peito",
+                            "Mais difícil que a flexão normal",
+                            "Mantenha o equilíbrio",
+                            "Controle a descida"
+                        ],
+                        errors: [
+                            "Cabeça para baixo",
+                            "Quadril muito alto",
+                            "Cotovelos abertos demais",
+                            "Não descer o suficiente"
+                        ],
+                        variations: ["Declinada com Pés Elevados", "Declinada com Peso"]
+                    },
+                    {
+                        id: "pullover",
+                        name: "Pullover com Halter",
+                        difficulty: "intermediate",
+                        equipment: "Halter",
                         focus: "Expansão Torácica",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/blog/wp-content/uploads/2020/06/exercicio-pullover.jpg",
                         muscles: {
                             primary: ["Peitoral Maior", "Dorsal Grande"],
                             secondary: ["Tríceps Braquial (cabeça longa)", "Serrátil Anterior"],
@@ -1380,7 +1460,7 @@
                         instructions: [
                             "Deite-se perpendicular ao banco (ombros no banco)",
                             "Segure o halter com as duas mãos sobre o peito",
-                            "Mantenve leve flexão nos cotovelos",
+                            "Mantenha leve flexão nos cotovelos",
                             "Leve o peso atrás da cabeça sentindo o alongamento",
                             "Retorne o peso à posição inicial contraindo o peito"
                         ],
@@ -1397,6 +1477,72 @@
                             "Movimento muito curto"
                         ],
                         variations: ["Pullover com Barra", "Pullover na Máquina", "Pullover com Cabo"]
+                    },
+                    {
+                        id: "voador-frontal",
+                        name: "Voador Frontal (Peck Deck)",
+                        difficulty: "beginner",
+                        equipment: "Máquina",
+                        focus: "Isolamento do Peitoral",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Peitoral Maior"],
+                            secondary: ["Deltóide Anterior"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina com as costas apoiadas",
+                            "Posicione os braços na altura dos ombros",
+                            "Mantenha cotovelos levemente flexionados",
+                            "Feche os braços contraindo o peito",
+                            "Retorne controladamente sentindo o alongamento"
+                        ],
+                        tips: [
+                            "Excelente para iniciantes",
+                            "Tensão constante durante todo o movimento",
+                            "Não deixe o peso descansar no topo",
+                            "Foco na contração do peito"
+                        ],
+                        errors: [
+                            "Cotovelos muito flexionados",
+                            "Usar momentum",
+                            "Não controlar a fase excêntrica",
+                            "Levantar o quadril do banco"
+                        ],
+                        variations: ["Voador com Uma perna", "Voador com Pausa"]
+                    },
+                    {
+                        id: "paralelas",
+                        name: "Paralelas (Mergulho)",
+                        difficulty: "intermediate",
+                        equipment: "Paralelas",
+                        focus: "Peito e Tríceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Peitoral Maior", "Tríceps Braquial"],
+                            secondary: ["Deltóide Anterior"],
+                            stabilizers: ["Core", "Ombros"]
+                        },
+                        instructions: [
+                            "Segure as barras das paralelas e suspenda-se",
+                            "Incline o torso para frente para focar no peito",
+                            "Desça flexionando os cotovelos",
+                            "Mantenha os cotovelos próximos ao corpo",
+                            "Empurre para cima estendendo os braços"
+                        ],
+                        tips: [
+                            "Inclinar o torso = foco em peito",
+                            "Corpo reto = foco em tríceps",
+                            "Amplitude completa para máximo estímulo",
+                            "Adicione peso com cinto quando necessário"
+                        ],
+                        errors: [
+                            "Não descer completamente",
+                            "Cotovelos abertos para fora",
+                            "Usar momentum",
+                            "Não controlar a subida"
+                        ],
+                        variations: ["Paralelas com Peso", "Paralelas Assistidas", "Paralelas entre Bancos"]
                     }
                 ]
             },
@@ -1413,7 +1559,6 @@
                         equipment: "Máquina de Pulley",
                         focus: "Largura das Costas",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2024/08/Puxada-frente-pegada-aberta.gif",
                         muscles: {
                             primary: ["Dorsal Grande", "Redondo Maior"],
                             secondary: ["Bíceps Braquial", "Braquial", "Deltóide Posterior"],
@@ -1441,13 +1586,78 @@
                         variations: ["Puxada Fechada", "Puxada Supinada", "Puxada com Triângulo", "Puxada Unilateral"]
                     },
                     {
-                        id: "remada-curvada",
-                        name: "Remada Curvada",
-                        difficulty: "intermediate",
-                        equipment: "Barra ou Halteres",
+                        id: "puxada-fechada",
+                        name: "Puxada Fechada",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Pulley",
                         focus: "Espessura das Costas",
                         type: "weight",
-                        image: "https://vedius.com.br/wp-content/uploads/2025/08/Remada-Unilateral-com-Halteres_-Fortalecimento-das-Costas.jpg",
+                        muscles: {
+                            primary: ["Dorsal Grande", "Romboides"],
+                            secondary: ["Bíceps", "Trapézio Médio"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Use a barra de triângulo ou pegada fechada",
+                            "Sente-se com as coxas presas",
+                            "Puxe em direção ao esterno",
+                            "Cotovelos próximos ao corpo",
+                            "Contraia as escápulas no final"
+                        ],
+                        tips: [
+                            "Foco na espessura das costas",
+                            "Mantenha os cotovelos apontando para baixo",
+                            "Puxe em direção ao esterno, não ao queixo",
+                            "Sinta a contração no meio das costas"
+                        ],
+                        errors: [
+                            "Cotovelos abertos",
+                            "Puxar com os bíceps",
+                            "Usar momentum",
+                            "Não contraír as escápulas"
+                        ],
+                        variations: ["Puxada Fechada Supinada", "Puxada com Corda", "Puxada Unilateral Fechada"]
+                    },
+                    {
+                        id: "puxada-supinada",
+                        name: "Puxada com Pegada Supinada",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Pulley",
+                        focus: "Largura e Bíceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Dorsal Grande"],
+                            secondary: ["Bíceps Braquial", "Braquial"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Segure a barra com as palmas voltadas para você",
+                            "Puxe a barra até a parte superior do peito",
+                            "Cotovelos próximos ao corpo",
+                            "Contraia as escápulas no topo",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Maior ativação do bíceps",
+                            "Pegada mais confortável para alguns",
+                            "Foco na largura do dorsal",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Balancear o corpo",
+                            "Não controlar a subida",
+                            "Cotovelos abertos",
+                            "Puxar apenas com os braços"
+                        ],
+                        variations: ["Puxada Supinada Fechada", "Puxada Supinada com Triângulo"]
+                    },
+                    {
+                        id: "remada-curvada",
+                        name: "Remada Curvada com Barra",
+                        difficulty: "intermediate",
+                        equipment: "Barra",
+                        focus: "Espessura das Costas",
+                        type: "weight",
                         muscles: {
                             primary: ["Dorsal Grande", "Romboides", "Trapézio Médio"],
                             secondary: ["Bíceps Braquial", "Braquial", "Deltóide Posterior"],
@@ -1475,13 +1685,45 @@
                         variations: ["Remada com Pegada Supinada", "Remada Unilateral", "Remada T-Bar", "Remada no Cabo"]
                     },
                     {
+                        id: "remada-curvada-supinada",
+                        name: "Remada Curvada Supinada",
+                        difficulty: "intermediate",
+                        equipment: "Barra",
+                        focus: "Espessura e Bíceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Dorsal Grande", "Romboides"],
+                            secondary: ["Bíceps Braquial", "Braquial"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Segure a barra com as palmas voltadas para cima",
+                            "Torso inclinado a 45 graus",
+                            "Puxe a barra em direção ao abdômen",
+                            "Cotovelos próximos ao corpo",
+                            "Contraia as escápulas no topo"
+                        ],
+                        tips: [
+                            "Maior ativação do bíceps",
+                            "Pegada mais forte que a pronada",
+                            "Foco na espessura das costas",
+                            "Mantenha a coluna neutra"
+                        ],
+                        errors: [
+                            "Arquear a lombar",
+                            "Usar momentum",
+                            "Cotovelos abertos",
+                            "Não controlar a descida"
+                        ],
+                        variations: ["Remada Supinada com Barra W", "Remada Supinada Unilateral"]
+                    },
+                    {
                         id: "remada-cavalinho",
                         name: "Remada Cavalinho (T-Bar)",
                         difficulty: "intermediate",
-                        equipment: "Máquina T-Bar ou Barra",
+                        equipment: "Máquina T-Bar",
                         focus: "Espessura Central",
                         type: "weight",
-                        image: "https://saude.abril.com.br/wp-content/uploads/2025/10/remada-cavalinho.jpg?quality=50&strip=info&resize=1080,565&crop=1",
                         muscles: {
                             primary: ["Dorsal Grande", "Romboides", "Trapézio Médio"],
                             secondary: ["Bíceps Braquial", "Deltóide Posterior"],
@@ -1496,7 +1738,7 @@
                         ],
                         tips: [
                             "Excelente para isolar as costas sem stress na lombar",
-                            "Mantenve o peito sempre apoiado",
+                            "Mantenha o peito sempre apoiado",
                             "Use pegada fechada para foco central",
                             "Pegada aberta para foco lateral"
                         ],
@@ -1515,7 +1757,6 @@
                         equipment: "Barra Fixa",
                         focus: "Força e Largura",
                         type: "weight",
-                        image: "https://blog.gsuplementos.com.br/wp-content/uploads/2023/07/Pullover.jpg",
                         muscles: {
                             primary: ["Dorsal Grande", "Redondo Maior"],
                             secondary: ["Bíceps Braquial", "Braquial", "Deltóide Posterior"],
@@ -1543,13 +1784,45 @@
                         variations: ["Chin-up (Pegada Supinada)", "Pull-up Neutro", "Pull-up com Peso", "Pull-up Assistido"]
                     },
                     {
+                        id: "chin-up",
+                        name: "Chin-up (Pegada Supinada)",
+                        difficulty: "intermediate",
+                        equipment: "Barra Fixa",
+                        focus: "Largura e Bíceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Dorsal Grande"],
+                            secondary: ["Bíceps Braquial", "Braquial"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Segure a barra com as palmas voltadas para você",
+                            "Braços estendidos, corpo pendurado",
+                            "Puxe até o queixo passar a barra",
+                            "Cotovelos próximos ao corpo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Mais fácil que o pull-up tradicional",
+                            "Maior ativação do bíceps",
+                            "Excelente para iniciantes",
+                            "Mantenha o core contraído"
+                        ],
+                        errors: [
+                            "Não descer completamente",
+                            "Balançar o corpo",
+                            "Cotovelos abertos",
+                            "Pular a fase excêntrica"
+                        ],
+                        variations: ["Chin-up com Peso", "Chin-up Assistido", "Chin-up Largo"]
+                    },
+                    {
                         id: "remada-baixa",
                         name: "Remada Baixa no Cabo",
                         difficulty: "beginner",
                         equipment: "Máquina de Cabos",
                         focus: "Espessura e Definição",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/blog/wp-content/uploads/2021/10/remada-articulada-aberta.jpg",
                         muscles: {
                             primary: ["Dorsal Grande", "Romboides"],
                             secondary: ["Bíceps Braquial", "Deltóide Posterior"],
@@ -1583,7 +1856,6 @@
                         equipment: "Halter e Banco",
                         focus: "Isolamento Unilateral",
                         type: "weight",
-                        image: "https://vedius.com.br/wp-content/uploads/2025/08/Remada-Unilateral-com-Halteres_-Fortalecimento-das-Costas.jpg",
                         muscles: {
                             primary: ["Dorsal Grande", "Romboides"],
                             secondary: ["Bíceps Braquial", "Deltóide Posterior"],
@@ -1609,6 +1881,204 @@
                             "Não completar a amplitude"
                         ],
                         variations: ["Remada Unilateral em Pé", "Remada Unilateral no Cabo", "Remada Unilateral na Máquina"]
+                    },
+                    {
+                        id: "remada-unilateral-em-pe",
+                        name: "Remada Unilateral em Pé",
+                        difficulty: "intermediate",
+                        equipment: "Halter",
+                        focus: "Isolamento Unilateral",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Dorsal Grande", "Romboides"],
+                            secondary: ["Bíceps", "Core"],
+                            stabilizers: ["Lombar", "Glúteos"]
+                        },
+                        instructions: [
+                            "Fique em pé com halter em uma mão",
+                            "Incline o torso para frente apoiando a mão livre",
+                            "Braço com halter estendido",
+                            "Puxe o halter em direção ao quadril",
+                            "Contraia a escápula no topo"
+                        ],
+                        tips: [
+                            "Maior ativação do core",
+                            "Permite maior amplitude",
+                            "Foco unilateral intenso",
+                            "Mantenha o equilíbrio"
+                        ],
+                        errors: [
+                            "Torcer a coluna",
+                            "Usar momentum",
+                            "Cotovelo aberto",
+                            "Não contraír a escápula"
+                        ],
+                        variations: ["Remada em Pé com Apoio", "Remada em Pé sem Apoio"]
+                    },
+                    {
+                        id: "remada-articulada",
+                        name: "Remada Articulada (Hammer Strength)",
+                        difficulty: "beginner",
+                        equipment: "Máquina",
+                        focus: "Espessura das Costas",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Dorsal Grande", "Romboides"],
+                            secondary: ["Bíceps", "Trapézio"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina com o peito no apoio",
+                            "Segure as alças com pegada neutra",
+                            "Puxe em direção ao abdômen",
+                            "Contraia as escápulas no topo",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Máquina guiada para maior segurança",
+                            "Foco na contração do dorsal",
+                            "Movimento controlado",
+                            "Ajuste o apoio de peito adequadamente"
+                        ],
+                        errors: [
+                            "Levantar o peito do apoio",
+                            "Usar momentum",
+                            "Não completar a amplitude",
+                            "Puxar com os braços"
+                        ],
+                        variations: ["Remada Articulada Unilateral", "Remada Articulada com Pegada Larga"]
+                    },
+                    {
+                        id: "pullover-maquina",
+                        name: "Pullover na Máquina",
+                        difficulty: "beginner",
+                        equipment: "Máquina",
+                        focus: "Largura do Dorsal",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Dorsal Grande"],
+                            secondary: ["Peitoral Maior", "Tríceps"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina com os braços estendidos",
+                            "Segure a barra ou alça",
+                            "Leve os braços para trás sentindo o alongamento",
+                            "Retorne controladamente",
+                            "Mantenha leve flexão nos cotovelos"
+                        ],
+                        tips: [
+                            "Excelente para isolar o dorsal",
+                            "Movimento em arco",
+                            "Sinta o alongamento no dorsal",
+                            "Não use o tríceps para empurrar"
+                        ],
+                        errors: [
+                            "Esticar os cotovelos",
+                            "Usar o tríceps excessivamente",
+                            "Movimento muito curto",
+                            "Não sentir o alongamento"
+                        ],
+                        variations: ["Pullover na Polia Alta", "Pullover com Halter"]
+                    },
+                    {
+                        id: "remada-cabo-alto",
+                        name: "Remada no Cabo Alto",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Largura do Dorsal",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Dorsal Grande"],
+                            secondary: ["Romboides", "Bíceps"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione a polia na altura alta",
+                            "Segure a barra com pegada larga",
+                            "Ajoelhe-se ou sente-se",
+                            "Puxe a barra em direção ao peito",
+                            "Contraia as escápulas no final"
+                        ],
+                        tips: [
+                            "Foco na largura do dorsal",
+                            "Mantenha os cotovelos altos",
+                            "Contraia as escápulas",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Cotovelos baixos",
+                            "Não contraír as escápulas",
+                            "Usar momentum",
+                            "Movimento muito rápido"
+                        ],
+                        variations: ["Remada no Cabo com Corda", "Remada no Cabo Unilateral"]
+                    },
+                    {
+                        id: "face-pull",
+                        name: "Face Pull",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Postura e Ombros",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Romboides", "Deltóide Posterior"],
+                            secondary: ["Trapézio Médio", "Manguito Rotador"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione a polia na altura da cabeça",
+                            "Segure a corda com as duas mãos",
+                            "Puxe em direção ao rosto separando as mãos",
+                            "Cotovelos altos e para fora",
+                            "Contraia as escápulas no final"
+                        ],
+                        tips: [
+                            "Excelente para saúde dos ombros",
+                            "Foco na retração escapular",
+                            "Mantenha os cotovelos altos",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Cotovelos baixos",
+                            "Não separar as mãos",
+                            "Usar peso excessivo",
+                            "Não contraír as escápulas"
+                        ],
+                        variations: ["Face Pull com Pausa", "Face Pull em Pé"]
+                    },
+                    {
+                        id: "hiperextensao",
+                        name: "Hiperextensão Lombar",
+                        difficulty: "beginner",
+                        equipment: "Banco de Hiperextensão",
+                        focus: "Lombar e Postura",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Eretor da Espinha"],
+                            secondary: ["Glúteos", "Isquiotibiais"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione-se no banco com os calcanhares apoiados",
+                            "Cruze os braços no peito ou atrás da cabeça",
+                            "Desça o torso flexionando no quadril",
+                            "Levante o torso até alinhar com as pernas",
+                            "Contraia a lombar no topo"
+                        ],
+                        tips: [
+                            "Não hiperextenda excessivamente",
+                            "Movimento controlado",
+                            "Foco na lombar, não no glúteo",
+                            "Excelente para prevenção de dores"
+                        ],
+                        errors: [
+                            "Hiperextensão excessiva",
+                            "Movimento rápido",
+                            "Usar momentum",
+                            "Não controlar a descida"
+                        ],
+                        variations: ["Hiperextensão com Peso", "Hiperextensão Unilateral"]
                     }
                 ]
             },
@@ -1619,13 +2089,12 @@
                 description: "Deltóides responsáveis pela abdução, flexão e extensão do braço",
                 exercises: [
                     {
-                        id: "desenvolvimento",
+                        id: "desenvolvimento-halteres",
                         name: "Desenvolvimento com Halteres",
                         difficulty: "intermediate",
-                        equipment: "Halteres ou Barra",
+                        equipment: "Halteres",
                         focus: "Massa e Força",
                         type: "weight",
-                        image: "https://treinoemalta.com.br/wp-content/uploads/2023/07/Desenvolvimento-com-Halteres-H.gif",
                         muscles: {
                             primary: ["Deltóide Anterior", "Deltóide Lateral"],
                             secondary: ["Deltóide Posterior", "Trapézio Superior"],
@@ -1653,13 +2122,78 @@
                         variations: ["Desenvolvimento na Barra", "Desenvolvimento Arnold", "Desenvolvimento na Máquina", "Desenvolvimento em Pé"]
                     },
                     {
+                        id: "desenvolvimento-barra",
+                        name: "Desenvolvimento com Barra",
+                        difficulty: "intermediate",
+                        equipment: "Barra",
+                        focus: "Força e Massa",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Deltóide Anterior", "Deltóide Lateral"],
+                            secondary: ["Tríceps", "Trapézio"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se com a barra na altura do peito",
+                            "Pegada larga, cotovelos apontados para frente",
+                            "Empurre a barra para cima",
+                            "Leve a barra ligeiramente para trás no topo",
+                            "Desça controladamente até o queixo"
+                        ],
+                        tips: [
+                            "Movimento mais estável que com halteres",
+                            "Permite maior carga",
+                            "Cuidado com a pressão lombar",
+                            "Use cinto para cargas pesadas"
+                        ],
+                        errors: [
+                            "Arco excessivo na lombar",
+                            "Bater a barra no peito",
+                            "Não controlar a descida",
+                            "Cotovelos muito abertos"
+                        ],
+                        variations: ["Desenvolvimento Militar", "Desenvolvimento na Smith", "Desenvolvimento em Pé"]
+                    },
+                    {
+                        id: "desenvolvimento-arnold",
+                        name: "Desenvolvimento Arnold",
+                        difficulty: "intermediate",
+                        equipment: "Halteres",
+                        focus: "Todos os Deltóides",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Deltóide Anterior", "Deltóide Lateral", "Deltóide Posterior"],
+                            secondary: ["Tríceps"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se com halteres na altura do peito",
+                            "Palmas voltadas para você",
+                            "Gire os punhos enquanto empurra",
+                            "Termine com as palmas para frente e braços estendidos",
+                            "Inverta o movimento na descida"
+                        ],
+                        tips: [
+                            "Trabalha todos os feixes do deltóide",
+                            "Maior amplitude de movimento",
+                            "Excelente para desenvolvimento completo",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Girar os punhos muito cedo ou tarde",
+                            "Usar peso excessivo",
+                            "Não controlar a descida",
+                            "Arco na lombar"
+                        ],
+                        variations: ["Arnold em Pé", "Arnold com Rotação Alternada"]
+                    },
+                    {
                         id: "elevacao-lateral",
                         name: "Elevação Lateral",
                         difficulty: "beginner",
-                        equipment: "Halteres ou Cabo",
+                        equipment: "Halteres",
                         focus: "Deltóide Lateral",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2020/01/elevacao-lateral.jpg",
                         muscles: {
                             primary: ["Deltóide Lateral"],
                             secondary: ["Deltóide Anterior"],
@@ -1667,7 +2201,7 @@
                         },
                         instructions: [
                             "Fique em pé com halteres ao lado do corpo",
-                            "Mantenve leve flexão nos cotovelos (10-15°)",
+                            "Mantenha leve flexão nos cotovelos (10-15°)",
                             "Levante os braços lateralmente até a altura dos ombros",
                             "Mantenha os cotovelos apontados para cima",
                             "Desça controladamente"
@@ -1687,13 +2221,45 @@
                         variations: ["Elevação Lateral no Cabo", "Elevação Lateral Inclinada", "Elevação Lateral Unilateral", "Elevação Lateral na Máquina"]
                     },
                     {
+                        id: "elevacao-lateral-cabo",
+                        name: "Elevação Lateral no Cabo",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Deltóide Lateral",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Deltóide Lateral"],
+                            secondary: ["Trapézio"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione a polia na altura baixa",
+                            "Segure a alça com uma mão",
+                            "Levante o braço lateralmente",
+                            "Cotovelo levemente flexionado",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Tensão constante durante todo o movimento",
+                            "Maior isolamento do deltóide",
+                            "Evite usar o trapézio",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Levantar o ombro",
+                            "Cotovelo esticado",
+                            "Movimento muito rápido"
+                        ],
+                        variations: ["Elevação Lateral no Cabo Cruzada", "Elevação Lateral com Corda"]
+                    },
+                    {
                         id: "elevacao-frontal",
                         name: "Elevação Frontal",
                         difficulty: "beginner",
-                        equipment: "Halteres, Barra ou Cabo",
+                        equipment: "Halteres",
                         focus: "Deltóide Anterior",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2020/02/elevacao-frontal.jpg",
                         muscles: {
                             primary: ["Deltóide Anterior"],
                             secondary: ["Trapézio Superior", "Serrátil Anterior"],
@@ -1701,7 +2267,7 @@
                         },
                         instructions: [
                             "Fique em pé com halteres à frente das coxas",
-                            "Mantenve leve flexão nos cotovelos",
+                            "Mantenha leve flexão nos cotovelos",
                             "Levante os braços à frente até a altura dos ombros",
                             "Mantenha os braços paralelos um ao outro",
                             "Desça controladamente"
@@ -1721,13 +2287,45 @@
                         variations: ["Elevação Frontal Alternada", "Elevação Frontal no Cabo", "Elevação Frontal com Anilha"]
                     },
                     {
+                        id: "elevacao-frontal-barra",
+                        name: "Elevação Frontal com Barra",
+                        difficulty: "intermediate",
+                        equipment: "Barra",
+                        focus: "Deltóide Anterior",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Deltóide Anterior"],
+                            secondary: ["Trapézio", "Core"],
+                            stabilizers: ["Lombar"]
+                        },
+                        instructions: [
+                            "Segure a barra com as mãos na largura dos ombros",
+                            "Braços estendidos à frente das coxas",
+                            "Levante a barra até a altura dos ombros",
+                            "Mantenha os braços estendidos",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Permite maior carga que halteres",
+                            "Movimento estrito",
+                            "Foco no deltóide anterior",
+                            "Evite balançar"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Flexionar os cotovelos",
+                            "Levantar acima dos ombros",
+                            "Arco na lombar"
+                        ],
+                        variations: ["Elevação Frontal na Smith", "Elevação Frontal com Pega Fechada"]
+                    },
+                    {
                         id: "crucifixo-invertido",
                         name: "Crucifixo Inverso",
                         difficulty: "intermediate",
-                        equipment: "Halteres ou Cabo",
+                        equipment: "Halteres",
                         focus: "Deltóide Posterior",
                         type: "weight",
-                        image: "https://www.hipertrofia.org/blog/wp-content/uploads/2023/05/elevacao-lateral-inclinada-1.gif",
                         muscles: {
                             primary: ["Deltóide Posterior"],
                             secondary: ["Romboides", "Trapézio Médio"],
@@ -1755,13 +2353,45 @@
                         variations: ["Face Pull", "Crucifixo Inverso no Cabo", "Máquina Reversa"]
                     },
                     {
+                        id: "crucifixo-invertido-cabo",
+                        name: "Crucifixo Inverso no Cabo",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Deltóide Posterior",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Deltóide Posterior"],
+                            secondary: ["Romboides"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione as polias na altura média",
+                            "Cruze os cabos e segure as alças",
+                            "Braços estendidos à frente",
+                            "Abra os braços lateralmente",
+                            "Contraia o posterior do ombro"
+                        ],
+                        tips: [
+                            "Tensão constante do cabo",
+                            "Maior isolamento",
+                            "Movimento controlado",
+                            "Foco na contração"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Cotovelos flexionados demais",
+                            "Não abrir completamente",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Crucifixo Inverso Unilateral", "Crucifixo Inverso com Pausa"]
+                    },
+                    {
                         id: "remada-alta",
                         name: "Remada Alta",
                         difficulty: "intermediate",
-                        equipment: "Barra ou Cabo",
+                        equipment: "Barra",
                         focus: "Trapézio Superior",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/blog/wp-content/uploads/2020/02/remada-alta-execucao-e-musculos.jpg",
                         muscles: {
                             primary: ["Trapézio Superior", "Deltóide Lateral"],
                             secondary: ["Deltóide Anterior", "Romboides"],
@@ -1787,6 +2417,138 @@
                             "Pegada muito estreita"
                         ],
                         variations: ["Remada Alta no Cabo", "Remada Alta com Halteres", "Remada Alta Smith"]
+                    },
+                    {
+                        id: "remada-alta-cabo",
+                        name: "Remada Alta no Cabo",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Trapézio",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Trapézio Superior"],
+                            secondary: ["Deltóide Lateral"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione a polia na altura baixa",
+                            "Segure a barra com pegada larga",
+                            "Levante os cotovelos lateralmente",
+                            "Cotovelos acima das mãos",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Tensão constante",
+                            "Maior controle que com barra",
+                            "Foco no trapézio",
+                            "Evite usar o corpo"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Cotovelos baixos",
+                            "Levantar demais",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Remada Alta com Corda", "Remada Alta Unilateral"]
+                    },
+                    {
+                        id: "encolhimento",
+                        name: "Encolhimento com Halteres",
+                        difficulty: "beginner",
+                        equipment: "Halteres",
+                        focus: "Trapézio Superior",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Trapézio Superior"],
+                            secondary: ["Trapézio Médio"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Fique em pé com halteres ao lado do corpo",
+                            "Mantenha os braços estendidos",
+                            "Levante os ombros em direção às orelhas",
+                            "Contraia o trapézio no topo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Movimento apenas nos ombros",
+                            "Não rotacione os ombros (apenas para cima)",
+                            "Segure a contração no topo",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Rotacionar os ombros",
+                            "Usar momentum",
+                            "Flexionar os cotovelos",
+                            "Não controlar a descida"
+                        ],
+                        variations: ["Encolhimento com Barra", "Encolhimento no Cabo", "Encolhimento Unilateral"]
+                    },
+                    {
+                        id: "encolhimento-barra",
+                        name: "Encolhimento com Barra",
+                        difficulty: "intermediate",
+                        equipment: "Barra",
+                        focus: "Trapézio",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Trapézio Superior"],
+                            secondary: ["Trapézio Médio", "Romboides"],
+                            stabilizers: ["Core", "Antebraço"]
+                        },
+                        instructions: [
+                            "Segure a barra à frente das coxas",
+                            "Braços estendidos",
+                            "Levante os ombros o máximo possível",
+                            "Segure a contração",
+                            "Desça lentamente"
+                        ],
+                        tips: [
+                            "Permite maior carga",
+                            "Use pegada pronada ou mista",
+                            "Foco na contração máxima",
+                            "Evite balançar"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Flexionar os cotovelos",
+                            "Não elevar o suficiente",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Encolhimento na Smith", "Encolhimento Atrás das Costas"]
+                    },
+                    {
+                        id: "face-pull-corda",
+                        name: "Face Pull com Corda",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Deltóide Posterior",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Deltóide Posterior"],
+                            secondary: ["Romboides", "Manguito Rotador"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Polia na altura da cabeça",
+                            "Segure a corda com as duas mãos",
+                            "Puxe em direção ao rosto",
+                            "Separe as mãos no final",
+                            "Cotovelos altos"
+                        ],
+                        tips: [
+                            "Excelente para saúde dos ombros",
+                            "Foco na retração escapular",
+                            "Rotação externa no final",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Cotovelos baixos",
+                            "Não separar as mãos",
+                            "Usar peso excessivo",
+                            "Não controlar"
+                        ],
+                        variations: ["Face Pull com Pausa", "Face Pull em Agachamento"]
                     }
                 ]
             },
@@ -1797,13 +2559,12 @@
                 description: "Músculos responsáveis pela flexão do cotovelo e supinação do antebraço",
                 exercises: [
                     {
-                        id: "rosca-direta",
-                        name: "Rosca Direta",
-                        difficulty: "beginner",
-                        equipment: "Barra ou Halteres",
+                        id: "rosca-direta-barra",
+                        name: "Rosca Direta com Barra",
+                        difficulty: "intermediate",
+                        equipment: "Barra",
                         focus: "Cabeça Curta do Bíceps",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2023/07/rosca-direta-com-halteres-como-fazer-musculos.jpg",
                         muscles: {
                             primary: ["Bíceps Braquial (cabeça curta)"],
                             secondary: ["Braquial", "Braquiorradial"],
@@ -1831,13 +2592,45 @@
                         variations: ["Rosca com Barra W", "Rosca com Barra Reta", "Rosca no Cabo", "Rosca 21"]
                     },
                     {
+                        id: "rosca-direta-halteres",
+                        name: "Rosca Direta com Halteres",
+                        difficulty: "beginner",
+                        equipment: "Halteres",
+                        focus: "Bíceps Braquial",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Bíceps Braquial"],
+                            secondary: ["Braquial", "Braquiorradial"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Fique em pé com halteres ao lado do corpo",
+                            "Palmas voltadas para frente",
+                            "Flexione os cotovelos elevando os halteres",
+                            "Contraia no topo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Permite rotação natural dos punhos",
+                            "Correção de desequilíbrios",
+                            "Movimento simultâneo ou alternado",
+                            "Foco na contração"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Cotovelos saírem do lugar",
+                            "Não estender os braços",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Rosca Simultânea", "Rosca Alternada", "Rosca com Rotação"]
+                    },
+                    {
                         id: "rosca-alternada",
                         name: "Rosca Alternada",
                         difficulty: "beginner",
                         equipment: "Halteres",
                         focus: "Isolamento Unilateral",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2020/10/rosca-alternada-com-halteres.jpg",
                         muscles: {
                             primary: ["Bíceps Braquial"],
                             secondary: ["Braquial", "Braquiorradial"],
@@ -1868,10 +2661,9 @@
                         id: "rosca-martelo",
                         name: "Rosca Martelo",
                         difficulty: "beginner",
-                        equipment: "Halteres ou Corda",
+                        equipment: "Halteres",
                         focus: "Braquial e Braquiorradial",
                         type: "weight",
-                        image: "https://static.strengthlevel.com/images/exercises/dumbbell-concentration-curl/dumbbell-concentration-curl-800.jpg",
                         muscles: {
                             primary: ["Braquial", "Braquiorradial"],
                             secondary: ["Bíceps Braquial"],
@@ -1899,13 +2691,45 @@
                         variations: ["Rosca Martelo no Cabo", "Rosca Martelo Cruzada", "Rosca Martelo Inclinada"]
                     },
                     {
+                        id: "rosca-martelo-corda",
+                        name: "Rosca Martelo com Corda",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Braquial",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Braquial"],
+                            secondary: ["Bíceps"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione a polia na altura baixa",
+                            "Segure a corda com as duas mãos",
+                            "Mantenha os cotovelos fixos",
+                            "Flexione os cotovelos",
+                            "Separe as pontas da corda no topo"
+                        ],
+                        tips: [
+                            "Tensão constante do cabo",
+                            "Separação das pontas aumenta contração",
+                            "Movimento controlado",
+                            "Foco no braquial"
+                        ],
+                        errors: [
+                            "Cotovelos saírem do lugar",
+                            "Não separar as pontas",
+                            "Usar momentum",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Rosca Martelo Unilateral no Cabo", "Rosca Martelo com Barra"]
+                    },
+                    {
                         id: "rosca-scott",
                         name: "Rosca Scott",
                         difficulty: "intermediate",
-                        equipment: "Banco Scott ou Máquina",
+                        equipment: "Banco Scott",
                         focus: "Cabeça Longa do Bíceps",
                         type: "weight",
-                        image: "https://saude.abril.com.br/wp-content/uploads/2025/02/rosca-scott.jpg?crop=1&resize=1212,909",
                         muscles: {
                             primary: ["Bíceps Braquial (cabeça longa)"],
                             secondary: ["Braquial"],
@@ -1933,13 +2757,45 @@
                         variations: ["Rosca Scott Unilateral", "Rosca Scott na Máquina", "Rosca Scott com Barra W"]
                     },
                     {
+                        id: "rosca-scott-unilateral",
+                        name: "Rosca Scott Unilateral",
+                        difficulty: "beginner",
+                        equipment: "Banco Scott",
+                        focus: "Isolamento Unilateral",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Bíceps Braquial"],
+                            secondary: ["Braquial"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se no banco Scott",
+                            "Apoie o braço na almofada",
+                            "Segure o halter com pegada supinada",
+                            "Flexione o cotovelo completamente",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Correção de desequilíbrios",
+                            "Foco intenso no bíceps",
+                            "Movimento controlado",
+                            "Não estender completamente"
+                        ],
+                        errors: [
+                            "Tirar o cotovelo do apoio",
+                            "Estender demais",
+                            "Usar momentum",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Scott com Rotação", "Scott com Pausa"]
+                    },
+                    {
                         id: "rosca-concentrada",
                         name: "Rosca Concentrada",
                         difficulty: "beginner",
                         equipment: "Halter",
                         focus: "Pico do Bíceps",
                         type: "weight",
-                        image: "https://static.strengthlevel.com/images/exercises/dumbbell-concentration-curl/dumbbell-concentration-curl-800.jpg",
                         muscles: {
                             primary: ["Bíceps Braquial"],
                             secondary: ["Braquial"],
@@ -1965,6 +2821,137 @@
                             "Não completar a amplitude"
                         ],
                         variations: ["Rosca Concentrada em Pé", "Rosca Concentrada no Cabo"]
+                    },
+                    {
+                        id: "rosca-inclinada",
+                        name: "Rosca Inclinada",
+                        difficulty: "intermediate",
+                        equipment: "Halteres",
+                        focus: "Cabeça Longa do Bíceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Bíceps Braquial (cabeça longa)"],
+                            secondary: ["Braquial"],
+                            stabilizers: ["Deltóide Anterior"]
+                        },
+                        instructions: [
+                            "Sente-se em um banco inclinado 45-60 graus",
+                            "Deixe os braços pendendo para os lados",
+                            "Flexione os cotovelos elevando os halteres",
+                            "Contraia no topo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Alonga a cabeça longa no início",
+                            "Maior amplitude de movimento",
+                            "Foco na parte externa do bíceps",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Cotovelos saírem do lugar",
+                            "Não controlar a descida",
+                            "Balançar o corpo"
+                        ],
+                        variations: ["Rosca Inclinada Alternada", "Rosca Inclinada Martelo"]
+                    },
+                    {
+                        id: "rosca-no-cabo",
+                        name: "Rosca no Cabo",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Bíceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Bíceps Braquial"],
+                            secondary: ["Braquial"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione a polia na altura baixa",
+                            "Segure a barra com pegada supinada",
+                            "Cotovelos fixos ao lado do corpo",
+                            "Flexione os cotovelos",
+                            "Contraia no topo"
+                        ],
+                        tips: [
+                            "Tensão constante durante todo o movimento",
+                            "Maior isolamento",
+                            "Movimento controlado",
+                            "Foco na contração"
+                        ],
+                        errors: [
+                            "Cotovelos saírem do lugar",
+                            "Usar momentum",
+                            "Movimento muito rápido",
+                            "Não contraír no topo"
+                        ],
+                        variations: ["Rosca no Cabo com Corda", "Rosca no Cabo Unilateral"]
+                    },
+                    {
+                        id: "rosca-21",
+                        name: "Rosca 21",
+                        difficulty: "intermediate",
+                        equipment: "Barra ou Halteres",
+                        focus: "Bíceps (todas as partes)",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Bíceps Braquial"],
+                            secondary: ["Braquial"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "7 repetições na metade inferior do movimento",
+                            "7 repetições na metade superior do movimento",
+                            "7 repetições completas",
+                            "Sem descanso entre as partes",
+                            "Mantenha a forma perfeita"
+                        ],
+                        tips: [
+                            "Técnica avançada para intensidade",
+                            "Trabalha todos os pontos de resistência",
+                            "Use peso moderado",
+                            "Foco na forma, não no peso"
+                        ],
+                        errors: [
+                            "Usar peso excessivo",
+                            "Descansar entre as partes",
+                            "Perder a forma",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Rosca 21 com Halteres", "Rosca 21 no Cabo"]
+                    },
+                    {
+                        id: "rosca-zottman",
+                        name: "Rosca Zottman",
+                        difficulty: "intermediate",
+                        equipment: "Halteres",
+                        focus: "Bíceps e Antebraço",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Bíceps Braquial"],
+                            secondary: ["Braquiorradial", "Extensores do Punho"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Flexione o cotovelo com pegada supinada",
+                            "No topo, gire o punho para pegada pronada",
+                            "Desça lentamente com pegada pronada",
+                            "Gire novamente no fundo"
+                        ],
+                        tips: [
+                            "Trabalha bíceps na subida e antebraço na descida",
+                            "Descida mais lenta que a subida",
+                            "Excelente para desenvolvimento completo",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Girar o punho cedo demais",
+                            "Descida rápida",
+                            "Usar momentum",
+                            "Cotovelo sair do lugar"
+                        ],
+                        variations: ["Zottman Alternado", "Zottman Inclinado"]
                     }
                 ]
             },
@@ -1981,7 +2968,6 @@
                         equipment: "Máquina de Cabos",
                         focus: "Cabeça Lateral",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/08/triceps-pulley-corda-na-polia.jpg",
                         muscles: {
                             primary: ["Tríceps Braquial (cabeça lateral)"],
                             secondary: ["Tríceps Braquial (cabeça longa)"],
@@ -2009,21 +2995,53 @@
                         variations: ["Tríceps com Barra", "Tríceps com Corda", "Tríceps Unilateral", "Tríceps Invertido"]
                     },
                     {
-                        id: "triceps-testa",
-                        name: "Tríceps Testa",
+                        id: "triceps-corda",
+                        name: "Tríceps com Corda",
                         difficulty: "beginner",
-                        equipment: "Barra W ou Halteres",
+                        equipment: "Máquina de Cabos",
+                        focus: "Todas as Cabeças",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Tríceps Braquial"],
+                            secondary: ["Deltóide Posterior"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Polia na altura alta",
+                            "Segure a corda com as duas mãos",
+                            "Cotovelos fixos ao lado do corpo",
+                            "Estenda os braços separando as pontas da corda",
+                            "Contraia no final"
+                        ],
+                        tips: [
+                            "Separação das pontas aumenta a contração",
+                            "Maior amplitude que a barra",
+                            "Foco na contração máxima",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Não separar as pontas",
+                            "Cotovelos saírem do lugar",
+                            "Usar o corpo",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Tríceps com Corda Unilateral", "Tríceps com Corda Atrás da Cabeça"]
+                    },
+                    {
+                        id: "triceps-testa",
+                        name: "Tríceps Testa com Barra W",
+                        difficulty: "beginner",
+                        equipment: "Barra W",
                         focus: "Cabeça Longa",
                         type: "weight",
-                        image: "https://p2.trrsf.com/image/fget/cf/500/0/images.terra.com/2024/02/12/2104145112-istock-1257493708.jpg",
                         muscles: {
                             primary: ["Tríceps Braquial (cabeça longa)"],
                             secondary: ["Tríceps Braquial (cabeça lateral)"],
                             stabilizers: ["Deltóide Anterior"]
                         },
                         instructions: [
-                            "Deite-se no banco com halteres estendidos",
-                            "Flexione os cotovelos levando os pesos em direção à testa",
+                            "Deite-se no banco com a barra estendida",
+                            "Flexione os cotovelos levando a barra em direção à testa",
                             "Mantenha os cotovelos apontados para cima",
                             "Estenda os braços voltando à posição inicial",
                             "Contraia o tríceps no topo"
@@ -2036,20 +3054,52 @@
                         ],
                         errors: [
                             "Cotovelos abertos para os lados",
-                            "Bater os pesos na testa",
+                            "Bater a barra na testa",
                             "Não estender completamente",
                             "Usar peso excessivo"
                         ],
                         variations: ["Tríceps Testa Unilateral", "Tríceps Testa no Cabo", "Tríceps Testa com Barra Reta"]
                     },
                     {
+                        id: "triceps-testa-halteres",
+                        name: "Tríceps Testa com Halteres",
+                        difficulty: "beginner",
+                        equipment: "Halteres",
+                        focus: "Cabeça Longa",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Tríceps Braquial (cabeça longa)"],
+                            secondary: ["Tríceps Braquial"],
+                            stabilizers: ["Deltóide Anterior"]
+                        },
+                        instructions: [
+                            "Deite-se no banco com halteres",
+                            "Braços estendidos acima do peito",
+                            "Flexione os cotovelos levando os halteres em direção à testa",
+                            "Cotovelos apontados para cima",
+                            "Estenda os braços"
+                        ],
+                        tips: [
+                            "Maior amplitude que a barra",
+                            "Movimento unilateral natural",
+                            "Foco na cabeça longa",
+                            "Controle total do movimento"
+                        ],
+                        errors: [
+                            "Cotovelos abertos",
+                            "Bater os halteres na testa",
+                            "Não estender completamente",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Tríceps Testa Alternado", "Tríceps Testa com Rotação"]
+                    },
+                    {
                         id: "triceps-frances",
                         name: "Tríceps Francês",
                         difficulty: "intermediate",
-                        equipment: "Halter ou Cabo",
+                        equipment: "Halter",
                         focus: "Cabeça Longa",
                         type: "weight",
-                        image: "https://p2.trrsf.com/image/fget/cf/500/0/images.terra.com/2024/02/12/2104145112-istock-1257493708.jpg",
                         muscles: {
                             primary: ["Tríceps Braquial (cabeça longa)"],
                             secondary: ["Tríceps Braquial (cabeça medial)"],
@@ -2077,14 +3127,45 @@
                         variations: ["Tríceps Francês Sentado", "Tríceps Francês no Cabo", "Tríceps Francês Unilateral"]
                     },
                     {
+                        id: "triceps-frances-cabo",
+                        name: "Tríceps Francês no Cabo",
+                        difficulty: "beginner",
+                        equipment: "Máquina de Cabos",
+                        focus: "Cabeça Longa",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Tríceps Braquial (cabeça longa)"],
+                            secondary: ["Tríceps Braquial"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Polia na altura baixa",
+                            "Costas para a máquina",
+                            "Segure a corda ou barra atrás da cabeça",
+                            "Estenda os braços para cima",
+                            "Contraia no topo"
+                        ],
+                        tips: [
+                            "Tensão constante do cabo",
+                            "Maior isolamento",
+                            "Foco na cabeça longa",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Cotovelos abertos",
+                            "Usar o corpo",
+                            "Não estender completamente",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Francês no Cabo Unilateral", "Francês no Cabo com Corda"]
+                    },
+                    {
                         id: "triceps-paralelas",
                         name: "Tríceps em Paralelas",
                         difficulty: "intermediate",
-                        equipment: "Paralelas ou Máquina",
+                        equipment: "Paralelas",
                         focus: "Tríceps Completo",
                         type: "weight",
-                        focus: "Força",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/08/triceps-pulley-corda-na-polia.jpg",
                         muscles: {
                             primary: ["Tríceps Braquial (todas as cabeças)"],
                             secondary: ["Peitoral Menor", "Deltóide Anterior"],
@@ -2115,10 +3196,9 @@
                         id: "triceps-coice",
                         name: "Tríceps Coice",
                         difficulty: "beginner",
-                        equipment: "Cabo ou Halter",
+                        equipment: "Cabo",
                         focus: "Cabeça Lateral",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/08/triceps-pulley-corda-na-polia.jpg",
                         muscles: {
                             primary: ["Tríceps Braquial (cabeça lateral)"],
                             secondary: ["Tríceps Braquial (cabeça longa)"],
@@ -2144,6 +3224,136 @@
                             "Usar momentum"
                         ],
                         variations: ["Tríceps Coice no Cabo", "Tríceps Coice com Halter", "Tríceps Coice na Máquina"]
+                    },
+                    {
+                        id: "triceps-coice-halter",
+                        name: "Tríceps Coice com Halter",
+                        difficulty: "beginner",
+                        equipment: "Halter",
+                        focus: "Cabeça Lateral",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Tríceps Braquial (cabeça lateral)"],
+                            secondary: ["Deltóide Posterior"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Incline o torso para frente",
+                            "Segure o halter com o braço flexionado 90 graus",
+                            "Estenda o braço para trás",
+                            "Contraia o tríceps",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Cotovelo fixo como pivô",
+                            "Movimento apenas no cotovelo",
+                            "Foco na cabeça lateral",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Movimento no ombro",
+                            "Cotovelo sair do lugar",
+                            "Não estender completamente",
+                            "Usar momentum"
+                        ],
+                        variations: ["Coice em Pé", "Coice no Banco"]
+                    },
+                    {
+                        id: "triceps-mergulho-banco",
+                        name: "Mergulho entre Bancos",
+                        difficulty: "beginner",
+                        equipment: "Bancos",
+                        focus: "Tríceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Tríceps Braquial"],
+                            secondary: ["Peitoral", "Deltóide Anterior"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione-se entre dois bancos",
+                            "Mãos em um banco, pés no outro",
+                            "Desça flexionando os cotovelos",
+                            "Mantenha o corpo próximo ao banco",
+                            "Empurre para cima"
+                        ],
+                        tips: [
+                            "Excelente para iniciantes",
+                            "Foco no tríceps",
+                            "Mantenha os cotovelos para trás",
+                            "Controle o movimento"
+                        ],
+                        errors: [
+                            "Cotovelos abertos",
+                            "Afastar o corpo do banco",
+                            "Não descer o suficiente",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Mergulho no Chão", "Mergulho com Pernas Elevadas"]
+                    },
+                    {
+                        id: "triceps-pegada-fechada",
+                        name: "Flexão com Pegada Fechada",
+                        difficulty: "intermediate",
+                        equipment: "Peso Corporal",
+                        focus: "Tríceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Tríceps Braquial"],
+                            secondary: ["Peitoral", "Deltóide Anterior"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posição de flexão com as mãos juntas (formando diamante)",
+                            "Desça o peito em direção às mãos",
+                            "Cotovelos próximos ao corpo",
+                            "Empurre para cima estendendo os braços"
+                        ],
+                        tips: [
+                            "Excelente para tríceps",
+                            "Mãos próximas formam diamante",
+                            "Cotovelos não saem do lugar",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Cotovelos abertos",
+                            "Mãos muito afastadas",
+                            "Não descer o suficiente",
+                            "Quadril para cima"
+                        ],
+                        variations: ["Diamond Push-up", "Flexão Fechada Inclinada"]
+                    },
+                    {
+                        id: "triceps-apoio",
+                        name: "Tríceps no Apoio",
+                        difficulty: "beginner",
+                        equipment: "Banco ou Cadeira",
+                        focus: "Tríceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Tríceps Braquial"],
+                            secondary: ["Deltóide Anterior"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na borda do banco com as mãos ao lado do quadril",
+                            "Deslize o quadril para fora do banco",
+                            "Desça flexionando os cotovelos",
+                            "Empurre para cima estendendo os braços"
+                        ],
+                        tips: [
+                            "Excelente para iniciantes",
+                            "Pernas estendidas = mais difícil",
+                            "Pernas flexionadas = mais fácil",
+                            "Foco no tríceps"
+                        ],
+                        errors: [
+                            "Cotovelos abertos",
+                            "Descer muito (estresse no ombro)",
+                            "Usar momentum",
+                            "Não estender completamente"
+                        ],
+                        variations: ["Apoio com Pernas Elevadas", "Apoio com Peso"]
                     }
                 ]
             },
@@ -2160,7 +3370,6 @@
                         equipment: "Barra",
                         focus: "Força e Massa",
                         type: "weight",
-                        image: "https://boaforma.abril.com.br/wp-content/uploads/sites/2/2026/01/determined-female-leggings-having-abdominal-crunch-workout-indoors-side-view-fit.jpg?crop=1&resize=1212,909",
                         muscles: {
                             primary: ["Quadríceps", "Glúteo Máximo"],
                             secondary: ["Isquiotibiais", "Addutores", "Eretor da Espinha"],
@@ -2191,13 +3400,78 @@
                         variations: ["Agachamento Frontal", "Agachamento Sumô", "Agachamento Búlgaro", "Agachamento Hack"]
                     },
                     {
+                        id: "agachamento-frontal",
+                        name: "Agachamento Frontal",
+                        difficulty: "advanced",
+                        equipment: "Barra",
+                        focus: "Quadríceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Quadríceps"],
+                            secondary: ["Glúteos", "Core"],
+                            stabilizers: ["Deltóides", "Trapézio"]
+                        },
+                        instructions: [
+                            "Posicione a barra na frente dos ombros",
+                            "Cotovelos altos, braços paralelos ao chão",
+                            "Desça em agachamento",
+                            "Mantenha o torso ereto",
+                            "Empurre o chão para subir"
+                        ],
+                        tips: [
+                            "Maior ênfase no quadríceps",
+                            "Requer boa mobilidade de tornozelo",
+                            "Mantenha os cotovelos altos",
+                            "Core fortemente contraído"
+                        ],
+                        errors: [
+                            "Cotovelos caírem",
+                            "Torso inclinar para frente",
+                            "Calcanhares levantarem",
+                            "Joelhos entrarem"
+                        ],
+                        variations: ["Agachamento Frontal com Pegada Cruzada", "Agachamento Frontal na Smith"]
+                    },
+                    {
+                        id: "agachamento-hack",
+                        name: "Agachamento Hack",
+                        difficulty: "intermediate",
+                        equipment: "Máquina Hack",
+                        focus: "Quadríceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Quadríceps"],
+                            secondary: ["Glúteos"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Deite-se na máquina com os ombros no apoio",
+                            "Pés na plataforma na largura dos ombros",
+                            "Desça flexionando os joelhos",
+                            "Não ultrapasse 90 graus se tiver problemas de joelho",
+                            "Empurre a plataforma para cima"
+                        ],
+                        tips: [
+                            "Máquina guiada para maior segurança",
+                            "Foco intenso no quadríceps",
+                            "Menor ativação de estabilizadores",
+                            "Ideal para iniciantes"
+                        ],
+                        errors: [
+                            "Descer muito (stress no joelho)",
+                            "Calcanhares levantarem",
+                            "Joelhos entrarem",
+                            "Não controlar o movimento"
+                        ],
+                        variations: ["Hack com Pés Baixos", "Hack com Pés Altos"]
+                    },
+                    {
                         id: "leg-press",
                         name: "Leg Press 45°",
                         difficulty: "beginner",
                         equipment: "Máquina Leg Press",
                         focus: "Massa e Força",
                         type: "weight",
-                        image: "https://saude.abril.com.br/wp-content/uploads/2025/07/exercicio-quadriceps-leg-press.jpg?quality=50&strip=info&w=1024",
                         muscles: {
                             primary: ["Quadríceps", "Glúteo Máximo"],
                             secondary: ["Isquiotibiais", "Addutores"],
@@ -2232,7 +3506,6 @@
                         equipment: "Máquina",
                         focus: "Isolamento do Quadríceps",
                         type: "weight",
-                        image: "https://image.tuasaude.com/media/article/ku/ib/treino-costas_73930.gif?width=686&height=487",
                         muscles: {
                             primary: ["Quadríceps (Vasto Lateral, Reto Femoral)"],
                             secondary: ["Vasto Medial"],
@@ -2264,10 +3537,9 @@
                         id: "afundo",
                         name: "Afundo (Lunge)",
                         difficulty: "intermediate",
-                        equipment: "Halteres ou Barra",
+                        equipment: "Halteres",
                         focus: "Força Funcional",
                         type: "weight",
-                        image: "https://boaforma.abril.com.br/wp-content/uploads/sites/2/2026/01/determined-female-leggings-having-abdominal-crunch-workout-indoors-side-view-fit.jpg?crop=1&resize=1212,909",
                         muscles: {
                             primary: ["Quadríceps", "Glúteo Máximo"],
                             secondary: ["Isquiotibiais", "Addutores"],
@@ -2294,6 +3566,204 @@
                             "Não descer suficientemente"
                         ],
                         variations: ["Afundo Estático", "Afundo Reverso", "Afundo Búlgaro", "Afundo Caminhando"]
+                    },
+                    {
+                        id: "afundo-reverso",
+                        name: "Afundo Reverso",
+                        difficulty: "beginner",
+                        equipment: "Halteres",
+                        focus: "Quadríceps e Glúteos",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Quadríceps", "Glúteos"],
+                            secondary: ["Isquiotibiais"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Fique em pé com halteres",
+                            "Dê um passo para trás com uma perna",
+                            "Desça o quadril",
+                            "Joelho de trás quase toca o chão",
+                            "Retorne à posição inicial"
+                        ],
+                        tips: [
+                            "Menor stress no joelho que o afundo normal",
+                            "Maior ênfase no glúteo da perna da frente",
+                            "Mantenha o torso ereto",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Torso inclinar para frente",
+                            "Joelho da frente passar da ponta do pé",
+                            "Passo muito curto",
+                            "Perder o equilíbrio"
+                        ],
+                        variations: ["Afundo Reverso Estático", "Afundo Reverso com Elevação"]
+                    },
+                    {
+                        id: "agachamento-bulgaro",
+                        name: "Agachamento Búlgaro",
+                        difficulty: "advanced",
+                        equipment: "Halteres",
+                        focus: "Quadríceps e Glúteos",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Quadríceps", "Glúteos"],
+                            secondary: ["Isquiotibiais"],
+                            stabilizers: ["Core", "Equilíbrio"]
+                        },
+                        instructions: [
+                            "Posicione um pé atrás em um banco",
+                            "Pé da frente afastado do banco",
+                            "Desça em agachamento",
+                            "Empurre com o calcanhar para subir",
+                            "Mantenha o equilíbrio"
+                        ],
+                        tips: [
+                            "Excelente para desequilíbrios",
+                            "Maior amplitude que o agachamento normal",
+                            "Foco intenso na perna da frente",
+                            "Mantenha o torso ereto"
+                        ],
+                        errors: [
+                            "Pé da frente muito próximo do banco",
+                            "Torso inclinar para frente",
+                            "Joelho entrar",
+                            "Perder o equilíbrio"
+                        ],
+                        variations: ["Búlgaro com Halteres", "Búlgaro na Smith", "Búlgaro Isométrico"]
+                    },
+                    {
+                        id: "agachamento-sumo",
+                        name: "Agachamento Sumô",
+                        difficulty: "intermediate",
+                        equipment: "Barra ou Halter",
+                        focus: "Quadríceps Interno e Addutores",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Quadríceps", "Addutores"],
+                            secondary: ["Glúteos", "Isquiotibiais"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Pés em posição larga, pontas para fora",
+                            "Segure a barra ou halter",
+                            "Desça em agachamento",
+                            "Mantenha o torso ereto",
+                            "Empurre o chão para subir"
+                        ],
+                        tips: [
+                            "Foco no vasto medial (parte interna)",
+                            "Maior ativação dos addutores",
+                            "Postura mais vertical",
+                            "Cuidado com a mobilidade de quadril"
+                        ],
+                        errors: [
+                            "Pontas dos pés não apontarem para fora",
+                            "Calcanhares levantarem",
+                            "Torso inclinar muito",
+                            "Joelhos não acompanharem os pés"
+                        ],
+                        variations: ["Sumô com Halter", "Sumô na Smith", "Sumô com Pausa"]
+                    },
+                    {
+                        id: "agachamento-pistol",
+                        name: "Agachamento Pistol (Unilateral)",
+                        difficulty: "advanced",
+                        equipment: "Peso Corporal",
+                        focus: "Força Unilateral",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Quadríceps", "Glúteos"],
+                            secondary: ["Isquiotibiais", "Panturrilha"],
+                            stabilizers: ["Core", "Equilíbrio"]
+                        },
+                        instructions: [
+                            "Fique em uma perna",
+                            "Estenda a outra perna para frente",
+                            "Desça em agachamento controlado",
+                            "Mantenha o equilíbrio",
+                            "Suba estendendo o joelho"
+                        ],
+                        tips: [
+                            "Exercício avançado de força",
+                            "Excelente para equilíbrio",
+                            "Comece com apoio se necessário",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Perder o equilíbrio",
+                            "Descer rápido demais",
+                            "Não descer completamente",
+                            "Usar momentum"
+                        ],
+                        variations: ["Pistol com Apoio", "Pistol para Caixa", "Pistol com Peso"]
+                    },
+                    {
+                        id: "step-up",
+                        name: "Step-up",
+                        difficulty: "beginner",
+                        equipment: "Banco ou Step",
+                        focus: "Quadríceps e Glúteos",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Quadríceps", "Glúteos"],
+                            secondary: ["Isquiotibiais"],
+                            stabilizers: ["Core", "Equilíbrio"]
+                        },
+                        instructions: [
+                            "Fique em frente a um banco",
+                            "Suba no banco com uma perna",
+                            "Empurre com o calcanhar",
+                            "Levante o corpo completamente",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Excelente para força funcional",
+                            "Foco na perna que sobe",
+                            "Evite empurrar com a perna de trás",
+                            "Mantenha o torso ereto"
+                        ],
+                        errors: [
+                            "Empurrar com a perna de trás",
+                            "Não subir completamente",
+                            "Desça rápido",
+                            "Torso inclinar"
+                        ],
+                        variations: ["Step-up com Halteres", "Step-up Lateral", "Step-up com Chute"]
+                    },
+                    {
+                        id: "agachamento-sissy",
+                        name: "Agachamento Sissy",
+                        difficulty: "intermediate",
+                        equipment: "Peso Corporal",
+                        focus: "Quadríceps",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Quadríceps"],
+                            secondary: ["Panturrilha"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Fique em pé com as mãos segurando um apoio",
+                            "Calcanhares levantados",
+                            "Desça flexionando os joelhos",
+                            "Mantenha o torso ereto",
+                            "Suba estendendo os joelhos"
+                        ],
+                        tips: [
+                            "Isolamento intenso do quadríceps",
+                            "Movimento corporal desafiador",
+                            "Cuidado com os joelhos",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Calcanhares caírem",
+                            "Torso inclinar",
+                            "Descer muito rápido",
+                            "Não controlar a subida"
+                        ],
+                        variations: ["Sissy com Peso", "Sissy em Máquina"]
                     }
                 ]
             },
@@ -2310,7 +3780,6 @@
                         equipment: "Máquina",
                         focus: "Isolamento",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/07/mesa-flexora.jpg",
                         muscles: {
                             primary: ["Isquiotibiais (Bíceps Femoral)"],
                             secondary: ["Gastrocnêmio"],
@@ -2342,10 +3811,9 @@
                         id: "stiff",
                         name: "Stiff (Levantamento Terra Romeno)",
                         difficulty: "intermediate",
-                        equipment: "Barra ou Halteres",
+                        equipment: "Barra",
                         focus: "Cadeia Posterior",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/07/mesa-flexora.jpg",
                         muscles: {
                             primary: ["Isquiotibiais", "Glúteo Máximo"],
                             secondary: ["Eretor da Espinha", "Trapézio"],
@@ -2380,7 +3848,6 @@
                         equipment: "Máquina",
                         focus: "Isolamento",
                         type: "weight",
-                        image: "https://grandeatleta.com.br/wp-content/uploads/2018/07/mesa-flexora.jpg",
                         muscles: {
                             primary: ["Isquiotibiais"],
                             secondary: ["Gastrocnêmio"],
@@ -2407,6 +3874,241 @@
                             "Movimento muito rápido"
                         ],
                         variations: ["Flexora Unilateral", "Flexora com Pés Alternados"]
+                    },
+                    {
+                        id: "stiff-unilateral",
+                        name: "Stiff Unilateral",
+                        difficulty: "intermediate",
+                        equipment: "Halter",
+                        focus: "Isquiotibiais Unilateral",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Isquiotibiais"],
+                            secondary: ["Glúteos"],
+                            stabilizers: ["Core", "Equilíbrio"]
+                        },
+                        instructions: [
+                            "Fique em uma perna segurando o halter",
+                            "Incline o torso para frente",
+                            "Estenda a perna livre para trás",
+                            "Sinta o alongamento no posterior",
+                            "Retorne à posição inicial"
+                        ],
+                        tips: [
+                            "Correção de desequilíbrios",
+                            "Maior ativação do core",
+                            "Foco unilateral intenso",
+                            "Mantenha o equilíbrio"
+                        ],
+                        errors: [
+                            "Arquear a lombar",
+                            "Perder o equilíbrio",
+                            "Não sentir o alongamento",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Stiff Unilateral sem Peso", "Stiff Unilateral no Smith"]
+                    },
+                    {
+                        id: "good-morning",
+                        name: "Good Morning",
+                        difficulty: "intermediate",
+                        equipment: "Barra",
+                        focus: "Isquiotibiais e Lombar",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Isquiotibiais", "Eretor da Espinha"],
+                            secondary: ["Glúteos"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione a barra nos trapézios",
+                            "Pés na largura dos ombros",
+                            "Joelhos levemente flexionados",
+                            "Incline o torso para frente",
+                            "Mantenha a coluna neutra",
+                            "Retorne à posição ereta"
+                        ],
+                        tips: [
+                            "Excelente para cadeia posterior",
+                            "Mantenha a coluna sempre neutra",
+                            "Movimento no quadril",
+                            "Comece com peso leve"
+                        ],
+                        errors: [
+                            "Arquear a lombar",
+                            "Flexionar muito os joelhos",
+                            "Descer muito rápido",
+                            "Não controlar o movimento"
+                        ],
+                        variations: ["Good Morning Sentado", "Good Morning com Halteres"]
+                    },
+                    {
+                        id: "flexora-em-pe",
+                        name: "Flexora em Pé",
+                        difficulty: "beginner",
+                        equipment: "Máquina",
+                        focus: "Isquiotibiais",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Isquiotibiais"],
+                            secondary: ["Gastrocnêmio"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Fique em pé na máquina",
+                            "Posicione o rolo atrás do calcanhar",
+                            "Segure o apoio para equilíbrio",
+                            "Flexione o joelho levando o calcanhar em direção ao glúteo",
+                            "Contraia no topo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Trabalha uma perna de cada vez",
+                            "Foco unilateral",
+                            "Mantenha o equilíbrio",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Não contraír no topo",
+                            "Estender completamente",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Flexora em Pé Unilateral", "Flexora em Pé com Pausa"]
+                    },
+                    {
+                        id: "hip-thrust",
+                        name: "Hip Thrust no Chão",
+                        difficulty: "intermediate",
+                        equipment: "Barra ou Halter",
+                        focus: "Glúteos e Posterior",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Glúteo Máximo"],
+                            secondary: ["Isquiotibiais"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Sente-se no chão com as costas apoiadas em um banco",
+                            "Barra sobre o quadril",
+                            "Pés firmes no chão",
+                            "Empurre o quadril para cima",
+                            "Contraia o glúteo no topo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Excelente para glúteos",
+                            "Maior amplitude que o agachamento",
+                            "Foco na contração do glúteo",
+                            "Use protetor para a barra"
+                        ],
+                        errors: [
+                            "Hiperextensão lombar",
+                            "Não estender completamente o quadril",
+                            "Usar o impulso das costas",
+                            "Pés muito à frente"
+                        ],
+                        variations: ["Hip Thrust Unilateral", "Hip Thrust com Banda", "Hip Thrust com Pés Elevados"]
+                    },
+                    {
+                        id: "levantamento-terra",
+                        name: "Levantamento Terra",
+                        difficulty: "advanced",
+                        equipment: "Barra",
+                        focus: "Força Total",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Isquiotibiais", "Glúteos", "Eretor da Espinha"],
+                            secondary: ["Quadríceps", "Trapézio", "Romboides"],
+                            stabilizers: ["Core", "Antebraço", "Ombros"]
+                        },
+                        instructions: [
+                            "Pés na largura do quadril",
+                            "Segure a barra com pegada mista ou pronada",
+                            "Costas retas, peito aberto",
+                            "Empurre o chão com os pés",
+                            "Estenda quadril e joelhos simultaneamente",
+                            "Barra próxima ao corpo durante todo o movimento"
+                        ],
+                        tips: [
+                            "O rei dos exercícios",
+                            "Trabalha todo o corpo",
+                            "Técnica é fundamental",
+                            "Comece com peso leve para aprender"
+                        ],
+                        errors: [
+                            "Arquear a lombar",
+                            "Barra afastar do corpo",
+                            "Levantar o quadril primeiro",
+                            "Não estender completamente"
+                        ],
+                        variations: ["Terra Sumô", "Terra Romeno", "Terra Deficit", "Terra com Pausa"]
+                    },
+                    {
+                        id: "glute-ham-raise",
+                        name: "Glute-Ham Raise",
+                        difficulty: "advanced",
+                        equipment: "Máquina GHR",
+                        focus: "Isquiotibiais e Glúteos",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Isquiotibiais"],
+                            secondary: ["Glúteos", "Gastrocnêmio"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posicione-se na máquina com os calcanhares apoiados",
+                            "Cruze os braços no peito",
+                            "Desça o torso flexionando no joelho",
+                            "Use os isquiotibiais para subir",
+                            "Contraia no topo"
+                        ],
+                        tips: [
+                            "Exercício corporal avançado",
+                            "Foco intenso nos isquiotibiais",
+                            "Movimento excêntrico controlado",
+                            "Use ajuda se necessário no início"
+                        ],
+                        errors: [
+                            "Dobrar no quadril (vira hiperextensão)",
+                            "Descer rápido demais",
+                            "Não usar os isquios para subir",
+                            "Perder a forma"
+                        ],
+                        variations: ["GHR Assistido", "GHR com Peso", "GHR Negativo"]
+                    },
+                    {
+                        id: "reverse-hyper",
+                        name: "Reverse Hyperextension",
+                        difficulty: "intermediate",
+                        equipment: "Máquina ou Banco",
+                        focus: "Glúteos e Posterior",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Glúteos", "Isquiotibiais"],
+                            secondary: ["Lombar"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Deite-se de bruços na máquina",
+                            "Pernas penduradas",
+                            "Segure o apoio frontal",
+                            "Eleve as pernas contraindo o glúteo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Excelente para glúteos",
+                            "Alivia pressão lombar",
+                            "Movimento controlado",
+                            "Não use momentum"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Elevar o torso",
+                            "Movimento muito curto",
+                            "Não contraír o glúteo"
+                        ],
+                        variations: ["Reverse Hyper no Banco", "Reverse Hyper com Peso", "Reverse Hyper Unilateral"]
                     }
                 ]
             },
@@ -2420,10 +4122,9 @@
                         id: "elevacao-pelvica",
                         name: "Elevação Pélvica (Hip Thrust)",
                         difficulty: "intermediate",
-                        equipment: "Barra ou Halter",
+                        equipment: "Barra",
                         focus: "Glúteo Máximo",
                         type: "weight",
-                        image: "https://meujoelho.com.br/wp-content/uploads/2020/05/Imagem-6-3.png",
                         muscles: {
                             primary: ["Glúteo Máximo"],
                             secondary: ["Isquiotibiais", "Quadríceps"],
@@ -2455,10 +4156,9 @@
                         id: "agachamento-bulgaro",
                         name: "Agachamento Búlgaro",
                         difficulty: "advanced",
-                        equipment: "Halteres ou Barra",
+                        equipment: "Halteres",
                         focus: "Glúteo e Quadríceps",
                         type: "weight",
-                        image: "https://boaforma.abril.com.br/wp-content/uploads/sites/2/2026/01/determined-female-leggings-having-abdominal-crunch-workout-indoors-side-view-fit.jpg?crop=1&resize=1212,909",
                         muscles: {
                             primary: ["Quadríceps", "Glúteo Máximo"],
                             secondary: ["Isquiotibiais", "Addutores"],
@@ -2493,7 +4193,6 @@
                         equipment: "Máquina",
                         focus: "Glúteo Médio",
                         type: "weight",
-                        image: "https://meujoelho.com.br/wp-content/uploads/2020/05/Imagem-6-3.png",
                         muscles: {
                             primary: ["Glúteo Médio", "Glúteo Mínimo"],
                             secondary: ["Tensor da Fáscia Lata"],
@@ -2519,6 +4218,303 @@
                             "Movimento muito rápido"
                         ],
                         variations: ["Abdução no Cabo", "Abdução Lateral com Banda", "Abdução em Pé"]
+                    },
+                    {
+                        id: "cadeira-adutora",
+                        name: "Cadeira Adutora",
+                        difficulty: "beginner",
+                        equipment: "Máquina",
+                        focus: "Addutores e Glúteo Médio",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Addutores", "Glúteo Médio"],
+                            secondary: ["Grácil"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina com as almofadas externas nos joelhos",
+                            "Pernas abertas",
+                            "Feche as pernas contraindo os adutores",
+                            "Contraia no topo",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Foco nos adutores internos",
+                            "Movimento controlado",
+                            "Contraia no topo",
+                            "Não use momentum"
+                        ],
+                        errors: [
+                            "Levantar o quadril",
+                            "Usar momentum",
+                            "Não fechar completamente",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Adutora no Cabo", "Adutora em Pé"]
+                    },
+                    {
+                        id: "levantamento-terra-sumô",
+                        name: "Levantamento Terra Sumô",
+                        difficulty: "intermediate",
+                        equipment: "Barra",
+                        focus: "Glúteos e Posterior",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Glúteos", "Isquiotibiais"],
+                            secondary: ["Quadríceps", "Addutores"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Pés em posição larga, pontas para fora",
+                            "Segure a barra entre as pernas",
+                            "Costas retas",
+                            "Empurre o chão com os pés",
+                            "Estenda quadril e joelhos"
+                        ],
+                        tips: [
+                            "Maior ênfase nos glúteos",
+                            "Postura mais vertical que o terra tradicional",
+                            "Cuidado com a mobilidade de quadril",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Arquear a lombar",
+                            "Pontas dos pés não apontarem para fora",
+                            "Levantar o quadril primeiro",
+                            "Barra afastar do corpo"
+                        ],
+                        variations: ["Terra Sumô com Halter", "Terra Sumô Deficit"]
+                    },
+                    {
+                        id: "ponte-gluteo",
+                        name: "Ponte para Glúteo",
+                        difficulty: "beginner",
+                        equipment: "Peso Corporal",
+                        focus: "Glúteo Máximo",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Glúteo Máximo"],
+                            secondary: ["Isquiotibiais"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Deite-se de costas com joelhos flexionados",
+                            "Pés firmes no chão",
+                            "Eleve o quadril contraindo o glúteo",
+                            "Mantenha a posição no topo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Excelente para ativação do glúteo",
+                            "Mantenha o core contraído",
+                            "Não arqueie a lombar",
+                            "Foco na contração do glúteo"
+                        ],
+                        errors: [
+                            "Hiperextensão lombar",
+                            "Não contraír o glúteo",
+                            "Usar o impulso",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Ponte com Perna Estendida", "Ponte com Peso", "Ponte com Banda"]
+                    },
+                    {
+                        id: "ponte-gluteo-unilateral",
+                        name: "Ponte Unilateral",
+                        difficulty: "intermediate",
+                        equipment: "Peso Corporal",
+                        focus: "Glúteo Unilateral",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Glúteo Máximo"],
+                            secondary: ["Isquiotibiais"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Deite-se de costas",
+                            "Uma perna estendida, outra flexionada",
+                            "Eleve o quadril com a perna flexionada",
+                            "Contraia o glúteo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Correção de desequilíbrios",
+                            "Maior dificuldade que a ponte normal",
+                            "Foco unilateral intenso",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Quadril cair para um lado",
+                            "Não contraír o glúteo",
+                            "Usar o impulso",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Ponte Unilateral com Peso", "Ponte Unilateral no Banco"]
+                    },
+                    {
+                        id: "donkey-kick",
+                        name: "Donkey Kick",
+                        difficulty: "beginner",
+                        equipment: "Peso Corporal",
+                        focus: "Glúteo Máximo",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Glúteo Máximo"],
+                            secondary: ["Lombar"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posição de quatro apoios",
+                            "Joelhos sob os quadris, mãos sob os ombros",
+                            "Chute uma perna para trás e para cima",
+                            "Contraia o glúteo no topo",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Excelente para ativação",
+                            "Mantenha o core estável",
+                            "Não arqueie a lombar",
+                            "Foco na contração do glúteo"
+                        ],
+                        errors: [
+                            "Arquear a lombar",
+                            "Movimento no quadril",
+                            "Não elevar o suficiente",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Donkey Kick com Peso", "Donkey Kick no Cabo", "Fire Hydrant"]
+                    },
+                    {
+                        id: "fire-hydrant",
+                        name: "Fire Hydrant",
+                        difficulty: "beginner",
+                        equipment: "Peso Corporal",
+                        focus: "Glúteo Médio",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Glúteo Médio"],
+                            secondary: ["Glúteo Mínimo"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posição de quatro apoios",
+                            "Eleve a perna lateralmente",
+                            "Mantenha o joelho flexionado 90 graus",
+                            "Contraia o glúteo no topo",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Foco no glúteo médio",
+                            "Movimento controlado",
+                            "Não incline o tronco",
+                            "Mantenha o core estável"
+                        ],
+                        errors: [
+                            "Inclinar o tronco",
+                            "Esticar a perna",
+                            "Não elevar o suficiente",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Fire Hydrant com Peso", "Fire Hydrant no Cabo", "Fire Hydrant com Pausa"]
+                    },
+                    {
+                        id: "step-up-lateral",
+                        name: "Step-up Lateral",
+                        difficulty: "intermediate",
+                        equipment: "Banco",
+                        focus: "Glúteo Médio",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Glúteo Médio", "Quadríceps"],
+                            secondary: ["Addutores"],
+                            stabilizers: ["Core", "Equilíbrio"]
+                        },
+                        instructions: [
+                            "Fique de lado ao banco",
+                            "Suba no banco com a perna próxima",
+                            "Empurre com o calcanhar",
+                            "Levante o corpo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Foco no glúteo médio",
+                            "Maior trabalho de estabilidade",
+                            "Movimento controlado",
+                            "Mantenha o torso ereto"
+                        ],
+                        errors: [
+                            "Empurrar com a perna de trás",
+                            "Torso inclinar",
+                            "Não subir completamente",
+                            "Perder o equilíbrio"
+                        ],
+                        variations: ["Step-up Lateral com Halteres", "Step-up Lateral com Chute"]
+                    },
+                    {
+                        id: "clamshell",
+                        name: "Clamshell",
+                        difficulty: "beginner",
+                        equipment: "Banda Elástica",
+                        focus: "Glúteo Médio",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Glúteo Médio"],
+                            secondary: ["Glúteo Mínimo"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Deite-se de lado com joelhos flexionados",
+                            "Pés juntos",
+                            "Abra o joelho de cima",
+                            "Contraia o glúteo",
+                            "Feche controladamente"
+                        ],
+                        tips: [
+                            "Excelente para ativação do glúteo médio",
+                            "Use banda para aumentar resistência",
+                            "Mantenha os pés juntos",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Rolar o quadril para trás",
+                            "Abrir os pés",
+                            "Movimento rápido",
+                            "Não contraír o glúteo"
+                        ],
+                        variations: ["Clamshell com Banda", "Clamshell Elevado"]
+                    },
+                    {
+                        id: "monster-walk",
+                        name: "Monster Walk",
+                        difficulty: "beginner",
+                        equipment: "Banda Elástica",
+                        focus: "Glúteo Médio",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Glúteo Médio"],
+                            secondary: ["Glúteo Mínimo"],
+                            stabilizers: ["Core", "Quadríceps"]
+                        },
+                        instructions: [
+                            "Posicione a banda acima dos joelhos",
+                            "Postura agachada leve",
+                            "Dê passos laterais",
+                            "Mantenha tensão na banda",
+                            "Movimento controlado"
+                        ],
+                        tips: [
+                            "Excelente para ativação",
+                            "Mantenha os pés afastados",
+                            "Não deixe os joelhos entrarem",
+                            "Core contraído"
+                        ],
+                        errors: [
+                            "Levantar muito o torso",
+                            "Deixar os joelhos entrarem",
+                            "Passos muito curtos",
+                            "Perder a tensão na banda"
+                        ],
+                        variations: ["Monster Walk para Frente", "Monster Walk com Banda nos Tornozelos"]
                     }
                 ]
             },
@@ -2532,10 +4528,9 @@
                         id: "gemeos-em-pe",
                         name: "Gêmeos em Pé",
                         difficulty: "beginner",
-                        equipment: "Máquina ou Smith",
+                        equipment: "Máquina",
                         focus: "Gastrocnêmio",
                         type: "weight",
-                        image: "https://image.tuasaude.com/media/article/ku/ib/treino-costas_73930.gif?width=686&height=487",
                         muscles: {
                             primary: ["Gastrocnêmio"],
                             secondary: ["Sóleo"],
@@ -2570,7 +4565,6 @@
                         equipment: "Máquina",
                         focus: "Sóleo",
                         type: "weight",
-                        image: "https://image.tuasaude.com/media/article/ku/ib/treino-costas_73930.gif?width=686&height=487",
                         muscles: {
                             primary: ["Sóleo"],
                             secondary: ["Gastrocnêmio"],
@@ -2597,6 +4591,172 @@
                             "Usar momentum"
                         ],
                         variations: ["Gêmeos Sentado Unilateral", "Gêmeos Sentado no Cabo"]
+                    },
+                    {
+                        id: "gemeos-leg-press",
+                        name: "Gêmeos no Leg Press",
+                        difficulty: "beginner",
+                        equipment: "Máquina Leg Press",
+                        focus: "Gastrocnêmio",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Gastrocnêmio"],
+                            secondary: ["Sóleo"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina Leg Press",
+                            "Posicione os pés na parte inferior da plataforma",
+                            "Calcanhares para fora da plataforma",
+                            "Estenda as pernas",
+                            "Flexione os tornozelos descendo os calcanhares",
+                            "Empurre elevando os calcanhares"
+                        ],
+                        tips: [
+                            "Amplitude máxima",
+                            "Pés juntos = foco externo",
+                            "Pés afastados = foco interno",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Amplitude curta",
+                            "Dobrar os joelhos",
+                            "Movimento rápido",
+                            "Não controlar"
+                        ],
+                        variations: ["Gêmeos no Leg Press Unilateral", "Gêmeos no Leg Press com Pés Juntos"]
+                    },
+                    {
+                        id: "gemeos-em-pe-livre",
+                        name: "Gêmeos em Pé Livre",
+                        difficulty: "beginner",
+                        equipment: "Halteres",
+                        focus: "Gastrocnêmio",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Gastrocnêmio"],
+                            secondary: ["Sóleo"],
+                            stabilizers: ["Core", "Equilíbrio"]
+                        },
+                        instructions: [
+                            "Fique em pé segurando halteres",
+                            "Calcanhares no chão, pontas em um step ou placa",
+                            "Desça alongando os calcanhares",
+                            "Empurre elevando os calcanhares",
+                            "Contraia no topo"
+                        ],
+                        tips: [
+                            "Não precisa de máquina",
+                            "Use apoio para equilíbrio se necessário",
+                            "Amplitude completa",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Perder o equilíbrio",
+                            "Amplitude curta",
+                            "Usar momentum",
+                            "Não contraír no topo"
+                        ],
+                        variations: ["Gêmeos Livres Unilateral", "Gêmeos Livres com Pausa"]
+                    },
+                    {
+                        id: "elevacao-tibia",
+                        name: "Elevação de Tibia",
+                        difficulty: "beginner",
+                        equipment: "Máquina ou Halter",
+                        focus: "Tibial Anterior",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Tibial Anterior"],
+                            secondary: ["Extensores do Pé"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina com os pés soltos",
+                            "Ou use um halter sobre os pés",
+                            "Flexione os pés para cima",
+                            "Contraia no topo",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Prevenção de lesões na panturrilha",
+                            "Equilíbrio muscular",
+                            "Movimento controlado",
+                            "Não use peso excessivo"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Amplitude curta",
+                            "Movimento rápido",
+                            "Peso excessivo"
+                        ],
+                        variations: ["Elevação de Tibia em Pé", "Elevação de Tibia com Elástico"]
+                    },
+                    {
+                        id: "panturrilha-em-pe-unilateral",
+                        name: "Panturrilha em Pé Unilateral",
+                        difficulty: "intermediate",
+                        equipment: "Halter",
+                        focus: "Gastrocnêmio Unilateral",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Gastrocnêmio"],
+                            secondary: ["Sóleo"],
+                            stabilizers: ["Core", "Equilíbrio"]
+                        },
+                        instructions: [
+                            "Fique em uma perna segurando um halter",
+                            "Ponta do pé em um step",
+                            "Desça o calcanhar",
+                            "Empurre elevando o calcanhar",
+                            "Contraia no topo"
+                        ],
+                        tips: [
+                            "Correção de desequilíbrios",
+                            "Maior dificuldade",
+                            "Use apoio para equilíbrio",
+                            "Foco unilateral"
+                        ],
+                        errors: [
+                            "Perder o equilíbrio",
+                            "Amplitude curta",
+                            "Usar o braço para puxar",
+                            "Não controlar"
+                        ],
+                        variations: ["Panturrilha Unilateral na Máquina", "Panturrilha Unilateral no Smith"]
+                    },
+                    {
+                        id: "panturrilha-donkey",
+                        name: "Panturrilha Donkey",
+                        difficulty: "intermediate",
+                        equipment: "Máquina ou Parceiro",
+                        focus: "Gastrocnêmio",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Gastrocnêmio"],
+                            secondary: ["Sóleo"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Posicione-se em inclinação com as mãos em um apoio",
+                            "Pés no chão, calcanhares para fora",
+                            "Tenha alguém sentado nas suas costas (ou use máquina)",
+                            "Flexione os tornozelos",
+                            "Empurre elevando os calcanhares"
+                        ],
+                        tips: [
+                            "Excelente alongamento do gastrocnêmio",
+                            "Maior amplitude que em pé",
+                            "Movimento controlado",
+                            "Peso adicional aumenta intensidade"
+                        ],
+                        errors: [
+                            "Amplitude curta",
+                            "Movimento rápido",
+                            "Não pausar no topo",
+                            "Usar momentum"
+                        ],
+                        variations: ["Donkey na Máquina", "Donkey com Banda"]
                     }
                 ]
             },
@@ -2613,7 +4773,6 @@
                         equipment: "Peso Corporal",
                         focus: "Estabilidade",
                         type: "time",
-                        image: "https://blogscdn.thehut.net/app/uploads/sites/461/2020/09/Plank_1600178118.jpg",
                         muscles: {
                             primary: ["Reto Abdominal", "Transverso do Abdômen"],
                             secondary: ["Oblíquos", "Eretor da Espinha"],
@@ -2642,13 +4801,45 @@
                         variations: ["Prancha Lateral", "Prancha com Elevação de Perna", "Prancha com Toque no Ombro", "Prancha Dinâmica"]
                     },
                     {
+                        id: "prancha-lateral",
+                        name: "Prancha Lateral",
+                        difficulty: "beginner",
+                        equipment: "Peso Corporal",
+                        focus: "Oblíquos",
+                        type: "time",
+                        muscles: {
+                            primary: ["Oblíquo Externo", "Oblíquo Interno"],
+                            secondary: ["Quadratus Lumborum"],
+                            stabilizers: ["Deltóides", "Core"]
+                        },
+                        instructions: [
+                            "Deite-se de lado com o cotovelo apoiado",
+                            "Eleve o quadril do chão",
+                            "Corpo em linha reta",
+                            "Mantenha a posição",
+                            "Troque de lado"
+                        ],
+                        tips: [
+                            "Foco nos oblíquos",
+                            "Evite deixar o quadril cair",
+                            "Mantenha o ombro sobre o cotovelo",
+                            "Respire normalmente"
+                        ],
+                        errors: [
+                            "Quadril cair",
+                            "Ombro não alinhado com cotovelo",
+                            "Prender a respiração",
+                            "Não manter a linha reta"
+                        ],
+                        variations: ["Prancha Lateral com Rotação", "Prancha Lateral com Elevação de Perna"]
+                    },
+                    {
                         id: "abdominal-infra",
                         name: "Abdominal Infra",
                         difficulty: "beginner",
                         equipment: "Barra ou Máquina",
                         focus: "Reto Inferior",
                         type: "weight",
-                        image: "https://s2-ge.glbimg.com/5f5370d3bdd9283b6a43e351f33a05994c68453d.jpg",
                         muscles: {
                             primary: ["Reto Abdominal (porção inferior)"],
                             secondary: ["Psoas Ilíaco", "Reto Femoral"],
@@ -2679,10 +4870,9 @@
                         id: "abdominal-supra",
                         name: "Abdominal Supra",
                         difficulty: "beginner",
-                        equipment: "Peso Corporal ou Anilha",
+                        equipment: "Peso Corporal",
                         focus: "Reto Superior",
                         type: "weight",
-                        image: "https://boaforma.abril.com.br/wp-content/uploads/sites/2/2026/01/determined-female-leggings-having-abdominal-crunch-workout-indoors-side-view-fit.jpg?crop=1&resize=1212,909",
                         muscles: {
                             primary: ["Reto Abdominal (porção superior)"],
                             secondary: ["Oblíquos"],
@@ -2711,23 +4901,22 @@
                     },
                     {
                         id: "abdominal-obliquo",
-                        name: "Abdominal Oblíquo",
+                        name: "Abdominal Oblíquo (Russian Twist)",
                         difficulty: "intermediate",
-                        equipment: "Halter ou Cabo",
+                        equipment: "Halter ou Peso",
                         focus: "Oblíquos",
                         type: "weight",
-                        image: "https://boaforma.abril.com.br/wp-content/uploads/sites/2/2026/01/determined-female-leggings-having-abdominal-crunch-workout-indoors-side-view-fit.jpg?crop=1&resize=1212,909",
                         muscles: {
                             primary: ["Oblíquo Externo", "Oblíquo Interno"],
                             secondary: ["Reto Abdominal"],
                             stabilizers: ["Core", "Lombar"]
                         },
                         instructions: [
+                            "Sente-se no chão com joelhos flexionados",
+                            "Incline o torso para trás",
                             "Segure o peso com as duas mãos",
-                            "Mantenha os braços estendidos à frente",
-                            "Gire o torso para um lado contraindo o oblíquo",
-                            "Retorne ao centro e gire para o outro lado",
-                            "Movimento controlado, sem momentum"
+                            "Gire o torso de um lado para o outro",
+                            "Mantenha os pés no chão ou elevados"
                         ],
                         tips: [
                             "Rotação no torso, não apenas nos braços",
@@ -2741,7 +4930,337 @@
                             "Usar momentum",
                             "Movimento muito rápido"
                         ],
-                        variations: ["Russian Twist", "Oblíquo no Cabo", "Oblíquo Lateral", "Oblíquo na Máquina"]
+                        variations: ["Russian Twist com Pés Elevados", "Russian Twist com Bola", "Russian Twist no Cabo"]
+                    },
+                    {
+                        id: "abdominal-bicicleta",
+                        name: "Abdominal Bicicleta",
+                        difficulty: "intermediate",
+                        equipment: "Peso Corporal",
+                        focus: "Oblíquos e Reto",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Oblíquos", "Reto Abdominal"],
+                            secondary: ["Flexores do Quadril"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Deite-se de costas com as mãos atrás da cabeça",
+                            "Eleve os ombros do chão",
+                            "Traga um joelho em direção ao peito",
+                            "Gire o cotovelo oposto em direção ao joelho",
+                            "Alterne os lados em movimento contínuo"
+                        ],
+                        tips: [
+                            "Foco nos oblíquos",
+                            "Movimento controlado, não rápido",
+                            "Não puxe a cabeça",
+                            "Mantenha a lombar no chão"
+                        ],
+                        errors: [
+                            "Puxar a cabeça",
+                            "Movimento rápido demais",
+                            "Não girar o torso",
+                            "Lombar arquear"
+                        ],
+                        variations: ["Bicicleta Lenta", "Bicicleta com Pausa"]
+                    },
+                    {
+                        id: "abdominal-maquina",
+                        name: "Abdominal na Máquina",
+                        difficulty: "beginner",
+                        equipment: "Máquina",
+                        focus: "Reto Abdominal",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Reto Abdominal"],
+                            secondary: ["Oblíquos"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Sente-se na máquina com as costas apoiadas",
+                            "Segure as alças",
+                            "Contraia o abdômen flexionando o torso",
+                            "Contraia no final",
+                            "Retorne controladamente"
+                        ],
+                        tips: [
+                            "Máquina guiada para maior controle",
+                            "Foco na contração",
+                            "Movimento controlado",
+                            "Ajuste o peso adequadamente"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Não contraír no final",
+                            "Movimento muito curto",
+                            "Peso excessivo"
+                        ],
+                        variations: ["Abdominal na Máquina com Rotação", "Abdominal na Máquina Unilateral"]
+                    },
+                    {
+                        id: "crunch-invertido",
+                        name: "Crunch Invertido",
+                        difficulty: "beginner",
+                        equipment: "Peso Corporal",
+                        focus: "Reto Inferior",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Reto Abdominal (porção inferior)"],
+                            secondary: ["Oblíquos"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Deite-se de costas com as pernas elevadas",
+                            "Joelhos flexionados 90 graus",
+                            "Leve os joelhos em direção ao peito",
+                            "Eleve o quadril do chão",
+                            "Contraia o abdômen"
+                        ],
+                        tips: [
+                            "Foco na parte inferior do abdômen",
+                            "Movimento no quadril",
+                            "Não use momentum",
+                            "Controle a descida"
+                        ],
+                        errors: [
+                            "Usar momentum",
+                            "Não elevar o quadril",
+                            "Movimento apenas nos joelhos",
+                            "Descer rápido"
+                        ],
+                        variations: ["Crunch Invertido na Bola", "Crunch Invertido com Elevação de Pernas"]
+                    },
+                    {
+                        id: "eleicao-perna",
+                        name: "Elevação de Pernas",
+                        difficulty: "beginner",
+                        equipment: "Banco ou Chão",
+                        focus: "Reto Inferior",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Reto Abdominal (porção inferior)"],
+                            secondary: ["Flexores do Quadril"],
+                            stabilizers: ["Core", "Lombar"]
+                        },
+                        instructions: [
+                            "Deite-se no banco ou chão",
+                            "Segure o apoio atrás da cabeça",
+                            "Eleve as pernas estendidas",
+                            "Leve em direção ao teto",
+                            "Desça controladamente"
+                        ],
+                        tips: [
+                            "Mantenha as pernas estendidas",
+                            "Controle a descida",
+                            "Não deixe as pernas tocarem o chão",
+                            "Foco no abdômen inferior"
+                        ],
+                        errors: [
+                            "Dobrar os joelhos",
+                            "Descer rápido",
+                            "Arco na lombar",
+                            "Usar momentum"
+                        ],
+                        variations: ["Elevação de Pernas Inclinada", "Elevação de Pernas na Barra"]
+                    },
+                    {
+                        id: "mountain-climber",
+                        name: "Mountain Climber",
+                        difficulty: "intermediate",
+                        equipment: "Peso Corporal",
+                        focus: "Core e Cardio",
+                        type: "time",
+                        muscles: {
+                            primary: ["Reto Abdominal", "Oblíquos"],
+                            secondary: ["Deltóides", "Peitoral"],
+                            stabilizers: ["Core", "Quadríceps"]
+                        },
+                        instructions: [
+                            "Posição de prancha alta",
+                            "Traga um joelho em direção ao peito",
+                            "Alterne as pernas rapidamente",
+                            "Mantenha o core contraído",
+                            "Mantenha o quadril baixo"
+                        ],
+                        tips: [
+                            "Excelente para queima calórica",
+                            "Mantém o core trabalhando constantemente",
+                            "Respire ritmadamente",
+                            "Mantenha o ritmo constante"
+                        ],
+                        errors: [
+                            "Quadril muito alto",
+                            "Não trazer o joelho suficientemente",
+                            "Prender a respiração",
+                            "Movimento lento"
+                        ],
+                        variations: ["Mountain Climber Lento", "Mountain Climber Cruzado", "Mountain Climber com Sliders"]
+                    },
+                    {
+                        id: "dead-bug",
+                        name: "Dead Bug",
+                        difficulty: "beginner",
+                        equipment: "Peso Corporal",
+                        focus: "Estabilidade do Core",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Transverso do Abdômen", "Reto Abdominal"],
+                            secondary: ["Oblíquos"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Deite-se de costas com braços e pernas para cima",
+                            "Mantenha a lombar pressionada no chão",
+                            "Abaixe um braço e a perna oposta",
+                            "Mantenha a posição",
+                            "Retorne e alterne"
+                        ],
+                        tips: [
+                            "Excelente para estabilização lombar",
+                            "Mantenha a lombar sempre no chão",
+                            "Movimento controlado",
+                            "Respire normalmente"
+                        ],
+                        errors: [
+                            "Lombar arquear",
+                            "Movimento rápido",
+                            "Não manter a lombar no chão",
+                            "Prender a respiração"
+                        ],
+                        variations: ["Dead Bug com Bola", "Dead Bug com Banda"]
+                    },
+                    {
+                        id: "bird-dog",
+                        name: "Bird Dog",
+                        difficulty: "beginner",
+                        equipment: "Peso Corporal",
+                        focus: "Estabilidade do Core",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Eretor da Espinha", "Multífidos"],
+                            secondary: ["Glúteos", "Deltóides"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Posição de quatro apoios",
+                            "Estenda um braço e a perna oposta",
+                            "Mantenha o core estável",
+                            "Segure a posição",
+                            "Retorne e alterne"
+                        ],
+                        tips: [
+                            "Excelente para saúde lombar",
+                            "Mantenha o quadril estável",
+                            "Não deixe o quadril girar",
+                            "Movimento controlado"
+                        ],
+                        errors: [
+                            "Quadril girar",
+                            "Arco na lombar",
+                            "Não estender completamente",
+                            "Movimento rápido"
+                        ],
+                        variations: ["Bird Dog com Pausa", "Bird Dog com Elástico"]
+                    },
+                    {
+                        id: "hollow-body",
+                        name: "Hollow Body Hold",
+                        difficulty: "intermediate",
+                        equipment: "Peso Corporal",
+                        focus: "Core Anterior",
+                        type: "time",
+                        muscles: {
+                            primary: ["Reto Abdominal", "Transverso"],
+                            secondary: ["Flexores do Quadril"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Deite-se de costas",
+                            "Eleve os ombros e as pernas do chão",
+                            "Forme um 'barco' com o corpo",
+                            "Mantenha a lombar pressionada no chão",
+                            "Segure a posição"
+                        ],
+                        tips: [
+                            "Exercício de ginástica olímpica",
+                            "Máxima contração do core",
+                            "Comece com as pernas dobradas se necessário",
+                            "Respire controladamente"
+                        ],
+                        errors: [
+                            "Lombar arquear",
+                            "Não elevar ombros",
+                            "Prender a respiração",
+                            "Não manter a tensão"
+                        ],
+                        variations: ["Hollow Body com Balanço", "Hollow Body com Peso"]
+                    },
+                    {
+                        id: "ab-wheel",
+                        name: "Ab Wheel (Roda Abdominal)",
+                        difficulty: "advanced",
+                        equipment: "Roda Abdominal",
+                        focus: "Core Completo",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Reto Abdominal", "Oblíquos"],
+                            secondary: ["Deltóides", "Latíssimo"],
+                            stabilizers: ["Core"]
+                        },
+                        instructions: [
+                            "Ajoelhe-se com as mãos na roda",
+                            "Role para frente estendendo o corpo",
+                            "Mantenha o core contraído",
+                            "Role de volta à posição inicial",
+                            "Não deixe o quadril cair"
+                        ],
+                        tips: [
+                            "Exercício avançado",
+                            "Comece com amplitude curta",
+                            "Mantenha o core sempre contraído",
+                            "Não arqueie a lombar"
+                        ],
+                        errors: [
+                            "Lombar arquear",
+                            "Quadril cair",
+                            "Amplitude excessiva (não consegue voltar)",
+                            "Usar momentum"
+                        ],
+                        variations: ["Ab Wheel em Pé", "Ab Wheel Inclinado", "Ab Wheel Unilateral"]
+                    },
+                    {
+                        id: "dragon-flag",
+                        name: "Dragon Flag",
+                        difficulty: "advanced",
+                        equipment: "Banco ou Barra",
+                        focus: "Core Intenso",
+                        type: "weight",
+                        muscles: {
+                            primary: ["Reto Abdominal"],
+                            secondary: ["Oblíquos", "Eretor"],
+                            stabilizers: ["Core", "Ombros"]
+                        },
+                        instructions: [
+                            "Deite-se em um banco segurando atrás da cabeça",
+                            "Eleve as pernas e o quadril",
+                            "Mantenha o corpo reto",
+                            "Abaixe as pernas sem tocar o banco",
+                            "Levante novamente"
+                        ],
+                        tips: [
+                            "Exercício avançado de Bruce Lee",
+                            "Máxima força do core",
+                            "Mantenha o corpo sempre reto",
+                            "Comece com abaixamentos parciais"
+                        ],
+                        errors: [
+                            "Dobrar no quadril",
+                            "Lombar arquear",
+                            "Descer rápido demais",
+                            "Não controlar o movimento"
+                        ],
+                        variations: ["Dragon Flag Negativo", "Dragon Flag com Joelhos Flexionados"]
                     }
                 ]
             }
@@ -2945,33 +5464,26 @@
             
             exercises.forEach(exercise => {
                 const card = document.createElement('div');
-                card.className = 'exercise-card rounded-2xl overflow-hidden cursor-pointer';
+                card.className = 'exercise-card rounded-2xl p-4 cursor-pointer';
                 card.onclick = () => showExerciseDetailFull(exercise);
                 
                 const difficultyClass = `difficulty-${exercise.difficulty}`;
                 
                 card.innerHTML = `
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="${exercise.image}" alt="${exercise.name}" class="w-full h-full object-cover">
-                        <div class="absolute top-2 right-2">
-                            <span class="difficulty-badge ${difficultyClass}">${exercise.difficulty}</span>
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 to-transparent p-4">
-                            <span class="text-xs text-orange-400 font-medium">${exercise.muscleGroup}</span>
-                        </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="difficulty-badge ${difficultyClass}">${exercise.difficulty}</span>
+                        <span class="text-xs text-gray-400">${exercise.muscleGroup}</span>
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2">${exercise.name}</h3>
-                        <div class="flex flex-wrap gap-2 mb-3">
-                            <span class="muscle-tag muscle-primary">
-                                <i class="fas fa-bullseye text-xs"></i>
-                                ${exercise.muscles.primary[0]}
-                            </span>
-                        </div>
-                        <div class="flex items-center justify-between text-sm text-gray-400">
-                            <span><i class="fas fa-dumbbell mr-1"></i> ${exercise.equipment}</span>
-                            <span><i class="fas fa-layer-group mr-1"></i> ${exercise.focus}</span>
-                        </div>
+                    <h3 class="font-bold text-lg mb-2">${exercise.name}</h3>
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        <span class="muscle-tag muscle-primary">
+                            <i class="fas fa-bullseye text-xs"></i>
+                            ${exercise.muscles.primary[0]}
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm text-gray-400">
+                        <span><i class="fas fa-dumbbell mr-1"></i> ${exercise.equipment}</span>
+                        <span><i class="fas fa-layer-group mr-1"></i> ${exercise.focus}</span>
                     </div>
                 `;
                 
@@ -2987,14 +5499,6 @@
             currentExerciseDetail = exercise;
             
             document.getElementById('detail-exercise-name').textContent = exercise.name;
-            
-            // Gallery
-            const gallery = document.getElementById('detail-gallery');
-            gallery.innerHTML = `
-                <div class="gallery-item" onclick="openImageModal('${exercise.image}')">
-                    <img src="${exercise.image}" alt="${exercise.name}">
-                </div>
-            `;
             
             // Tags
             const tags = document.getElementById('detail-tags');
@@ -3075,15 +5579,6 @@
             document.getElementById('detail-focus').textContent = exercise.focus;
             
             showView('exercise-detail');
-        }
-
-        function openImageModal(src) {
-            document.getElementById('modal-image').src = src;
-            document.getElementById('image-modal').classList.add('active');
-        }
-
-        function closeImageModal() {
-            document.getElementById('image-modal').classList.remove('active');
         }
 
         function backFromDetail() {
@@ -4248,6 +6743,7 @@
     </script>
 </body>
 </html>
+
 
 
 
